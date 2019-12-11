@@ -1,0 +1,13 @@
+//圆形的头像
+
+.wrapper {
+  position: fixed;
+  bottom: 138+48px;
+  right: 30px;
+  width: 98px;
+  z-index: 99;
+  .icon {
+    width: 98px;
+    height: 98px;
+  }
+}

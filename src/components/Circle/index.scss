@@ -1,0 +1,31 @@
+$W: 18px;
+.circleWrapper {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: $W solid #d6dbdf;
+}
+
+.status_0 {
+  border-left: $W solid #627d6b;
+  border-bottom: $W solid #627d6b;
+  border-right: $W solid #627d6b;
+  animation: load 1s linear infinite;
+}
+.status_1 {
+  border-color: #627d6b;
+}
+
+.status_2 {
+  border-color: #d6dbdf;
+}
+
+@keyframes load {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}

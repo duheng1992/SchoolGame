@@ -1,0 +1,17 @@
+.base_router {
+  font-size: px(18);
+  color: gray;
+  .text {
+    display: block;
+    margin: 10px 0;
+    border: 1px solid #7ed321;
+    border-radius: px(10);
+    .name {
+      display: block;
+      color: #7ed321;
+    }
+  }
+}
+.page {
+  text-align: center;
+}

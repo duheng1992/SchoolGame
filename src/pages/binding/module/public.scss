@@ -1,0 +1,138 @@
+//三个状态模块的公共样式
+
+//杂项
+.loding {
+  margin-bottom: 40px;
+}
+.cheng {
+  display: block;
+  margin: 0 auto;
+  width: 90vw;
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  background-position: center center;
+  background-size: 100%;
+  background-color: #627d6b;
+}
+.footer {
+  padding: 40px 50px;
+  padding-bottom: 108px;
+  border-radius: 48px 48px 0 0;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.statusStr {
+  font-size: 48px;
+  color: #41403f;
+  .title-label {
+    margin-bottom: 8px;
+  }
+  .title-val {
+    font-weight: 600;
+  }
+}
+
+.cheng_ce {
+  width: 100%;
+  display: block;
+  margin: 70px auto;
+}
+
+// 1/2
+.stepStr {
+  font-size: 98px;
+  font-weight: 700;
+  font-style: italic;
+  margin-bottom: 40px;
+}
+
+//步骤页面
+.StepView {
+  background-color: #627d6b;
+  background-size: 100%;
+  .cheng {
+    margin-top: -50px;
+  }
+
+  .swper {
+    width: 200vw;
+    display: flex;
+    transition: 0.3s;
+    .swper-item {
+      width: 100vw;
+    }
+    &.step2 {
+      margin-left: -100vw;
+    }
+  }
+}
+
+.nextBtn {
+  font-size: 28px;
+}
+
+//成功页面
+
+.Succeed {
+  .goHomeBtn {
+    cursor: pointer;
+    width: 650px;
+    height: 98px;
+    background-color: #627d6b;
+    border-radius: 24px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+//绑定失败
+
+// .BindFall {
+// }
+
+//蓝牙 页面
+.Bluetooth {
+  .footer {
+    padding: 80px 50px;
+  }
+  .title {
+    font-size: 48px;
+    color: #fff;
+    padding: 40px 50px;
+  }
+  .BtnBox {
+    margin-top: 80px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #fff;
+    .black {
+      background-color: #41403f;
+      border-radius: 24px 0px 0px 24px;
+    }
+    .green {
+      background-color: #627d6b;
+      border-radius: 0px 24px 24px 0px;
+    }
+    .btn {
+      cursor: pointer;
+      height: 100%;
+      width: 325px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

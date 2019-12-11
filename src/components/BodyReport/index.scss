@@ -1,0 +1,52 @@
+//圆形的头像
+
+.wrapper {
+  display: block;
+  width: 680px;
+  margin: 0 auto;
+  .listBox {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .item {
+    width: 310px;
+    height: 374px;
+    box-sizing: border-box;
+    padding: 40px;
+    background-color: #f7f8f8;
+    border-radius: 24px;
+    margin: 15px;
+  }
+}
+
+.item {
+  color: #41403f;
+  .icon {
+    .img {
+      width: 64px;
+      height: 64px;
+    }
+  }
+  .label {
+    font-size: 34px;
+    margin-top: 40px;
+    margin-bottom: 8px;
+  }
+  .value {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 40px;
+  }
+  .range {
+  }
+  .rangeStr {
+    font-size: 24px;
+    margin-top: 14px;
+  }
+  .green {
+    color: #97ab9f;
+  }
+  .red {
+    color: #d6b0a9;
+  }
+}

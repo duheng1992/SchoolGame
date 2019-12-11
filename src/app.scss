@@ -1,0 +1,71 @@
+.fixed {
+  bottom: 0;
+  /* 在 H5 模式下将会编译成 margin-bottom: 50px，在小程序模式下则会忽略 */
+  margin-bottom: taro-tabbar-height;
+}
+
+// color
+
+page {
+  color: #41403f;
+  font-family: PingFangSC;
+}
+
+.h1 {
+  font-size: 48px;
+  font-weight: 600;
+}
+
+.h3 {
+  font-size: 34px;
+  font-weight: 400;
+}
+
+//按钮的公共样式
+.at-button {
+  width: 650px;
+  border-radius: 24px !important;
+}
+
+//默认的头像大小
+.at-avatar--normal {
+  width: 128px;
+  height: 128px;
+}
+
+.at-avatar--large {
+  width: 160px;
+  height: 160px;
+}
+
+.at-avatar--small {
+  width: 98px;
+  height: 98px;
+}
+
+// 阴影
+
+.shadow {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+//弹窗
+.at-modal__container {
+  border-radius: 28px;
+}
+.at-modal__content {
+  min-height: 120px;
+  text-align: center;
+  font-size: 26px;
+  line-height: 32px;
+}
+.at-modal__header {
+  font-weight: bold;
+}
+
+//tabbar占位
+.line {
+  width: 100vw;
+  display: block;
+  height: 146px;
+}

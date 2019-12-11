@@ -1,0 +1,27 @@
+.wrapper {
+  display: inline-block;
+  position: relative;
+  .canvas_bg,
+  .canvas_loding,
+  .contentBox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+  .contentBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .content {
+      border-radius: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

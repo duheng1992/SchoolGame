@@ -1,0 +1,94 @@
+//基础布局
+page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  .pageBox {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+  }
+  .pageBg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    z-index: 0;
+  }
+}
+
+.titleBox {
+  z-index: 9;
+  .strBox {
+    // margin-top: -30px;
+    color: #fff;
+    text-align: center;
+    .more {
+      cursor: pointer;
+      display: flex;
+      width: 500px;
+      font-size: 34px;
+      margin: 0 auto;
+      justify-content: center;
+      align-items: center;
+    }
+    .data {
+      .str1 {
+        font-size: 34px;
+      }
+      .str2 {
+        font-size: 60px;
+        font-weight: bolder;
+      }
+      .str3 {
+        font-size: 28px;
+      }
+    }
+  }
+  margin-bottom: 80px;
+}
+
+.contentBox {
+  position: absolute;
+  transition: 0.3s;
+  z-index: 10;
+  width: 100vw;
+  background-color: #fff;
+  border-radius: 48px 48px 0px 0px;
+  padding-bottom: 146px;
+  padding-top: 154px;
+  box-sizing: border-box;
+  .scrollBox {
+    height: 100%;
+  }
+  .topContent {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    .lineBox {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .line {
+        display: block;
+        width: 108px;
+        height: 10px;
+        background: #41403f;
+        border-radius: 9px;
+      }
+    }
+    .userName {
+      margin: 30px 0;
+      text-align: center;
+      font-size: 34px;
+      color: #41403f;
+      font-weight: bold;
+    }
+  }
+}

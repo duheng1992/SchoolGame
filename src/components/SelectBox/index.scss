@@ -1,0 +1,13 @@
+.btnBox {
+  font-size: 34px;
+  display: flex;
+  justify-content: space-between;
+  padding: 50px;
+  padding-bottom: 10px;
+  .ok {
+    color: #0bbb08;
+  }
+  .cancel {
+    color: #646464;
+  }
+}

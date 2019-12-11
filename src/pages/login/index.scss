@@ -1,0 +1,38 @@
+page {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+.page {
+  position: relative;
+}
+.bgVideo {
+  width: 100vw;
+  height: 100vh;
+}
+.content {
+  position: absolute;
+  background-color: rgba($color: #000, $alpha: 0.6);
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  .logo {
+    display: block;
+    margin: 0 auto;
+    margin-top: 200px;
+    width: 100vw;
+    height: 100vh;
+  }
+  .loginBtn {
+    opacity: 0.8;
+    margin-top: 537px;
+    background-color: #627d6b;
+    border: none;
+  }
+}
+
+.loginBtnBox {
+  display: block;
+  margin: 0 auto;
+}

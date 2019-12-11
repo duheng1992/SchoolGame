@@ -1,0 +1,60 @@
+page {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #f0e8df;
+}
+
+.userDeatil {
+  .goEditData {
+    cursor: pointer;
+    font-size: 34px;
+    display: flex;
+    align-items: center;
+    color: #41403f;
+    margin-top: 20px;
+  }
+  .userName {
+    font-size: 48px;
+    color: #41403f;
+    font-weight: bold;
+    max-width: 540px;
+    word-break: break-all;
+  }
+  padding: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contentWrapper {
+  min-height: 600px;
+}
+
+.linkList {
+  .item {
+    height: 240px;
+    box-sizing: border-box;
+    padding: 60px 50px;
+    border-radius: 48px 48px 0px 0px;
+    .cont {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    font-size: 34px;
+    color: #41403f;
+    font-weight: bold;
+  }
+  .item_1 {
+    background-color: #efdbd8;
+  }
+  .item_2 {
+    margin-top: -86px;
+    background-color: #e7c9c5;
+  }
+  .item_3 {
+    height: 300px;
+    margin-top: -86px;
+    background-color: #d6b0a9;
+  }
+}

@@ -1,0 +1,63 @@
+page {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0e8df;
+}
+
+.bottom {
+  bottom: 108px;
+  width: 100vw;
+  margin-top: 240px;
+  padding-bottom: 108px;
+}
+
+.header {
+  width: 650px;
+  margin: 0 auto;
+}
+
+.content {
+  margin-top: 120px;
+  text-align: center;
+  position: relative;
+  .avatarBox {
+    position: absolute;
+    width: 100%;
+  }
+  .cont-box {
+    display: inline-block;
+    margin-top: 80px;
+    width: 650px;
+    padding-top: 80px;
+    min-height: 300px;
+    background: #fff;
+    box-shadow: 0px 30px 80px 0px #ddd2c6;
+    border-radius: 48px;
+    padding-bottom: 30px;
+    .userName {
+      width: 480px;
+      margin: 0 auto;
+      margin-top: 40px;
+      font-size: 48px;
+      font-weight: 600;
+      color: rgba(65, 64, 63, 1);
+      line-height: 60px;
+      word-break: break-all;
+      margin-bottom: 40px;
+    }
+  }
+}
+
+.inputBox {
+  box-sizing: border-box;
+  padding: 0 50px;
+  width: 550px;
+  height: 108px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  background: rgba(239, 241, 242, 1);
+  border-radius: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

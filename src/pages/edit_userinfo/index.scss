@@ -1,0 +1,35 @@
+page {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #f0e8df;
+}
+
+.contentBox {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 48px;
+  margin-top: 40px;
+  .item {
+    padding: 38px 0;
+    margin: 0 50px;
+    border-bottom: 1px solid #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:last-child {
+      border: none;
+    }
+    font-size: 34px;
+    color: #41403f;
+    .right {
+      text-align: right;
+    }
+  }
+}
+
+.footer {
+  position: fixed;
+  width: 100vw;
+  left: 0;
+  bottom: 108px;
+}

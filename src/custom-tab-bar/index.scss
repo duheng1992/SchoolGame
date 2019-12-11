@@ -1,0 +1,20 @@
+.wrapper {
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+  z-index: 9999;
+  background-color: #fff;
+  height: 146px;
+  border-radius: 48px 48px 0px 0px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  .tabList {
+    display: flex;
+    height: 98px;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .tabTn {
+    width: 52px;
+    height: 52px;
+  }
+}

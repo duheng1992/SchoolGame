@@ -1,0 +1,128 @@
+page {
+  width: 100vw;
+  height: 100vh;
+  background-color: #627d6b;
+  overflow: hidden;
+}
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.topBar {
+  .titleBar {
+    height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    .left,
+    .right {
+      display: flex;
+      align-items: center;
+      font-size: 36px;
+      color: #fff;
+      .backIcon {
+        width: 52px;
+      }
+    }
+    .right {
+      opacity: 0;
+    }
+    .center {
+      .str {
+        background-color: #fff;
+        border-radius: 100px;
+        height: 48px;
+        padding: 0 28px;
+        line-height: 48px;
+        font-size: 24px;
+      }
+    }
+    .right {
+    }
+  }
+}
+.topBox {
+  height: 424px;
+  overflow: hidden;
+  position: relative;
+  color: #ffffff;
+  text-align: center;
+  .chartBox {
+    height: 424px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .topBox-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    font-size: 60px;
+  }
+  .topBox-detail {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 70px;
+    font-size: 28px;
+  }
+}
+
+.contentBox {
+  position: absolute;
+  transition: 0.3s;
+  z-index: 10;
+  width: 100vw;
+  background-color: #fff;
+  border-radius: 48px 48px 0px 0px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: #d6b0a9;
+  .scrollBox {
+    height: 100%;
+  }
+  .topContent {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    .lineBox {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .line {
+        display: block;
+        width: 108px;
+        height: 10px;
+        background: #41403f;
+        border-radius: 9px;
+      }
+    }
+  }
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 60px;
+  width: 100vw;
+  height: 98px;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 20px;
+  }
+}
