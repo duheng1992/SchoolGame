@@ -1,4 +1,4 @@
-# Public_Taro_MiniPrograms_TS
+# Taro_MiniPrograms_TS
 
 基于`Taro`和`TypeScript`的小程序多端编译框架,根据公司需求专门开发定制
 
