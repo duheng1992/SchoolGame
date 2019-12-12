@@ -199,34 +199,16 @@ class _page extends Component {
 
     return (
       <View>
-          <AtList>
-            <AtListItem title="123" arrow='right' />
-            <AtListItem title='标题文字' extraText='详细信息' />
-          </AtList>
-        {/* <Image className="pageBg" mode="widthFix" src={homeBg} /> */}
-        <View className="pageBox" id="pageBox">
-          <View className="titleBox" id="titleBox">
-            {/* <Weight num={49} /> */}
-            <View className="strBox">
 
-            </View>
-          </View>
-          {/* <View className="contentBox" style={style}>
-            <View className="topContent">
-              <View className="lineBox" onClick={this.unfold}>
-                <View className="line"></View>
-              </View>
-              {userInfo && (
-                <View className="userName">{userInfo.nickName}</View>
-              )}
-            </View>
-            <ScrollView className="scrollBox" scrollY>
-              <BodyReport data={homeData} click={this.goToDetail} />
-            </ScrollView>
-          </View>
-
-          <Share />  */}
+      <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
+        <View>
+          <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px'/>
+          <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px'/>
+          <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px'/>
+          <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px'/>
+        
         </View>
+      </ScrollView>
       </View>
     );
   }
