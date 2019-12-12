@@ -13,6 +13,7 @@ import { getEquipmentList } from "@/api/equipment";
 
 import Arrow from "@/components/Arrow";
 
+import { AtList, AtListItem ,AtSwitch } from "taro-ui";
 import "./index.scss";
 
 import Share from "@/components/Share";
@@ -129,7 +130,7 @@ class _page extends Component {
   componentWillReact() {}
 
   config: Config = {
-    navigationBarBackgroundColor: "#627D6B",
+    navigationBarBackgroundColor: "#FFFFFF",
   };
 
   unfold = () => {
@@ -198,34 +199,19 @@ class _page extends Component {
 
     return (
       <View>
-        <Image className="pageBg" mode="widthFix" src={homeBg} />
+          <AtList>
+            <AtListItem title="123" arrow='right' />
+            <AtListItem title='标题文字' extraText='详细信息' />
+          </AtList>
+        {/* <Image className="pageBg" mode="widthFix" src={homeBg} /> */}
         <View className="pageBox" id="pageBox">
           <View className="titleBox" id="titleBox">
-            <Weight num={49} />
+            {/* <Weight num={49} /> */}
             <View className="strBox">
-              {!userInfo && (
-                <View className="more" onClick={this.goToLogin}>
-                  登录后，查看更多精彩 <Arrow color="white" />
-                </View>
-              )}
-              {!equipmentList.length && userInfo && (
-                <View className="more" onClick={this.goToBind}>
-                  绑定你的随心秤 <Arrow color="white" />
-                </View>
-              )}
-              {!homeData.targetWeight && equipmentList.length && (
-                <View className="more" onClick={this.goToSet}>
-                  来设定一个目标吧 <Arrow color="white" />
-                </View>
-              )}
-              {/* <View className="data">
-                <View className="str1">还需增肌</View>
-                <View className="str2">3KG</View>
-                <View className="str3">以达到你的目标体重48KG</View>
-              </View> */}
+
             </View>
           </View>
-          <View className="contentBox" style={style}>
+          {/* <View className="contentBox" style={style}>
             <View className="topContent">
               <View className="lineBox" onClick={this.unfold}>
                 <View className="line"></View>
@@ -239,7 +225,7 @@ class _page extends Component {
             </ScrollView>
           </View>
 
-          <Share />
+          <Share />  */}
         </View>
       </View>
     );
