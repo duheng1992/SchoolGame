@@ -50,6 +50,20 @@ class _page extends Component {
     equipmentList: [],
     homeData: "",
     equipmentId: "2",
+    one: [
+      {
+        name: '1',
+        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg'
+      },
+      {
+        name: '2',
+        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg'
+      },
+      {
+        name: '3',
+        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg'
+      }
+    ]
   };
 
   componentWillMount() { }
@@ -67,62 +81,12 @@ class _page extends Component {
           {
             userInfo: res.data,
           },
-          () => {
-            _this.setStyle();
-            _this.getEquipmentList();
-            _this.getHomeData();
-          },
+   
         );
       });
-    } else {
-      _this.setStyle();
-    }
+    } 
   }
 
-  getHomeData = () => {
-    const _this = this;
-    const { equipmentId } = this.state;
-    getHomeData({ equipmentId }).then((res) => {
-      if (res.data) {
-        _this.setState({
-          homeData: res.data,
-        });
-      }
-    });
-  };
-
-  getEquipmentList = () => {
-    const _this = this;
-    getEquipmentList().then((res: any) => {
-      if (res.code === "OK") {
-        _this.setState({
-          equipmentList: res.data,
-        });
-      }
-    });
-  };
-
-  setStyle = () => {
-    const _this = this;
-    setTimeout(() => {
-      const titleBox = Taro.createSelectorQuery();
-      titleBox.select("#titleBox").boundingClientRect();
-      titleBox.selectViewport().scrollOffset();
-      titleBox.exec(function (res) {
-        _this.setState({
-          titleBoxH: Math.ceil(res[0].height),
-        });
-      });
-      const pageBox = Taro.createSelectorQuery();
-      pageBox.select("#pageBox").boundingClientRect();
-      pageBox.selectViewport().scrollOffset();
-      pageBox.exec(function (res) {
-        _this.setState({
-          pageBoxH: Math.ceil(res[0].height),
-        });
-      });
-    }, 200);
-  };
 
   componentWillReact() { }
 
@@ -161,36 +125,21 @@ class _page extends Component {
     }
   };
 
-  rend_style = () => {
-    const { isShow, pageBoxH, titleBoxH } = this.state;
-    let style = {};
-    if (isShow) {
-      style = {
-        height: "90vh",
-        top: "10vh",
-      };
-    } else {
-      if (pageBoxH && titleBoxH) {
-        style = {
-          height: `${pageBoxH - titleBoxH}px`,
-          top: `${titleBoxH + 40}px`,
-        };
-      } else {
-        style = {
-          height: "304px",
-          top: "460px",
-        };
-      }
-    }
-    return style;
-  };
 
   goToSet = () => {
     console.log("去设置目标");
   };
 
-  render() {
+  goToDetailById = id=>{
+    console.log('id',id)
+    Taro.navigateTo({
+      url: `/pages/detail_page/index?id=${id}`,
+    });
 
+  }
+
+  render() {
+    const {one,two} = this.state
     return (
       <View>
         <ScrollView scrollY scrollTop={0} className="verticalBox">
@@ -206,9 +155,9 @@ class _page extends Component {
               </View>
             </ScrollView>
 
-            <ItemView title="123" />
-            <ItemView title="456" />
-            <ItemView title="678" />
+            <ItemView title="123" list={one} onClick={(e)=>this.goToDetailById(e)}/>
+            <ItemView title="456" list={one}  />
+            <ItemView title="678" list={one}  />
 
           </View>
         </ScrollView>

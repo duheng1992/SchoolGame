@@ -11,7 +11,10 @@ type StateType = {
 };
 
 type ComponentsProps = {
-  [propName: string]: any;
+
+  onClick(id: string): void;
+  list: any;
+  title: string;
 };
 
 interface ItemView {
@@ -21,8 +24,10 @@ interface ItemView {
 
 class ItemView extends Component {
   static defaultProps: ComponentsProps = {
-    title: "",
-  };
+    list: [],
+    title: '',
+    onClick: () => { }
+  }
 
   constructor(props) {
     super(props);
@@ -30,20 +35,7 @@ class ItemView extends Component {
 
   state: StateType = {
     // token,
-    list: [
-      {
-        name: '1',
-        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg'
-      },
-      {
-        name: '2',
-        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg'
-      },
-      {
-        name: '3',
-        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg'
-      }
-    ]
+
   };
 
   componentWillMount() { }
@@ -57,17 +49,20 @@ class ItemView extends Component {
   componentDidShow() { }
 
   componentWillReact() { }
+  goToDetail = (e) => {
+    const { onClick } = this.props
+    onClick(e.name)
+  }
 
   render() {
-    const { title } = this.props;
-    const { list } = this.state
+    const { title, list } = this.props;
     return <View >
       <AtCard title={title} extra='查看全部' isFull>
         <View>
           <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
             {
               list.map((item, index) => (
-                <View key={index} className="img_item">
+                <View key={index} className="img_item" onClick={() => this.goToDetail(item)}>
                   <Image src={item.url} style='height:200px' />
                   <Text>{item.name}</Text>
 
