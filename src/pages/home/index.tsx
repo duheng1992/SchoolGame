@@ -11,12 +11,9 @@ import { getUserInfo } from "@/api/login";
 
 import { getEquipmentList } from "@/api/equipment";
 
-import Arrow from "@/components/Arrow";
-
-import { AtList, AtListItem ,AtSwitch } from "taro-ui";
 import "./index.scss";
 
-import Share from "@/components/Share";
+import ItemView from "@/components/ItemView";
 
 import { getHomeData } from "@/api/detail";
 
@@ -55,9 +52,9 @@ class _page extends Component {
     equipmentId: "2",
   };
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   componentDidShow() {
     const { tabBarStore } = this.props;
@@ -111,7 +108,7 @@ class _page extends Component {
       const titleBox = Taro.createSelectorQuery();
       titleBox.select("#titleBox").boundingClientRect();
       titleBox.selectViewport().scrollOffset();
-      titleBox.exec(function(res) {
+      titleBox.exec(function (res) {
         _this.setState({
           titleBoxH: Math.ceil(res[0].height),
         });
@@ -119,7 +116,7 @@ class _page extends Component {
       const pageBox = Taro.createSelectorQuery();
       pageBox.select("#pageBox").boundingClientRect();
       pageBox.selectViewport().scrollOffset();
-      pageBox.exec(function(res) {
+      pageBox.exec(function (res) {
         _this.setState({
           pageBoxH: Math.ceil(res[0].height),
         });
@@ -127,7 +124,7 @@ class _page extends Component {
     }, 200);
   };
 
-  componentWillReact() {}
+  componentWillReact() { }
 
   config: Config = {
     navigationBarBackgroundColor: "#FFFFFF",
@@ -193,23 +190,30 @@ class _page extends Component {
   };
 
   render() {
-    const { userInfo, equipmentList, homeData } = this.state;
-
-    const style = this.rend_style();
 
     return (
       <View>
+        <ScrollView scrollY scrollTop={0} className="verticalBox">
+          <View>
 
-      <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
-        <View>
-          <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px'/>
-          <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px'/>
-          <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px'/>
-          <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px'/>
-        
-        </View>
-      </ScrollView>
+            <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
+              <View>
+                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px' />
+                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px' />
+                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px' />
+                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px' />
+
+              </View>
+            </ScrollView>
+
+            <ItemView title="123" />
+            <ItemView title="456" />
+            <ItemView title="678" />
+
+          </View>
+        </ScrollView>
       </View>
+
     );
   }
 }

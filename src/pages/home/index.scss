@@ -20,14 +20,19 @@ page {
     z-index: 0;
   }
 }
-.horizontalBox {
+.verticalBox{
   width: 100vw;
-  height: 300px;
-  white-space: nowrap;
-  .img_item {
-    display: inline-block;
+  height: calc(100vh - 146px); 
+  .horizontalBox {
+    width: 100vw;
+    height: 300px;
+    white-space: nowrap;
+    .img_item {
+      display: inline-block;
+    }
   }
 }
+
 .titleBox {
   z-index: 9;
   .strBox {
