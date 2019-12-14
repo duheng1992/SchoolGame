@@ -20,6 +20,18 @@ page {
     z-index: 0;
   }
 }
+.verticalBox{
+  width: 100vw;
+  height: calc(100vh - 146px); 
+  .horizontalBox {
+    width: 100vw;
+    height: 300px;
+    white-space: nowrap;
+    .img_item {
+      display: inline-block;
+    }
+  }
+}
 
 .titleBox {
   z-index: 9;

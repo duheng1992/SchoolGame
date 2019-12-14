@@ -1,0 +1,14 @@
+.wrapper {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+}
+.horizontalBox {
+  width: 100vw;
+  height: 300px;
+  white-space: nowrap;
+  .img_item {
+    display: inline-block;
+  }
+}

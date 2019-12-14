@@ -57,6 +57,8 @@ class App extends Component {
       "pages/register/index", // 注册
       "pages/login/index", // 登录
 
+      "pages/detail_page/index", //详情页面
+
       "pages/detail/index", //详情页面
       "pages/cheng_set/index", // 称的设置
       "pages/edit_userinfo/index", // 个人资料修改
