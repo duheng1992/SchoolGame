@@ -16,17 +16,17 @@ class _page extends Component {
     };
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentWillReact() {}
+  componentWillReact() { }
 
   config: Config = {
     navigationStyle: "custom",

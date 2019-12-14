@@ -1,5 +1,6 @@
 // let url = 'https://xcx.joywaygym.com'; //生产服
-const url = "http://ip-29-zhinengchen-app.coralcodes.com"; //测试服
+// const url = "http://ip-29-zhinengchen-app.coralcodes.com"; //测试服
+const url = 'https://huolixiaoyuan.photomoments.club'
 
 export const baseUrl = url;
 

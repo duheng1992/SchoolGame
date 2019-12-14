@@ -4,8 +4,12 @@ page {
   min-height: 100vh;
   // background-color: #f0e8df;
 }
+.personalPage{
+  background-color:#F5F5F5 ;
+}
 
 .userDeatil {
+  background-color:#FFFFFF ;
   .goEditData {
     cursor: pointer;
     font-size: 34px;
@@ -21,41 +25,16 @@ page {
     max-width: 540px;
     word-break: break-all;
   }
-  padding: 50px;
+  padding: 40px 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.contentWrapper {
-  min-height: 600px;
+.listPadding{
+  margin-top:18px ;
 }
-
-.linkList {
-  .item {
-    height: 240px;
-    box-sizing: border-box;
-    padding: 60px 50px;
-    border-radius: 48px 48px 0px 0px;
-    .cont {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    font-size: 34px;
-    color: #41403f;
-    font-weight: bold;
-  }
-  .item_1 {
-    background-color: #efdbd8;
-  }
-  .item_2 {
-    margin-top: -86px;
-    background-color: #e7c9c5;
-  }
-  .item_3 {
-    height: 300px;
-    margin-top: -86px;
-    background-color: #d6b0a9;
-  }
+.loginBtnBox {
+  display: block;
+  margin: 0 auto;
 }

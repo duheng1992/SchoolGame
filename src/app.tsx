@@ -58,6 +58,7 @@ class App extends Component {
       "pages/login/index", // 登录
 
       "pages/detail_page/index", //详情页面
+      "pages/personal/about/index", //关于活力校园
 
       "pages/detail/index", //详情页面
       "pages/cheng_set/index", // 称的设置
