@@ -56,6 +56,7 @@ class App extends Component {
       "pages/personal/index", //个人中心
       "pages/register/index", // 注册
       "pages/login/index", // 登录
+      "pages/search_page/index", // 搜索
 
       "pages/detail_page/index", //详情页面
       "pages/personal/about/index", //关于活力校园

@@ -4,7 +4,7 @@ import { baseUrl } from "../config/baseUrl";
 
 export { baseUrl };
 
-const interceptor = function(chain) {
+const interceptor = function (chain) {
   const requestParams = chain.requestParams;
   // const { method, data, url } = requestParams;
   // console.log("开始请求");
@@ -37,7 +37,8 @@ const request = ({ url, data, method }) => {
     data,
     method,
     header: {
-      Authorization: `Bearer ${token}`,
+      "content-type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${token}`,
     },
   });
 };

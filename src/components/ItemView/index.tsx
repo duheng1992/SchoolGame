@@ -15,6 +15,8 @@ type ComponentsProps = {
   onClick(id: string): void;
   list: any;
   title: string;
+  note: string;
+  onTapGrunp(): void;
 };
 
 interface ItemView {
@@ -26,6 +28,8 @@ class ItemView extends Component {
   static defaultProps: ComponentsProps = {
     list: [],
     title: '',
+    note: '',
+    onTapGrunp: () => { },
     onClick: () => { }
   }
 
@@ -55,24 +59,30 @@ class ItemView extends Component {
   }
 
   render() {
-    const { title, list } = this.props;
-    return <View >
-      <AtCard title={title} extra='查看全部' isFull>
-        <View>
-          <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
-            {
-              list.map((item, index) => (
-                <View key={index} className="img_item" onClick={() => this.goToDetail(item)}>
-                  <Image src={item.url} style='height:200px' />
-                  <Text>{item.name}</Text>
+    const { title, list, note, onTapGrunp } = this.props;
+    return <View className='itemView-wrapper'>
 
-                </View>
-              ))
-            }
-
-          </ScrollView>
+      <View className='card'>
+        <View className='card-info' onClick={() => onTapGrunp()}>
+          <View className="title">{title}</View>
+          <View className="extra">查看全部</View>
         </View>
-      </AtCard>
+        <View className="note">{note}</View>
+      </View>
+      <View>
+        <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
+          {
+            list.map((item, index) => (
+              <View key={index} className="img_item" onClick={() => this.goToDetail(item)}>
+                <Image src={item.url} style='height:253px' />
+                <Text>{item.name}</Text>
+
+              </View>
+            ))
+          }
+
+        </ScrollView>
+      </View>
     </View>;
   }
 }

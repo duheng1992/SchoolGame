@@ -1,8 +1,23 @@
-.wrapper {
-  display: block;
-  width: 30px;
-  height: 30px;
-  margin-left: 10px;
+.itemView-wrapper {
+  padding: 40px;
+}
+.card{
+margin-bottom: 60px;
+.card-info{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  .title{
+    font-size: 30px;
+    color: #000;
+    font-weight: 500;
+  }
+  }
+}
+
+.note,.extra{
+  font-size: 24px;
+  color: #999;
 }
 .horizontalBox {
   width: 100vw;

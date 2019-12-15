@@ -40,7 +40,7 @@ export const wx_login = (e) => {
 
 export const getUserInfo = () => {
   return ajax({
-    url: "/api/u/user/info",
+    url: "/api/userInfo/baseInfo",
     method: "get",
   });
 };

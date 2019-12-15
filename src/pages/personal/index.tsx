@@ -34,7 +34,8 @@ class _page extends Component {
 
   state: StateType = {
     userInfo: {
-      nickName: '',
+      nickName: null,
+      avatarUrl: 'https://jdc.jd.com/img/200'
 
     },
     isToastOpened: false,
@@ -43,20 +44,22 @@ class _page extends Component {
 
   componentWillMount() { }
 
-  componentDidMount() { }
-
-  componentDidShow() {
-    const { tabBarStore } = this.props;
-    tabBarStore.setIndex(1);
+  componentDidMount() {
     const _this = this;
     const token = getStore("userToken");
     if (token) {
       getUserInfo().then((res) => {
         _this.setState({
-          userInfo: res.data,
+          userInfo: { ...res.data },
         });
       });
     }
+  }
+
+  componentDidShow() {
+    const { tabBarStore } = this.props;
+    tabBarStore.setIndex(1);
+
   }
   componentWillReact() { }
 
@@ -75,14 +78,18 @@ class _page extends Component {
     }
   };
   goToNav = (url: string) => {
-    const { userInfo } = this.state;
-    if (userInfo.id) {
-      Taro.navigateTo({
-        url: url,
-      });
-    } else {
-      this.setState({ isToastOpened: true })
-    }
+    // const { userInfo } = this.state;
+    // const token = getStore("userToken");
+    Taro.navigateTo({
+      url: url,
+    });
+    // if (token) {
+    //   Taro.navigateTo({
+    //     url: url,
+    //   });
+    // } else {
+    //   this.setState({ isToastOpened: true })
+    // }
 
   }
 
@@ -94,7 +101,14 @@ class _page extends Component {
     setStore("getUserInfo_time", nowTime);
     if (e.detail.userInfo) {
       wx_login(e).then(() => {
+        console.log('wxuser', e.detail.userInfo)
         const { avatarUrl, gender, nickName } = e.detail.userInfo;
+        this.setState({
+          userInfo: {
+            avatarUrl,
+            nickName
+          }
+        })
         setUserInfo({
           avatarImage: {
             title: nickName,
@@ -103,80 +117,88 @@ class _page extends Component {
           gender,
           nickName,
         });
-        getUserInfo().then((res: any) => {
-          if (res.code === "OK") {
-            const data = res.data;
-            if (data.birthday && data.gender && data.height) {
+        // getUserInfo().then((res: any) => {
+        //   if (res.code === "OK") {
+        //     const data = res.data;
+        //     if (data.birthday && data.gender && data.height) {
 
-            } else {
+        //     } else {
 
-            }
-          }
-        });
+        //     }
+        //   }
+        // });
       });
     } else {
       clearUserInfo();
 
     }
   };
+  Toast = () => {
+    const { isToastOpened, toastText } = this.state
+    this.setState({
+      isToastOpened: true,
+      toastText: '功能暂未开放'
+    })
+  }
 
 
 
   render() {
     const { userInfo, isToastOpened, toastText } = this.state;
+    const { avatarUrl, nickName } = userInfo
+    console.log('userInfo', userInfo)
     // if (userInfo) {
     //   //
     // } else {
     //   return "";
     // }
 
-    const { nickName } = userInfo;
-
     return (
-      <View className="personalPage">
-        <View className="userDeatil">
+      <View>
+        <ScrollView scrollY scrollTop={0} className="personalPage">
+          <View className="userDeatil">
 
-          <GetUserInfo
-            getUserInfo={(e) => {
-              return this.getUserInfo(e);
-            }}
-            my-class="loginBtnBox"
-          >
-            <AtAvatar circle size='large' image='https://jdc.jd.com/img/200'></AtAvatar>
-          </GetUserInfo>
-          {/* <View className="userStr">
-            <View className="userName">
-              {nickName ? `,${nickName}` : nickName}
-            </View>
-            <View className="goEditData" onClick={this.goToEdit}>
-              {userInfo.nickName !== '' ? "个人资料修改" : "立即登录"}
-            </View>
-           
-          </View> */}
+            <GetUserInfo
+              getUserInfo={(e) => {
+                return this.getUserInfo(e);
+              }}
+              my-class="loginBtnBox"
+            >
 
-        </View>
-        <View className="listPadding">
-          <AtList hasBorder={false}>
-            <AtListItem hasBorder={false} title="我的动态" arrow='right' />
-            <AtListItem hasBorder={false} title="我的关注" arrow='right' />
-            <AtListItem hasBorder={false} title="已报活动" arrow='right' />
-          </AtList>
-        </View>
-        <View className="listPadding">
-          <AtList hasBorder={false}>
-            <AtListItem hasBorder={false} title='信息档案' arrow='right' />
-            <AtListItem hasBorder={false} title='发布直播' arrow='right' />
-          </AtList>
-        </View>
-        <View className="listPadding">
-          <AtList hasBorder={false}>
-            <AtListItem hasBorder={false} title='关注服务号，接受活动提醒' arrow='right' />
-            <AtListItem hasBorder={false} onClick={() => this.goToNav('/pages/personal/about/index')} title='关于活力校园' arrow='right' />
-          </AtList>
+              <AtAvatar circle size='large' image={avatarUrl}></AtAvatar>
+              <View className="goEditData" >
+                {nickName ? `${nickName}` : '立即登录'}
+              </View>
+            </GetUserInfo>
 
-        </View>
-        <AtToast isOpened={isToastOpened} text={toastText} duration={2000} icon="close"></AtToast>
+          </View>
+          <View className="listPadding">
+            <AtList hasBorder={false}>
+              <AtListItem hasBorder={false} title="我的动态" arrow='right' />
+              <AtListItem hasBorder={false} title="我的关注" arrow='right' />
+              <AtListItem hasBorder={false} title="已报活动" arrow='right' />
+            </AtList>
+          </View>
+          <View className="listPadding">
+            <AtList hasBorder={false}>
+              <AtListItem hasBorder={false} title='信息档案' arrow='right' />
+              <AtListItem hasBorder={false} title='发布直播' onClick={() => this.Toast()} arrow='right' />
+            </AtList>
+          </View>
+          <View className="listPadding">
+            <AtList hasBorder={false}>
+              <AtListItem hasBorder={false} title='关注服务号，接受活动提醒' arrow='right' />
+              <AtListItem hasBorder={false} onClick={() => this.goToNav('/pages/personal/about/index')} title='关于活力校园' arrow='right' />
+            </AtList>
+
+          </View>
+          <AtToast isOpened={isToastOpened} text={toastText} duration={2000} icon="close"></AtToast>
+
+        </ScrollView>
       </View>
+
+
+
     );
   }
 }

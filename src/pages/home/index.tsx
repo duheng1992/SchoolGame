@@ -14,6 +14,7 @@ import { getEquipmentList } from "@/api/equipment";
 import "./index.scss";
 
 import ItemView from "@/components/ItemView";
+import SearchBar from "@/components/SearchBar";
 
 import { getHomeData } from "@/api/detail";
 
@@ -81,10 +82,10 @@ class _page extends Component {
           {
             userInfo: res.data,
           },
-   
+
         );
       });
-    } 
+    }
   }
 
 
@@ -130,21 +131,27 @@ class _page extends Component {
     console.log("去设置目标");
   };
 
-  goToDetailById = id=>{
-    console.log('id',id)
+  goToDetailById = id => {
+    console.log('id', id)
     Taro.navigateTo({
       url: `/pages/detail_page/index?id=${id}`,
     });
 
   }
+  onSearchBar = () => {
+    console.log('onSearchBar')
+    Taro.navigateTo({
+      url: `/pages/search_page/index`,
+    });
+  }
 
   render() {
-    const {one,two} = this.state
+    const { one, two } = this.state
     return (
       <View>
         <ScrollView scrollY scrollTop={0} className="verticalBox">
           <View>
-
+            <SearchBar onTapSearchBar={() => this.onSearchBar()}></SearchBar>
             <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
               <View>
                 <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px' />
@@ -155,9 +162,10 @@ class _page extends Component {
               </View>
             </ScrollView>
 
-            <ItemView title="123" list={one} onClick={(e)=>this.goToDetailById(e)}/>
-            <ItemView title="456" list={one}  />
-            <ItemView title="678" list={one}  />
+            <ItemView title="教学资源" note='查找你需要的课堂教学内容' list={one} onClick={(e) => this.goToDetailById(e)} />
+            <ItemView title="热门话题" note='体育老师都在讨论什么' list={one} />
+            <ItemView title="活动追踪" note='活力校园相关资讯' list={one} />
+            <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={one} />
 
           </View>
         </ScrollView>
