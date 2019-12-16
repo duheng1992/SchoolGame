@@ -21,12 +21,12 @@ export const homeBg = `${image_domain}/icon/home-bg.png`;
 
 export const tab_bar = [
   {
-    iconPath: `${image_domain}/tab_bar/home.png`,
-    selectedIconPath: `${image_domain}/tab_bar/home-active.png`,
+    iconPath: "../images/tab_bar/home.png",
+    selectedIconPath: "../images/tab_bar/home-active.png",
   },
   {
-    iconPath: `${image_domain}/tab_bar/personal.png`,
-    selectedIconPath: `${image_domain}/tab_bar/personal-active.png`,
+    iconPath: "../images/tab_bar/personal.png",
+    selectedIconPath: "../images/tab_bar/personal-active.png",
   },
 ];
 

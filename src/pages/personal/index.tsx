@@ -47,13 +47,13 @@ class _page extends Component {
   componentDidMount() {
     const _this = this;
     const token = getStore("userToken");
-    if (token) {
-      getUserInfo().then((res) => {
-        _this.setState({
-          userInfo: { ...res.data },
-        });
-      });
-    }
+    // if (token) {
+    //   getUserInfo().then((res) => {
+    //     _this.setState({
+    //       userInfo: { ...res.data },
+    //     });
+    //   });
+    // }
   }
 
   componentDidShow() {

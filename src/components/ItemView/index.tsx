@@ -74,7 +74,7 @@ class ItemView extends Component {
           {
 
             {
-              'icon': list.map((item) => (
+              'icon': list.length > 0 && list.map((item) => (
                 <View key={item.id} className="icon_item" onClick={() => this.goToDetail(item)}>
                   <View className='icon_wrap'>
                     <View>
@@ -89,7 +89,7 @@ class ItemView extends Component {
                 </View>
               )),
               'image':
-                list.map((item) => (
+                list.length > 0 && list.map((item) => (
                   <View key={item.id} className="img_item" onClick={() => this.goToDetail(item)}>
                     <Image className='image' src={item.url} />
                     <View className='title'>{item.title}</View>

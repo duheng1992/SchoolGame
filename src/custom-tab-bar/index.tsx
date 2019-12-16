@@ -28,12 +28,16 @@ class TabBar extends Component {
       list: [
         {
           pagePath: "/pages/home/index",
+          // iconPath: "../images/tab_bar/home.png",
+          // selectedIconPath: "../images/tab_bar/home-active.png",
           iconPath: tab_bar[0].iconPath,
           selectedIconPath: tab_bar[0].selectedIconPath,
           index: 0,
         },
         {
           pagePath: "/pages/personal/index",
+          // iconPath: "../images/tab_bar/personal.png",
+          // selectedIconPath: "../images/tab_bar/personal-active.png",
           iconPath: tab_bar[1].iconPath,
           selectedIconPath: tab_bar[1].selectedIconPath,
           index: 1,

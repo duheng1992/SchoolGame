@@ -82,10 +82,14 @@ class App extends Component {
       list: [
         {
           pagePath: "pages/home/index",
+          // iconPath: "pages/images/tab_bar/home.png",
+          // selectedIconPath: "pages/images/tab_bar/home-active.png",
           text: "",
         },
         {
           pagePath: "pages/personal/index",
+          // iconPath: "pages/images/tab_bar/personal.png",
+          // selectedIconPath: "pages/images/tab_bar/personal-active.png",
           text: "",
         },
       ],
