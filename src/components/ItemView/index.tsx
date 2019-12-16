@@ -1,8 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import Taro, { Component } from "@tarojs/taro";
-import { AtCard } from "taro-ui"
-import { View, ScrollView, Image, Text } from "@tarojs/components";
-import { arrow } from "@/images/load";
+import { View, ScrollView, Image } from "@tarojs/components";
 
 import "./index.scss";
 
@@ -16,6 +14,7 @@ type ComponentsProps = {
   list: any;
   title: string;
   note: string;
+  type: string,
   onTapGrunp(): void;
 };
 
@@ -29,6 +28,7 @@ class ItemView extends Component {
     list: [],
     title: '',
     note: '',
+    type: 'image',
     onTapGrunp: () => { },
     onClick: () => { }
   }
@@ -55,11 +55,11 @@ class ItemView extends Component {
   componentWillReact() { }
   goToDetail = (e) => {
     const { onClick } = this.props
-    onClick(e.name)
+    onClick(e.id)
   }
 
   render() {
-    const { title, list, note, onTapGrunp } = this.props;
+    const { title, list, note, onTapGrunp, type } = this.props;
     return <View className='itemView-wrapper'>
 
       <View className='card'>
@@ -72,14 +72,33 @@ class ItemView extends Component {
       <View>
         <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
           {
-            list.map((item, index) => (
-              <View key={index} className="img_item" onClick={() => this.goToDetail(item)}>
-                <Image src={item.url} style='height:253px' />
-                <Text>{item.name}</Text>
 
-              </View>
-            ))
+            {
+              'icon': list.map((item) => (
+                <View key={item.id} className="icon_item" onClick={() => this.goToDetail(item)}>
+                  <View className='icon_wrap'>
+                    <View>
+                      <View className='title'>{item.title}</View>
+                      <View className='note'>{item.id ? item.subhead : ''}</View>
+                    </View>
+
+                    <Image className='icon' src={item.iconImage} />
+
+                  </View>
+
+                </View>
+              )),
+              'image':
+                list.map((item) => (
+                  <View key={item.id} className="img_item" onClick={() => this.goToDetail(item)}>
+                    <Image className='image' src={item.url} />
+                    <View className='title'>{item.title}</View>
+
+                  </View>
+                ))
+            }[type]
           }
+
 
         </ScrollView>
       </View>

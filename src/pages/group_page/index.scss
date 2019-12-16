@@ -1,0 +1,12 @@
+.group_page {
+  padding: 40px;
+  .list_warp {
+    position: relative;
+    .list_info {
+      position: absolute;
+      width: 100%;
+      left: 40px;
+      bottom: 40px;
+    }
+  }
+}

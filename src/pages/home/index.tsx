@@ -3,13 +3,13 @@ import { View, ScrollView, Image } from "@tarojs/components";
 import Weight from "@/components/Weight";
 import BodyReport from "@/components/BodyReport";
 
-import { getStore } from "@/utils/utils";
+import { getStore, setStore } from "@/utils/utils";
 
 import { homeBg } from "@/images/load";
 
 import { getUserInfo } from "@/api/login";
 
-import { getEquipmentList } from "@/api/equipment";
+import { getCategoryList, getTrackingList } from "@/api/home";
 
 import "./index.scss";
 
@@ -51,6 +51,8 @@ class _page extends Component {
     equipmentList: [],
     homeData: "",
     equipmentId: "2",
+    teach: [],
+    hot: [],
     one: [
       {
         name: '1',
@@ -76,16 +78,21 @@ class _page extends Component {
     tabBarStore.setIndex(0);
     const _this = this;
     const token = getStore("userToken");
-    if (token) {
-      getUserInfo().then((res) => {
-        _this.setState(
-          {
-            userInfo: res.data,
-          },
 
-        );
-      });
-    }
+    getCategoryList().then((res) => {
+      console.log('res', res)
+      this.setState({
+        teach: res.data
+      })
+    });
+
+    getTrackingList().then((res) => {
+      console.log('res', res)
+      this.setState({
+        hot: res.data
+      })
+    });
+
   }
 
 
@@ -114,17 +121,17 @@ class _page extends Component {
     });
   };
 
-  goToDetail = (item) => {
-    const { homeData } = this.state;
-    const token = getStore("userToken");
-    if (token) {
-      Taro.navigateTo({
-        url: `/pages/detail/index?id=${homeData.id}&fie=${item.name}`,
-      });
-    } else {
-      this.goToLogin();
-    }
-  };
+  // goToDetail = (item) => {
+  //   const { homeData } = this.state;
+  //   const token = getStore("userToken");
+  //   if (token) {
+  //     Taro.navigateTo({
+  //       url: `/pages/detail/index?id=${homeData.id}&fie=${item.name}`,
+  //     });
+  //   } else {
+  //     this.goToLogin();
+  //   }
+  // };
 
 
   goToSet = () => {
@@ -145,8 +152,14 @@ class _page extends Component {
     });
   }
 
+  goToGroup = categoryId => {
+    Taro.navigateTo({
+      url: `/pages/group_page/index?categoryId=${categoryId}`,
+    })
+  }
+
   render() {
-    const { one, two } = this.state
+    const { one, teach, hot } = this.state
     return (
       <View>
         <ScrollView scrollY scrollTop={0} className="verticalBox">
@@ -162,8 +175,9 @@ class _page extends Component {
               </View>
             </ScrollView>
 
-            <ItemView title="教学资源" note='查找你需要的课堂教学内容' list={one} onClick={(e) => this.goToDetailById(e)} />
-            <ItemView title="热门话题" note='体育老师都在讨论什么' list={one} />
+
+            <ItemView title="教学资源" note='查找你需要的课堂教学内容' list={teach} type='icon' onClick={(e) => this.goToDetailById(e)} onTapGrunp={() => this.goToGroup(teach)} />
+            <ItemView title="热门话题" note='体育老师都在讨论什么' list={hot} />
             <ItemView title="活动追踪" note='活力校园相关资讯' list={one} />
             <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={one} />
 

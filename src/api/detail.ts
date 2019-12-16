@@ -8,11 +8,19 @@ export const getHomeData = (data: { equipmentId }) => {
   });
 };
 
+// export const getDetailData = (data) => {
+//   return ajax({
+//     url: `/api/u/weight/record/detail/${data.id}/${data.field}`,
+//     data,
+//     method: "get",
+//   });
+// };
+
 export const getDetailData = (data) => {
   return ajax({
-    url: `/api/u/weight/record/detail/${data.id}/${data.field}`,
+    url: `/api/resource/category/list`,
     data,
-    method: "get",
+    method: "post",
   });
 };
 

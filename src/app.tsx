@@ -59,6 +59,7 @@ class App extends Component {
       "pages/search_page/index", // 搜索
 
       "pages/detail_page/index", //详情页面
+      "pages/group_page/index", //分类页面
       "pages/personal/about/index", //关于活力校园
 
       "pages/detail/index", //详情页面
