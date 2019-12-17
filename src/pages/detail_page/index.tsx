@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
+import { getDetailData } from "@/api/detail"
 // import "./index.scss";
 
 type StateType = {
@@ -22,32 +23,40 @@ class _page extends Component {
   }
 
   state: StateType = {
+    categoryId: null
   };
 
   componentWillMount() {
     console.log(this.$router.params)
+    const { categoryId } = this.$router.params;
+    this.setState({ categoryId })
   }
 
   componentDidMount() {
 
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   componentDidShow() {
-   
+    const { categoryId } = this.state
+    getDetailData({ categoryId }).then(res => {
+      console.log('res', res)
+    })
   }
 
-  componentWillReact() {}
+  componentWillReact() { }
 
   render() {
 
     return (
       <View className="page" id="page">
-          xiangqing
-</View>
+        <View>
+          {/* <Image src={}></Image> */}
+        </View>
+      </View>
     );
   }
 }

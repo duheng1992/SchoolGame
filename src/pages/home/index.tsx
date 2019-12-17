@@ -138,10 +138,9 @@ class _page extends Component {
     console.log("去设置目标");
   };
 
-  goToDetailById = id => {
-    console.log('id', id)
+  goToDetailByCategoryId = categoryId => {
     Taro.navigateTo({
-      url: `/pages/detail_page/index?id=${id}`,
+      url: `/pages/detail_page/index?categoryId=${categoryId}`,
     });
 
   }
@@ -152,9 +151,9 @@ class _page extends Component {
     });
   }
 
-  goToGroup = categoryId => {
+  goToGroup = () => {
     Taro.navigateTo({
-      url: `/pages/group_page/index?categoryId=${categoryId}`,
+      url: "/pages/group_page/index",
     })
   }
 
@@ -176,7 +175,7 @@ class _page extends Component {
             </ScrollView>
 
 
-            <ItemView title="教学资源" note='查找你需要的课堂教学内容' list={teach} type='icon' onClick={(e) => this.goToDetailById(e)} onTapGrunp={() => this.goToGroup(teach)} />
+            <ItemView title="教学资源" note='查找你需要的课堂教学内容' list={teach} type='icon' onClick={(e) => this.goToDetailByCategoryId(e)} onTapGrunp={() => this.goToGroup()} />
             <ItemView title="热门话题" note='体育老师都在讨论什么' list={hot} />
             <ItemView title="活动追踪" note='活力校园相关资讯' list={one} />
             <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={one} />

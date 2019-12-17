@@ -20,7 +20,7 @@ export const getDetailData = (data) => {
   return ajax({
     url: `/api/resource/category/list`,
     data,
-    method: "post",
+    method: "get",
   });
 };
 
