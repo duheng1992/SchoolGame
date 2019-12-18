@@ -1,4 +1,8 @@
 import { image_domain } from "@/config/baseUrl";
+import home from "./tab_bar/home.png"
+import homeActive from "./tab_bar/home-active.png"
+import personal from "./tab_bar/personal.png"
+import personalActive from "./tab_bar/personal-active.png"
 
 // 登陆页面
 export const logo = `${image_domain}/icon/logo.png`;
@@ -21,12 +25,12 @@ export const homeBg = `${image_domain}/icon/home-bg.png`;
 
 export const tab_bar = [
   {
-    iconPath: "../images/tab_bar/home.png",
-    selectedIconPath: "../images/tab_bar/home-active.png",
+    iconPath: home,
+    selectedIconPath: homeActive,
   },
   {
-    iconPath: "../images/tab_bar/personal.png",
-    selectedIconPath: "../images/tab_bar/personal-active.png",
+    iconPath: personal,
+    selectedIconPath: personalActive,
   },
 ];
 

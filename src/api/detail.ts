@@ -18,8 +18,15 @@ export const getHomeData = (data: { equipmentId }) => {
 
 export const getDetailData = (data) => {
   return ajax({
-    url: `/api/resource/category/list`,
+    url: `/api/resource/info/list`,
     data,
+    method: "get",
+  });
+};
+
+export const getResourceData = () => {
+  return ajax({
+    url: `/api/resource/banner/list`,
     method: "get",
   });
 };

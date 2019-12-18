@@ -139,6 +139,10 @@ class _page extends Component {
   };
 
   goToDetailByCategoryId = categoryId => {
+    const { teach } = this.state;
+    const teachDetail = teach.filter(item => item.id === categoryId)
+    console.log('teachDetail', teachDetail)
+    setStore('teachDetail', teachDetail)
     Taro.navigateTo({
       url: `/pages/detail_page/index?categoryId=${categoryId}`,
     });
@@ -151,7 +155,8 @@ class _page extends Component {
     });
   }
 
-  goToGroup = () => {
+  goToGroup = teach => {
+    setStore('groupList', teach)
     Taro.navigateTo({
       url: "/pages/group_page/index",
     })
@@ -166,16 +171,16 @@ class _page extends Component {
             <SearchBar onTapSearchBar={() => this.onSearchBar()}></SearchBar>
             <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
               <View>
-                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px' />
-                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px' />
-                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px' />
-                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:200px' />
+                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:488rpx' />
+                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:488rpx' />
+                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:488rpx' />
+                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:488rpx' />
 
               </View>
             </ScrollView>
 
 
-            <ItemView title="教学资源" note='查找你需要的课堂教学内容' list={teach} type='icon' onClick={(e) => this.goToDetailByCategoryId(e)} onTapGrunp={() => this.goToGroup()} />
+            <ItemView title="教学资源" note='查找你需要的课堂教学内容' list={teach} type='icon' onClick={(e) => this.goToDetailByCategoryId(e)} onTapGrunp={() => this.goToGroup(teach)} />
             <ItemView title="热门话题" note='体育老师都在讨论什么' list={hot} />
             <ItemView title="活动追踪" note='活力校园相关资讯' list={one} />
             <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={one} />

@@ -1,0 +1,28 @@
+.detail_card {
+  margin-bottom: 60px;
+  .detail_img {
+    width: 332px;
+    height: 332px;
+  }
+  .card_title {
+    font-weight: 500;
+    color: #000;
+    padding: 40px 0 20px 0;
+  }
+  .card_nums {
+    display: flex;
+    align-items: center;
+
+    .card_num {
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+      margin-right: 20px;
+      color: #666;
+    }
+    .card_icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}

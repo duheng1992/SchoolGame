@@ -3,6 +3,7 @@ import Taro, { Component, Config, getStorage } from "@tarojs/taro";
 import { View, ScrollView, Image, Swiper, SwiperItem } from "@tarojs/components";
 import { getStore } from "@/utils/utils";
 import SearchBar from "@/components/SearchBar";
+import { getResourceData } from "@/api/detail"
 import "./index.scss";
 
 type StateType = {
@@ -42,6 +43,9 @@ class _page extends Component {
   componentDidShow() {
     const list = getStore('groupList')
     console.log('list', list)
+    getResourceData().then(res => {
+      console.log('getResourceData', res)
+    })
     this.setState({
       list
     })
@@ -79,14 +83,14 @@ class _page extends Component {
           </Swiper>
         </View>
         <View>
-          <View>教学资源</View>
+          <View className='sub_title'>教学资源</View>
           {
             list.map(item => (
               <View className='list_warp'>
-                <Image src={item.bannerImage}></Image>
+                <Image className="list_img" mode="aspectFill" src={item.bannerImage}></Image>
                 <View className='list_info'>
                   <View>{item.subhead}</View>
-                  <View>{item.title}</View>
+                  <View className="list_title">{item.title}</View>
                 </View>
 
               </View>

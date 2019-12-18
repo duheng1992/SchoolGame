@@ -1,8 +1,11 @@
 /* eslint-disable react/no-unused-state */
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
-import { getDetailData } from "@/api/detail"
-// import "./index.scss";
+import DetailCard from "./components/DetailCard/index"
+import "./index.scss";
+import { data } from "./static"
+import { getDetailData } from "@/api/detail";
+import { getStore, setStore } from "@/utils/utils";
 
 type StateType = {
   [propName: string]: any;
@@ -23,13 +26,17 @@ class _page extends Component {
   }
 
   state: StateType = {
-    categoryId: null
+    detail_list: data,
+    categoryId: null,
+    detail_info: null
   };
 
   componentWillMount() {
     console.log(this.$router.params)
     const { categoryId } = this.$router.params;
-    this.setState({ categoryId })
+    const detail = getStore('teachDetail')
+    console.log('teachDetail', detail[0])
+    this.setState({ categoryId, detail_info: detail[0] })
   }
 
   componentDidMount() {
@@ -41,20 +48,41 @@ class _page extends Component {
   componentDidHide() { }
 
   componentDidShow() {
-    const { categoryId } = this.state
+    const { categoryId } = this.state;
     getDetailData({ categoryId }).then(res => {
       console.log('res', res)
+      const list = res.data.list.length > 0 ? res.data.list : data
+      this.setState({ detail_list: list })
     })
+
+
   }
 
   componentWillReact() { }
 
   render() {
-
+    const { detail_list, detail_info } = this.state
     return (
-      <View className="page" id="page">
-        <View>
-          {/* <Image src={}></Image> */}
+      <View className="detail_page" id="page">
+
+        <View className="detail_head">
+          <Image className="banner_image" mode="aspectFill" src={detail_info.bannerImage} />
+          <View className='detail_info'>
+            <View className='detail_subhead'>{detail_info.subhead}</View>
+            <View className='detail_title'>教学资源·{detail_info.title}</View>
+          </View>
+
+        </View>
+        <View className="detail_wrap">
+          <View className='intro'>{detail_info.intro}</View>
+
+          <View className="firstTitle">{detail_info.firstTitle}</View>
+          <View className='firstTitleIntro'>{detail_info.firstTitleIntro}</View>
+          <View className="detail_list">
+            {detail_list.map(item => (
+              <DetailCard data={item}></DetailCard>
+            ))}
+          </View>
         </View>
       </View>
     );
