@@ -31,6 +31,20 @@ export const getResourceData = () => {
   });
 };
 
+export const getResourceInfoData = (resourceId) => {
+  return ajax({
+    url: `/api/resource/info/${resourceId}`,
+    method: "get",
+  });
+};
+
+export const getCommentListByResourceId = (resourceId) => {
+  return ajax({
+    url: `/api/resource/comment/${resourceId}`,
+    method: "get",
+  });
+};
+
 export const delDetailData = (data) => {
   return ajax({
     url: `/api/u/weight/delete/${data.recordId}`,

@@ -142,11 +142,18 @@ class _page extends Component {
     const { teach } = this.state;
     const teachDetail = teach.filter(item => item.id === categoryId)
     console.log('teachDetail', teachDetail)
-    setStore('teachDetail', teachDetail)
+    setStore('teachDetail', teachDetail[0])
     Taro.navigateTo({
       url: `/pages/detail_page/index?categoryId=${categoryId}`,
     });
 
+  }
+
+  goToHotGroup = hot => {
+    setStore('hotGroupList', hot)
+    Taro.navigateTo({
+      url: "/pages/hot_group_page/index",
+    })
   }
   onSearchBar = () => {
     console.log('onSearchBar')
@@ -181,7 +188,7 @@ class _page extends Component {
 
 
             <ItemView title="教学资源" note='查找你需要的课堂教学内容' list={teach} type='icon' onClick={(e) => this.goToDetailByCategoryId(e)} onTapGrunp={() => this.goToGroup(teach)} />
-            <ItemView title="热门话题" note='体育老师都在讨论什么' list={hot} />
+            <ItemView title="热门话题" note='体育老师都在讨论什么' list={hot} onTapGrunp={() => this.goToHotGroup(hot)} />
             <ItemView title="活动追踪" note='活力校园相关资讯' list={one} />
             <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={one} />
 

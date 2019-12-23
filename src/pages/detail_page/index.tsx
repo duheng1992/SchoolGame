@@ -35,8 +35,8 @@ class _page extends Component {
     console.log(this.$router.params)
     const { categoryId } = this.$router.params;
     const detail = getStore('teachDetail')
-    console.log('teachDetail', detail[0])
-    this.setState({ categoryId, detail_info: detail[0] })
+    console.log('teachDetail', detail)
+    this.setState({ categoryId, detail_info: detail })
   }
 
   componentDidMount() {
@@ -60,6 +60,12 @@ class _page extends Component {
 
   componentWillReact() { }
 
+  tapCard = item => {
+    Taro.navigateTo({
+      url: `/pages/detail_item_page/index?resourceId=${item.id}`,
+    })
+  }
+
   render() {
     const { detail_list, detail_info } = this.state
     return (
@@ -80,7 +86,9 @@ class _page extends Component {
           <View className='firstTitleIntro'>{detail_info.firstTitleIntro}</View>
           <View className="detail_list">
             {detail_list.map(item => (
-              <DetailCard data={item}></DetailCard>
+              <View onClick={() => this.tapCard(item)}>
+                <DetailCard data={item}></DetailCard>
+              </View>
             ))}
           </View>
         </View>

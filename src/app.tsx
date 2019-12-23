@@ -58,8 +58,10 @@ class App extends Component {
       "pages/login/index", // 登录
       "pages/search_page/index", // 搜索
 
-      "pages/detail_page/index", //详情页面
-      "pages/group_page/index", //分类页面
+      "pages/detail_page/index", //分类详情列表页面
+      "pages/detail_item_page/index", //详情页面
+      "pages/group_page/index", //教学分类页面
+      "pages/hot_group_page/index",//热门分类页面
       "pages/personal/about/index", //关于活力校园
 
       "pages/detail/index", //详情页面

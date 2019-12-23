@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import Taro, { Component, Config, getStorage } from "@tarojs/taro";
 import { View, ScrollView, Image, Swiper, SwiperItem } from "@tarojs/components";
-import { getStore } from "@/utils/utils";
+import { getStore, setStore } from "@/utils/utils";
 import SearchBar from "@/components/SearchBar";
 import { getResourceData } from "@/api/detail"
 import "./index.scss";
@@ -58,6 +58,13 @@ class _page extends Component {
 
   }
 
+  toDeatilByCategoryId = (detail) => {
+    setStore('teachDetail', detail)
+    Taro.navigateTo({
+      url: `/pages/detail_page/index?categoryId=${detail.id}`,
+    });
+  }
+
   render() {
     const { list } = this.state
     return (
@@ -86,7 +93,7 @@ class _page extends Component {
           <View className='sub_title'>教学资源</View>
           {
             list.map(item => (
-              <View className='list_warp'>
+              <View className='list_warp' onClick={() => this.toDeatilByCategoryId(item)}>
                 <Image className="list_img" mode="aspectFill" src={item.bannerImage}></Image>
                 <View className='list_info'>
                   <View>{item.subhead}</View>

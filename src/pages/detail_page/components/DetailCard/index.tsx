@@ -14,6 +14,7 @@ type StateType = {
 
 type ComponentsProps = {
     data: any;
+    onTapCard: Function
 };
 
 interface DetailCard {
@@ -23,7 +24,8 @@ interface DetailCard {
 
 class DetailCard extends Component {
     static defaultProps: ComponentsProps = {
-        data: {}
+        data: {},
+        onTapCard: () => { }
     }
 
     constructor(props) {

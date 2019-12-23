@@ -2,6 +2,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import { AtSearchBar } from 'taro-ui'
+import { getCommonSearchList } from '@/api/searchPage'
 // import "./index.scss";
 
 type StateType = {
@@ -23,7 +24,11 @@ class _page extends Component {
   }
 
   state: StateType = {
-    value: ''
+    form: {
+      keyword: '',
+      pageIndex: 1,
+      pageSize: 10
+    }
   };
 
   componentWillMount() {
@@ -44,18 +49,26 @@ class _page extends Component {
 
   componentWillReact() { }
   onInputChange = val => {
+    let data = { ...this.state.form }
+    data.keyword = val
+    this.setState({ form: data })
     console.log('val', val)
   }
   onActionClick = () => {
     console.log('开始搜索')
+    const { form } = this.state
+    getCommonSearchList(form).then(res => {
+      console.log('search res', res)
+    })
+
   }
 
   render() {
-
+    const { form } = this.state
     return (
       <View className="page" id="page">
         <AtSearchBar
-          value={this.state.value}
+          value={form.keyword}
           onChange={(e) => this.onInputChange(e)}
           onActionClick={() => this.onActionClick()}
         />

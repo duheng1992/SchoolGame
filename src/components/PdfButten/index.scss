@@ -1,0 +1,15 @@
+.item_pdf_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 96px;
+  line-height: 96px;
+  border: 5px solid #fc4514;
+  border-radius: 50px;
+  color: #fc4514;
+  .pdf_img {
+    width: 32px;
+    height: 32px;
+  }
+}
