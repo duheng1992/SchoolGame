@@ -30,7 +30,7 @@ const interceptor = function (chain) {
 
 Taro.addInterceptor(interceptor);
 
-const request = ({ url, data, method }) => {
+const request = ({ url, data = null, method }) => {
   const token = getStore("userToken");
   return Taro.request({
     url: baseUrl + url,
@@ -42,5 +42,17 @@ const request = ({ url, data, method }) => {
     },
   });
 };
+const request_json = ({ url, data = null, method }) => {
+  const token = getStore("userToken");
+  return Taro.request({
+    url: baseUrl + url,
+    data,
+    method,
+    header: {
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+};
+const ajax = request
 
-export const ajax = request;
+export { ajax, request_json };

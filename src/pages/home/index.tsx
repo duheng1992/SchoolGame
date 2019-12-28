@@ -1,22 +1,16 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
-import Weight from "@/components/Weight";
-import BodyReport from "@/components/BodyReport";
 
 import { getStore, setStore } from "@/utils/utils";
 
-import { homeBg } from "@/images/load";
 
-import { getUserInfo } from "@/api/login";
-
-import { getCategoryList, getTrackingList } from "@/api/home";
+import { getCategoryList, getTrackingList, getThemeList, getBannerList, getVigorousList } from "@/api/home";
 
 import "./index.scss";
 
 import ItemView from "@/components/ItemView";
 import SearchBar from "@/components/SearchBar";
 
-import { getHomeData } from "@/api/detail";
 
 type StateType = {
   [propName: string]: any;
@@ -52,21 +46,10 @@ class _page extends Component {
     homeData: "",
     equipmentId: "2",
     teach: [],
-    hot: [],
-    one: [
-      {
-        name: '1',
-        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg'
-      },
-      {
-        name: '2',
-        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg'
-      },
-      {
-        name: '3',
-        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg'
-      }
-    ]
+    track: [],
+    theme: [],
+    banner: [],
+    vigorous: []
   };
 
   componentWillMount() { }
@@ -78,20 +61,47 @@ class _page extends Component {
     tabBarStore.setIndex(0);
     const _this = this;
     const token = getStore("userToken");
-
+    // 教学资料分类列表
     getCategoryList().then((res) => {
       console.log('res', res)
       this.setState({
         teach: res.data
       })
     });
-
+    // 活动追踪列表
     getTrackingList().then((res) => {
       console.log('res', res)
       this.setState({
-        hot: res.data
+        track: res.data.list
       })
     });
+    //热门话题列表
+    getThemeList().then(res => {
+      console.log('theme', res)
+      this.setState({
+        theme: res.data.list
+      })
+    })
+
+    // 获取banner
+    getBannerList().then(res => {
+      console.log('banner', res)
+      let list = res.data && res.data.length > 0 ? JSON.parse(JSON.stringify(res.data)) : []
+      list.forEach(item => {
+        item.bannerImage = JSON.parse(item.bannerImage)
+      })
+      console.log('list', list)
+      this.setState({
+        banner: list
+      })
+    })
+
+    getVigorousList().then(res => {
+      console.log('vigorous', res.data)
+      this.setState({
+        vigorous: res.data
+      })
+    })
 
   }
 
@@ -149,10 +159,20 @@ class _page extends Component {
 
   }
 
-  goToHotGroup = hot => {
-    setStore('hotGroupList', hot)
+  goToDetailByThemeId = themeId => {
+    const { theme } = this.state;
+    const themeDetail = theme.filter(item => item.id === themeId)
+    console.log('themeDetail', themeDetail)
+    setStore('themeDetail', themeDetail[0])
     Taro.navigateTo({
-      url: "/pages/hot_group_page/index",
+      url: `/pages/theme_detail_page/index?themeId=${themeId}`,
+    });
+  }
+
+  goToCategoryGroup = (item, name) => {
+    setStore(`${name}GroupList`, item)
+    Taro.navigateTo({
+      url: `/pages/${name}_group_page/index`,
     })
   }
   onSearchBar = () => {
@@ -162,7 +182,7 @@ class _page extends Component {
     });
   }
 
-  goToGroup = teach => {
+  goToGroup = (teach) => {
     setStore('groupList', teach)
     Taro.navigateTo({
       url: "/pages/group_page/index",
@@ -170,7 +190,7 @@ class _page extends Component {
   }
 
   render() {
-    const { one, teach, hot } = this.state
+    const { teach, track, theme, banner, vigorous } = this.state
     return (
       <View>
         <ScrollView scrollY scrollTop={0} className="verticalBox">
@@ -178,19 +198,17 @@ class _page extends Component {
             <SearchBar onTapSearchBar={() => this.onSearchBar()}></SearchBar>
             <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
               <View>
-                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:488rpx' />
-                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:488rpx' />
-                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:488rpx' />
-                <Image className="img_item" src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=66788718,2542085327&fm=26&gp=0.jpg' style='height:488rpx' />
-
+                {
+                  banner.length > 0 && banner.map(item => (<Image className='img_item' key={item.id} style='height:488rpx' src={item.bannerImage.file}></Image>))
+                }
               </View>
             </ScrollView>
 
 
             <ItemView title="教学资源" note='查找你需要的课堂教学内容' list={teach} type='icon' onClick={(e) => this.goToDetailByCategoryId(e)} onTapGrunp={() => this.goToGroup(teach)} />
-            <ItemView title="热门话题" note='体育老师都在讨论什么' list={hot} onTapGrunp={() => this.goToHotGroup(hot)} />
-            <ItemView title="活动追踪" note='活力校园相关资讯' list={one} />
-            <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={one} />
+            <ItemView title="热门话题" note='体育老师都在讨论什么' list={theme} onTapGrunp={() => this.goToCategoryGroup(theme, 'theme')} onClick={(e) => this.goToDetailByThemeId(e)} />
+            <ItemView title="活动追踪" note='活力校园相关资讯' list={track} onTapGrunp={() => this.goToCategoryGroup(track, 'track')} />
+            <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={vigorous} />
 
           </View>
         </ScrollView>

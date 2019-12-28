@@ -1,10 +1,13 @@
 /* eslint-disable react/no-unused-state */
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, ScrollView, Image, Video } from "@tarojs/components";
+import { View, ScrollView, Image, Video, RichText } from "@tarojs/components";
 import "./index.scss";
-import { getResourceInfoData, getCommentListByResourceId } from "@/api/detail";
+import { getResourceInfoData, getCommentListByResourceId, createResourceComment } from "@/api/detail";
 import PdfButten from "@/components/PdfButten/index"
-import { AtList, AtListItem, AtButton, AtModal, AtModalContent } from "taro-ui";
+import { AtList, AtListItem, AtButton, AtModal, AtModalContent, AtInput } from "taro-ui";
+import collect from '@/images/card/card_collect.png'
+import replay from '@/images/card/tab_replay.png'
+import praise from '@/images/card/comment_praise.png'
 
 type StateType = {
   [propName: string]: any;
@@ -29,7 +32,9 @@ class _page extends Component {
     item_info: {
       coursewareType: null
     },
-    showPdfModel: false
+    showPdfModel: false,
+    showInputModel: false,
+    content: ''
   };
 
   componentWillMount() {
@@ -79,9 +84,31 @@ class _page extends Component {
     })
   }
 
+  onInputCommit = () => {
+    this.setState({
+      showInputModel: true
+    })
+  }
+  onInputCommitChange = val => {
+    this.setState({ content: val })
+  }
+  onInputComfirm = () => {
+    console.log('e')
+    const { content, resourceId } = this.state
+    const data = {
+      content,
+      domainId: resourceId
+    }
+    createResourceComment(data).then(res => {
+      console.log('res', res);
+
+    })
+    this.setState({ showInputModel: false })
+  }
+
   render() {
     //coursewareType {1:pdf,2:video,3:pdf+vedio}
-    const { item_info, showPdfModel } = this.state
+    const { item_info, showPdfModel, showInputModel, content } = this.state
     console.log('item_info', item_info)
     const { coursewareType } = item_info
     return (
@@ -94,11 +121,7 @@ class _page extends Component {
           {
             (coursewareType == 2 || coursewareType == 3) &&
             <Video className="item_banner" src={item_info.videoFileUrl[0].url}></Video>
-
           }
-
-
-
         </View>
 
         <View className="item_wrap">
@@ -113,10 +136,11 @@ class _page extends Component {
             </View>
           }
 
-
           <View className='introduction'>
             <View>课程简介</View>
-            <View></View>
+            <View>
+              <RichText nodes={item_info.intro}></RichText>
+            </View>
             <AtList>
               <AtListItem className='list_item' title='了解更多 请查看课件' arrow='right' />
             </AtList>
@@ -125,6 +149,24 @@ class _page extends Component {
               <AtButton className='list_btn'>分享至微信</AtButton>
               <AtButton className='list_btn'>复制链接</AtButton>
             </View>
+          </View>
+          <View>
+            <View>评论</View>
+            <View className='commit_wrap'>
+              <View className='commit_item'>
+                <Image className='icon' src={collect}></Image>
+                <View className='num'>0</View>
+              </View>
+              <View className='commit_item' onClick={() => this.onInputCommit()}>
+                <Image className='icon' src={replay}></Image>
+                <View className='num'>1</View>
+              </View>
+              <View className='commit_item' >
+                <Image className='icon' src={praise}></Image>
+                <View className='num'>2</View>
+              </View>
+            </View>
+
           </View>
         </View>
 
@@ -137,6 +179,14 @@ class _page extends Component {
             <AtButton>获 取 邮 件</AtButton>
           </AtModalContent>
         </AtModal>
+        {showInputModel && <AtInput name='value'
+          type='text'
+          value={content}
+          onChange={this.onInputCommitChange}
+          autoFocus
+          className='commit_input'>
+          <View className='commit_btn' onClick={() => this.onInputComfirm()}>确定</View></AtInput>}
+
       </View>
     );
   }

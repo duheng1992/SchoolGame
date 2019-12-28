@@ -1,0 +1,15 @@
+.theme_avatar_wrap{
+    display: flex;
+    flex-direction: row;
+    .theme_avatar{
+        width:  96px;
+        height: 96px;
+        border-radius: 50px;
+        background-color: #999;
+        margin-right: 30px;
+    }
+    .theme_title_wrap{
+        display: flex;
+        flex-direction: column;
+    }
+}

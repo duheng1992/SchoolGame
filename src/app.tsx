@@ -52,24 +52,25 @@ class App extends Component {
     pages: [
       "pages/home/index", //首页
       "pages/binding/index", // 绑定设备
-      "pages/set_weight/index", //设置体重
       "pages/personal/index", //个人中心
       "pages/register/index", // 注册
       "pages/login/index", // 登录
       "pages/search_page/index", // 搜索
 
+      "pages/theme_detail_page/index", //话题详情页
+      "pages/theme_detail_item_page/index", //话题讨论详情页
+      "pages/release_page/index", //话题发布页
+      "pages/track_detail_page/index", //活动追踪详情页
       "pages/detail_page/index", //分类详情列表页面
       "pages/detail_item_page/index", //详情页面
       "pages/group_page/index", //教学分类页面
-      "pages/hot_group_page/index",//热门分类页面
+      "pages/theme_group_page/index",//热门分类页面
+      "pages/track_group_page/index",//活动追踪分类页面
       "pages/personal/about/index", //关于活力校园
 
-      "pages/detail/index", //详情页面
+      // "pages/detail/index", //详情页面
       "pages/cheng_set/index", // 称的设置
-      "pages/edit_userinfo/index", // 个人资料修改
       "pages/manage/index", // 管理称
-      "pages/share_my/index", // 分享
-      "pages/sheep/index", // 数羊助眠
 
       //demo
       // "pages/demo/mobxDemo/index",

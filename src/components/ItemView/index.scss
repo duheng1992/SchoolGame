@@ -25,14 +25,22 @@
   white-space: nowrap;
   .img_item {
     display: inline-block;
-    position: relative;
-    .title {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-    }
-    .image {
-      height: 252px;
+    margin-right: 6px;
+    .image_wrap {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      .title {
+        position: absolute;
+        color: #fff;
+        font-size: 36px;
+        max-width: 290px;
+        white-space: pre-line;
+      }
+      .image {
+        height: 252px;
+      }
     }
   }
   .icon_item {

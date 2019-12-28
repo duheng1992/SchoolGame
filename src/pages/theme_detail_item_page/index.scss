@@ -1,0 +1,19 @@
+.wrap {
+  padding: 40px;
+  .list_butten_group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    margin-bottom: 80px;
+    .list_btn {
+      &.save_btn {
+        background-color: #fc4514;
+        color: #fff;
+      }
+      color: #fc4514;
+      width: auto;
+      border-radius: 50px !important;
+      border: 5px solid #fc4514;
+    }
+  }
+}

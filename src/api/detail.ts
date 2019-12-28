@@ -1,4 +1,4 @@
-import { ajax } from "@/utils/http";
+import { ajax, request_json } from "@/utils/http";
 
 export const getHomeData = (data: { equipmentId }) => {
   return ajax({
@@ -52,3 +52,36 @@ export const delDetailData = (data) => {
     method: "post",
   });
 };
+
+// 话题详情themeID
+export const getThemeDetailByThemeId = (data) => {
+  return ajax({
+    url: `/api/theme/info/${data.themeId}`,
+    method: "get",
+  });
+}
+
+// 话题详情讨论themeID
+
+export const getThemeDetailDiscussByThemeId = (data) => {
+  return ajax({
+    url: `/api/theme/discuss/list/${data.themeId}`,
+    method: "get",
+  });
+}
+// 话题讨论详情discussId
+export const getThemeDetailDiscussDetailByDiscussId = (data) => {
+  return ajax({
+    url: `/api/theme/discuss/info/${data.discussId}`,
+    method: "get",
+  });
+}
+
+// 添加评论
+export const createResourceComment = (data) => {
+  return request_json({
+    url: `/api/resource/create/comment`,
+    data,
+    method: "post",
+  });
+}

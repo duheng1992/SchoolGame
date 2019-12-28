@@ -4,7 +4,7 @@ import { View } from "@tarojs/components";
 import SelectBox from "@/components/SelectBox";
 import BirthdayPicker from "@/components/BirthdayPicker";
 import ListPicker from "@/components/ListPicker";
-import Avatar from "@/components/Avatar";
+import Avatar from "@/components/Avactar";
 
 import { AtButton } from "taro-ui";
 import "./index.scss";
@@ -56,13 +56,13 @@ class _page extends Component {
     isSubmit: false,
   };
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   componentDidShow() {
     const _this = this;
@@ -87,13 +87,13 @@ class _page extends Component {
     });
   }
 
-  componentWillReact() {}
+  componentWillReact() { }
 
   config: Config = {
     navigationBarBackgroundColor: "#F0E8DF",
   };
 
-  updateStore = () => {};
+  updateStore = () => { };
 
   onHide = () => {
     this.setState(

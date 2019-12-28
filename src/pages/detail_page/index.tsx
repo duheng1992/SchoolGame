@@ -26,7 +26,7 @@ class _page extends Component {
   }
 
   state: StateType = {
-    detail_list: data,
+    comment_list: data,
     categoryId: null,
     detail_info: null
   };
@@ -67,7 +67,7 @@ class _page extends Component {
   }
 
   render() {
-    const { detail_list, detail_info } = this.state
+    const { comment_list, detail_info } = this.state
     return (
       <View className="detail_page" id="page">
 
@@ -85,7 +85,7 @@ class _page extends Component {
           <View className="firstTitle">{detail_info.firstTitle}</View>
           <View className='firstTitleIntro'>{detail_info.firstTitleIntro}</View>
           <View className="detail_list">
-            {detail_list.map(item => (
+            {comment_list.map(item => (
               <View onClick={() => this.tapCard(item)}>
                 <DetailCard data={item}></DetailCard>
               </View>

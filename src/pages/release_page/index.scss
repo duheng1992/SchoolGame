@@ -1,0 +1,17 @@
+.release_page {
+  position: relative;
+  height: 100vh;
+  .publish_btn {
+    position: absolute;
+    right: 40px;
+    height: 96px;
+    width: 210px;
+    bottom: 40px;
+    background-color: #fc4514;
+    font-size: 24px;
+    line-height: 96px;
+    text-align: center;
+    color: #fff;
+    border-radius: 48px;
+  }
+}

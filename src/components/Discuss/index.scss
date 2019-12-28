@@ -1,0 +1,29 @@
+.discuss_wrap {
+  padding: 40px 0;
+  .discuss_content {
+    margin-top: 30px;
+    font-size: 28px;
+    .theme_word {
+      color: #fc4514;
+      display: inline;
+    }
+  }
+
+  .theme_commit_wrap {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px;
+    .commit_wrap {
+      display: flex;
+      align-items: center;
+      .icon {
+        width: 48px;
+        height: 48px;
+      }
+      .num {
+        font-size: 24px;
+        color: #666;
+      }
+    }
+  }
+}

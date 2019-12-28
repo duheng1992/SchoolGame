@@ -44,5 +44,31 @@
         border: 5px solid #fc4514;
       }
     }
+    .commit_wrap {
+      display: flex;
+      justify-content: space-around;
+      margin: 40px;
+      .commit_item {
+        display: flex;
+        align-items: center;
+        .icon {
+          width: 48px;
+          height: 48px;
+        }
+        .num {
+          font-size: 24px;
+          color: #666;
+        }
+      }
+    }
+  }
+  .commit_input {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    .commit_btn {
+      color: #fc4514;
+    }
   }
 }
