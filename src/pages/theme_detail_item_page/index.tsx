@@ -71,9 +71,6 @@ class _page extends Component {
 
     componentWillReact() { }
 
-    config: Config = {
-        navigationBarBackgroundColor: "#FFFFFF",
-    };
 
 
 
@@ -94,7 +91,7 @@ class _page extends Component {
                     <View>
                         <View className='list_butten_group'>
                             <AtButton className='list_btn save_btn'>保存图片</AtButton>
-                            <AtButton className='list_btn'>分享至微信</AtButton>
+                            <AtButton className='list_btn' openType='share'>分享至微信</AtButton>
                             <AtButton className='list_btn'>复制链接</AtButton>
                         </View>
                     </View>

@@ -1,0 +1,13 @@
+.detail_card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 60px;
+  .detail_img {
+    height: 160px;
+    width: 160px;
+  }
+  .card_title {
+    margin-left: 40px;
+  }
+}

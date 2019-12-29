@@ -5,6 +5,8 @@ import Index from "./pages/login";
 import counterStore from "./store/counter";
 import tabBarStore from "./store/tabBarStore";
 
+import '@tarojs/async-await'
+
 import "@/assets/style/reset.scss";
 
 import "./app.scss";
@@ -53,6 +55,7 @@ class App extends Component {
       "pages/home/index", //首页
       "pages/binding/index", // 绑定设备
       "pages/personal/index", //个人中心
+      "pages/personal/userinfo", //信息档案
       "pages/register/index", // 注册
       "pages/login/index", // 登录
       "pages/search_page/index", // 搜索

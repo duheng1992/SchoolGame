@@ -74,6 +74,11 @@ class _page extends Component {
     getTrackingOldList(parmas).then(res => {
       console.log('list', res)
       const list = res.data.list
+      list.forEach(item => {
+        console.log('lisitem', item)
+        item.bannerImage = typeof item.bannerImage === 'string' ? JSON.parse(item.bannerImage).file : ''
+      })
+      console.log('oldList', list)
       this.setState({ list })
     })
   }
@@ -119,10 +124,19 @@ class _page extends Component {
   }
 
   goToDetailPage = detail => {
-    setStore('themeDetail', detail)
-    Taro.navigateTo({
-      url: `/pages/track_detail_page/index?themeId=${detail.id}`,
-    });
+    const { old } = this.state
+    if (old) {
+      setStore('trackOldDetail', detail)
+      Taro.navigateTo({
+        url: `/pages/track_old_detail_page/index?trackId=${detail.id}`,
+      });
+    } else {
+      setStore('trackDetail', detail)
+      Taro.navigateTo({
+        url: `/pages/track_detail_page/index?trackId=${detail.id}`,
+      });
+    }
+
   }
 
 

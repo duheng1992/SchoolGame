@@ -1,8 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Image, Button, Canvas, Text, ScrollView } from "@tarojs/components";
-import Avatar from '@/components/Avactar/index'
-import Discuss from '@/components/Discuss/index'
-import { getThemeDetailByThemeId, getThemeDetailDiscussByThemeId } from "@/api/detail";
+import { getTrackDetailByTrackId } from "@/api/detail";
 import { getStore } from "@/utils/utils";
 import Favorite from '@/images/tab_bar/home.png'
 import Favorited from '@/images/tab_bar/home-active.png'
@@ -37,16 +35,17 @@ class _page extends Component {
     state: StateType = {
         // token,
         detail_info: {},
-        discuss: []
+        discuss: [],
+        trackId: null
 
     };
 
     componentWillMount() {
         console.log(this.$router.params)
-        const { themeId } = this.$router.params
-        const detail = getStore('themeDetail')
+        const { trackId } = this.$router.params
+        const detail = getStore('trackDetail')
         this.setState({
-            themeId: Number(themeId),
+            traclId: Number(trackId),
             detail_info: detail
         })
     }
@@ -57,38 +56,16 @@ class _page extends Component {
     }
 
     componentDidShow() {
-        const { themeId } = this.state
-        getThemeDetailByThemeId({ themeId }).then(res => {
-            console.log('res', res);
+        const { trackId } = this.state
+        getTrackDetailByTrackId({ trackId }).then(res => {
+            console.log('tracklist', res)
 
-        })
-        getThemeDetailDiscussByThemeId({ themeId }).then(res => {
-            console.log('discuss', res)
-            const data = [{
-                "commentImage": "",
-                "content": "最近天气阴雨绵绵，室外体育课已经最近天气阴雨绵绵，室外体育课已经成为主要…",
-                "createTime": "2019.10.23",
-                "favoriteNum": 0,
-                "id": 0,
-                "isFavorite": false,
-                "isFollow": false,
-                "isPraise": false,
-                "praiseNum": 0,
-                "themeId": 0,
-                "themeTitle": "",
-                "userId": 0,
-                "viewNum": 0
-            }]
-            this.setState({ discuss: data })
         })
     }
 
 
     componentWillReact() { }
 
-    config: Config = {
-        navigationBarBackgroundColor: "#FFFFFF",
-    };
 
     onTapFab = () => {
         console.log('fab');
@@ -108,7 +85,6 @@ class _page extends Component {
                         </View>
                     </View>
                     <View className='theme_body_wrap'>
-                        <Avatar></Avatar>
                         <View className='theme_body_title'>
                             <View>{detail_info.title}</View>
                             <View className='favorite'>
@@ -125,14 +101,7 @@ class _page extends Component {
                         </View>
 
                     </View>
-                    <View className='discuss_wrap'>
-                        {
-                            discuss.length > 0 && discuss.map(item => (
-                                <Discuss detail={item} title={detail_info.title}></Discuss>
-                            ))
-                        }
 
-                    </View>
                     <View onClick={() => this.onTapFab()} className='fab_btn'>发布</View>
                 </ScrollView>
 

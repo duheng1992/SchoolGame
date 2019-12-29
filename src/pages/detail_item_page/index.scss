@@ -6,20 +6,22 @@
       height: 420px;
     }
   }
-
+  .item_title {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
   .item_info {
     width: 100%;
     margin-top: 60px;
     margin-bottom: 100px;
-    .item_title {
-      font-size: 36px;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
     .item_subhead {
       color: #999;
       font-size: 24px;
     }
+  }
+  .item_pdf_btn {
+    margin-bottom: 120px;
   }
   .item_wrap {
     padding: 0 40px;
@@ -69,6 +71,48 @@
     right: 0;
     .commit_btn {
       color: #fc4514;
+    }
+  }
+  .model_wrap {
+    padding: 18px 56px;
+    .model_title {
+      font-size: 36px;
+      font-weight: 500;
+      margin-bottom: 100px;
+      border-bottom: 1px solid #eee;
+    }
+    .model_info {
+      color: #666;
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+    .btn {
+      border: 2px solid #fc4514;
+      border-radius: 48px;
+      color: #fc4514;
+      font-size: 24px;
+      background-color: #fff;
+      width: 100%;
+      margin-bottom: 34px;
+      &.url_btn {
+        background-color: #fc4514;
+        color: #fff;
+      }
+    }
+  }
+  .canvas-wrap {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .btn-save {
+      margin-top: 40rpx;
     }
   }
 }

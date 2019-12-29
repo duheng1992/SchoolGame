@@ -1,9 +1,11 @@
 /* eslint-disable react/no-unused-state */
-import Taro, { Component, Config } from "@tarojs/taro";
-import { View, ScrollView, Image } from "@tarojs/components";
+import Taro, { Component } from "@tarojs/taro";
+import { View } from "@tarojs/components";
 import { AtSearchBar } from 'taro-ui'
 import { getCommonSearchList } from '@/api/searchPage'
-// import "./index.scss";
+import GoodItem from './components/card'
+import { toDetailByCategory } from '@/utils/utils'
+import "./index.scss";
 
 type StateType = {
   [propName: string]: any;
@@ -28,7 +30,8 @@ class _page extends Component {
       keyword: '',
       pageIndex: 1,
       pageSize: 10
-    }
+    },
+    list: []
   };
 
   componentWillMount() {
@@ -57,21 +60,36 @@ class _page extends Component {
   onActionClick = () => {
     console.log('开始搜索')
     const { form } = this.state
-    getCommonSearchList(form).then(res => {
+    getCommonSearchList(form).then((res: any) => {
       console.log('search res', res)
+      if (res.code == 'OK') {
+        const list = res.data.list
+        this.setState({ list })
+      }
     })
 
   }
 
+  onTapItem = item => {
+    console.log('item', item);
+    toDetailByCategory(item)
+
+  }
+
   render() {
-    const { form } = this.state
+    const { form, list } = this.state
     return (
-      <View className="page" id="page">
+      <View className="search_page" >
         <AtSearchBar
           value={form.keyword}
           onChange={(e) => this.onInputChange(e)}
           onActionClick={() => this.onActionClick()}
         />
+        {
+          list && list.map(item => (
+            <GoodItem data={item} onTapCard={() => this.onTapItem(item)}></GoodItem>
+          ))
+        }
       </View>
     );
   }

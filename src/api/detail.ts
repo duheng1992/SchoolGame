@@ -85,3 +85,11 @@ export const createResourceComment = (data) => {
     method: "post",
   });
 }
+
+// 话题讨论详情discussId
+export const getTrackDetailByTrackId = (data) => {
+  return ajax({
+    url: `/api/tracking/info/${data.trackId}`,
+    method: "get",
+  });
+}

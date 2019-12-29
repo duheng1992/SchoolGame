@@ -3,7 +3,7 @@ import { View, ScrollView, Image } from "@tarojs/components";
 import GetUserInfo from "@/components/GetUserInfo";
 import { getUserInfo, wx_login, setUserInfo } from "@/api/login";
 import { clearUserInfo, setStore, getStore } from "@/utils/utils";
-
+import { getUserBaseInfo } from '@/api/personal'
 import { AtList, AtListItem, AtAvatar, AtToast } from "taro-ui";
 import "./index.scss";
 
@@ -63,9 +63,6 @@ class _page extends Component {
   }
   componentWillReact() { }
 
-  config: Config = {
-    navigationBarBackgroundColor: "#FFFFFF",
-  };
 
   goToEdit = () => {
     const { userInfo } = this.state;
@@ -141,6 +138,18 @@ class _page extends Component {
     })
   }
 
+  userInfo = () => {
+    const token = getStore("userToken");
+    if (token) {
+      Taro.navigateTo({
+        url: "/pages/personal/userinfo",
+      });
+    } else {
+      Taro.showToast({ title: "请登录", icon: 'none' })
+    }
+
+  }
+
 
 
   render() {
@@ -181,7 +190,7 @@ class _page extends Component {
           </View>
           <View className="listPadding">
             <AtList hasBorder={false}>
-              <AtListItem hasBorder={false} title='信息档案' arrow='right' />
+              <AtListItem hasBorder={false} title='信息档案' onClick={() => this.userInfo()} arrow='right' />
               <AtListItem hasBorder={false} title='发布直播' onClick={() => this.Toast()} arrow='right' />
             </AtList>
           </View>

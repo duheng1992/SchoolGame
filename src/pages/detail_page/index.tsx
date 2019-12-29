@@ -31,6 +31,7 @@ class _page extends Component {
     detail_info: null
   };
 
+
   componentWillMount() {
     console.log(this.$router.params)
     const { categoryId } = this.$router.params;
@@ -51,7 +52,7 @@ class _page extends Component {
     const { categoryId } = this.state;
     getDetailData({ categoryId }).then(res => {
       console.log('res', res)
-      const list = res.data.list.length > 0 ? res.data.list : data
+      const list = res.data.list.length > 0 ? res.data.list : []
       this.setState({ detail_list: list })
     })
 

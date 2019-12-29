@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, ScrollView, Image, Video, RichText } from "@tarojs/components";
+import { View, ScrollView, Image, Video, RichText, Canvas, Button } from "@tarojs/components";
 import "./index.scss";
 import { getResourceInfoData, getCommentListByResourceId, createResourceComment } from "@/api/detail";
 import PdfButten from "@/components/PdfButten/index"
@@ -34,7 +34,8 @@ class _page extends Component {
     },
     showPdfModel: false,
     showInputModel: false,
-    content: ''
+    content: '',
+    showCanvasPage: false
   };
 
   componentWillMount() {
@@ -47,6 +48,7 @@ class _page extends Component {
   componentDidMount() {
 
   }
+
 
   componentWillUnmount() { }
 
@@ -79,6 +81,7 @@ class _page extends Component {
   }
 
   onShowPdfModel = () => {
+    console.log('true', 'pdfmodal')
     this.setState({
       showPdfModel: true
     })
@@ -106,9 +109,122 @@ class _page extends Component {
     this.setState({ showInputModel: false })
   }
 
+  getPdfUrl = () => {
+    const { item_info: { pdfFile } } = this.state
+    Taro.setClipboardData({
+      data: pdfFile
+    })
+  }
+  closePdfModal = () => {
+    console.log('close', this.state.showPdfModel);
+    this.setState({ showPdfModel: false })
+
+  }
+
+  preViewPdf = () => {
+    const { item_info: { pdfFile } } = this.state
+    Taro.downloadFile({
+      url: pdfFile,
+      success: function (res) {
+        console.log(res)
+        var Path = res.tempFilePath              //返回的文件临时地址，用于后面打开本地预览所用
+        Taro.openDocument({
+          filePath: Path,
+          fileType: 'pdf',
+          success: function (res) {
+            console.log('res', res)
+            console.log('打开文档成功')
+          }
+        })
+      }
+    })
+  }
+
+  async drawImage() {
+    // 创建canvas对象
+    let ctx = Taro.createCanvasContext('cardCanvas')
+
+    // 填充背景色
+    let grd = ctx.createLinearGradient(0, 0, 1, 600)
+    grd.addColorStop(0, '#FC4514')
+    // grd.addColorStop(0.5, '#FFF')
+    ctx.setFillStyle(grd)
+    ctx.fillRect(0, 0, 500, 600)
+
+    // 填充背景色
+    let grd_in = ctx.createLinearGradient(0, 0, 1, 600)
+    grd_in.addColorStop(0, '#fff')
+    // grd.addColorStop(0.5, '#FFF')
+    ctx.setFillStyle(grd_in)
+    ctx.fillRect(15, 80, 292, 508)
+
+    // // 绘制圆形用户头像
+    const { item_info } = this.state
+    let res = await Taro.downloadFile({
+      url: item_info.bannerImage
+    })
+    console.log('res', res);
+
+
+    ctx.save()
+    ctx.beginPath()
+    ctx.drawImage(res.tempFilePath, 15, 80, 292, 180)
+    ctx.restore()
+
+    // 绘制文字
+    ctx.save()
+    ctx.setFontSize(18)
+    ctx.setFillStyle('black')
+    ctx.fillText(item_info.title, 30, 300)
+    ctx.restore()
+
+    // 绘制文字
+    ctx.save()
+    ctx.setFontSize(14)
+    ctx.setFillStyle('#999')
+    ctx.fillText(`${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`, 30, 325)
+    ctx.restore()
+
+    ctx.lineTo(30, 292)
+    ctx.moveTo(30, 345)
+    ctx.setStrokeStyle('#red')
+    ctx.stroke()
+
+    // 绘制文字
+    ctx.save()
+    ctx.setFontSize(18)
+    ctx.setFillStyle('black')
+    ctx.fillText('课程简介', 30, 300)
+    ctx.restore()
+
+    // 绘制文字
+    ctx.save()
+    ctx.setFontSize(14)
+    ctx.setFillStyle('#999')
+    ctx.fillText(`${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`, 30, 325)
+    ctx.restore()
+
+    // 绘制二维码
+    // let qrcode = await Taro.downloadFile({
+    //   url: qrcodeUrl
+    // })
+    // console.log('qrcode', qrcode);
+
+
+    // ctx.drawImage(qrcode.tempFilePath, 70, 360, 180, 180)
+
+    // 将以上绘画操作进行渲染
+    ctx.draw()
+  }
+
+  saveImage = () => {
+    this.setState({ showCanvasPage: true })
+    this.drawImage()
+  }
+
   render() {
     //coursewareType {1:pdf,2:video,3:pdf+vedio}
-    const { item_info, showPdfModel, showInputModel, content } = this.state
+    const { item_info, showPdfModel, showInputModel, content, showCanvasPage } = this.state
     console.log('item_info', item_info)
     const { coursewareType } = item_info
     return (
@@ -137,16 +253,16 @@ class _page extends Component {
           }
 
           <View className='introduction'>
-            <View>课程简介</View>
+            <View className='item_title'>课程简介</View>
             <View>
               <RichText nodes={item_info.intro}></RichText>
             </View>
             <AtList>
-              <AtListItem className='list_item' title='了解更多 请查看课件' arrow='right' />
+              <AtListItem className='list_item' title='了解更多 请查看课件' arrow='right' onClick={() => this.preViewPdf()} />
             </AtList>
             <View className='list_butten_group'>
-              <AtButton className='list_btn save_btn'>保存图片</AtButton>
-              <AtButton className='list_btn'>分享至微信</AtButton>
+              <AtButton className='list_btn save_btn' onClick={() => this.saveImage()}>保存图片</AtButton>
+              <AtButton className='list_btn' openType="share">分享至微信</AtButton>
               <AtButton className='list_btn'>复制链接</AtButton>
             </View>
           </View>
@@ -170,13 +286,16 @@ class _page extends Component {
           </View>
         </View>
 
-        <AtModal isOpened={showPdfModel}>
+        <AtModal isOpened={showPdfModel} onClose={() => this.closePdfModal()}>
           <AtModalContent>
-            <View>下载文档</View>
-            <View>直接获取下载链接；复制链接到浏览器，然后下载文件。</View>
-            <AtButton>获 取 链 接</AtButton>
-            <View>也可以点击获取邮件到绑定邮箱，登陆邮箱下载。</View>
-            <AtButton>获 取 邮 件</AtButton>
+            <View className='model_wrap'>
+              <View className='model_title'>下载文档</View>
+              <View className='model_info'>直接获取下载链接；复制链接到浏览器，然后下载文件。</View>
+              <AtButton className='url_btn btn' onClick={() => this.getPdfUrl()}>获 取 链 接</AtButton>
+              <View className='model_info'>也可以点击获取邮件到绑定邮箱，登陆邮箱下载。</View>
+              <AtButton className='btn'>获 取 邮 件</AtButton>
+            </View>
+
           </AtModalContent>
         </AtModal>
         {showInputModel && <AtInput name='value'
@@ -187,6 +306,15 @@ class _page extends Component {
           className='commit_input'>
           <View className='commit_btn' onClick={() => this.onInputComfirm()}>确定</View></AtInput>}
 
+        {
+          showCanvasPage && (
+            <View className='canvas-wrap'>
+              <Canvas id='card-canvas'
+                style="width: 320px; height: 600px"
+                canvasId='cardCanvas'></Canvas>
+              <Button className='btn-save' onClick={() => this.saveCard()}>保存图片</Button>
+            </View>
+          )}
       </View>
     );
   }

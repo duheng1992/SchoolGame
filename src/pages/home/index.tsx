@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 
-import { getStore, setStore } from "@/utils/utils";
+import { getStore, setStore, toDetailByCategory } from "@/utils/utils";
 
 
 import { getCategoryList, getTrackingList, getThemeList, getBannerList, getVigorousList } from "@/api/home";
@@ -95,7 +95,7 @@ class _page extends Component {
         banner: list
       })
     })
-
+    // 活力校园
     getVigorousList().then(res => {
       console.log('vigorous', res.data)
       this.setState({
@@ -108,9 +108,6 @@ class _page extends Component {
 
   componentWillReact() { }
 
-  config: Config = {
-    navigationBarBackgroundColor: "#FFFFFF",
-  };
 
   unfold = () => {
     const { isShow } = this.state;
@@ -168,6 +165,15 @@ class _page extends Component {
       url: `/pages/theme_detail_page/index?themeId=${themeId}`,
     });
   }
+  goToDetailByTrackId = teackId => {
+    const { track } = this.state;
+    const trackDetail = track.filter(item => item.id === teackId)
+    console.log('trackDetail', trackDetail)
+    setStore('trackDetail', trackDetail[0])
+    Taro.navigateTo({
+      url: `/pages/track_detail_page/index?themeId=${teackId}`,
+    });
+  }
 
   goToCategoryGroup = (item, name) => {
     setStore(`${name}GroupList`, item)
@@ -188,6 +194,9 @@ class _page extends Component {
       url: "/pages/group_page/index",
     })
   }
+  onBannerTap = item => {
+    toDetailByCategory(item)
+  }
 
   render() {
     const { teach, track, theme, banner, vigorous } = this.state
@@ -199,7 +208,7 @@ class _page extends Component {
             <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
               <View>
                 {
-                  banner.length > 0 && banner.map(item => (<Image className='img_item' key={item.id} style='height:488rpx' src={item.bannerImage.file}></Image>))
+                  banner.length > 0 && banner.map(item => (<Image className='img_item' key={item.id} style='height:488rpx' onClick={() => this.onBannerTap(item)} src={item.bannerImage.file}></Image>))
                 }
               </View>
             </ScrollView>
@@ -207,7 +216,7 @@ class _page extends Component {
 
             <ItemView title="教学资源" note='查找你需要的课堂教学内容' list={teach} type='icon' onClick={(e) => this.goToDetailByCategoryId(e)} onTapGrunp={() => this.goToGroup(teach)} />
             <ItemView title="热门话题" note='体育老师都在讨论什么' list={theme} onTapGrunp={() => this.goToCategoryGroup(theme, 'theme')} onClick={(e) => this.goToDetailByThemeId(e)} />
-            <ItemView title="活动追踪" note='活力校园相关资讯' list={track} onTapGrunp={() => this.goToCategoryGroup(track, 'track')} />
+            <ItemView title="活动追踪" note='活力校园相关资讯' list={track} onTapGrunp={() => this.goToCategoryGroup(track, 'track')} onClick={(e) => this.goToDetailByTrackId(e)} />
             <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={vigorous} />
 
           </View>

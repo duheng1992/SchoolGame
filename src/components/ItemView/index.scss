@@ -21,7 +21,7 @@
   color: #999;
 }
 .horizontalBox {
-  width: 100vw;
+  width: 100%;
   white-space: nowrap;
   .img_item {
     display: inline-block;
@@ -53,6 +53,7 @@
       height: 154px;
       justify-content: space-around;
       align-items: center;
+      margin-right: 5px;
       .title {
         font-size: 28px;
         font-weight: 500;

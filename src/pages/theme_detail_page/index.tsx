@@ -76,9 +76,6 @@ class _page extends Component {
 
     componentWillReact() { }
 
-    config: Config = {
-        navigationBarBackgroundColor: "#FFFFFF",
-    };
 
     onTapFab = () => {
         const { themeId } = this.state

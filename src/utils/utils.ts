@@ -149,3 +149,39 @@ export const wipeYear = (date) => {
 
   return `${day_split[1]}月${day_split[2]}日 ${sec_split[0]}:${sec_split[1]}`;
 };
+
+
+export const toDetailByCategory = item => {
+  const { moduleType, id } = item
+  // 1:教学资源,2:热门话题,3:专家答疑,4:专家直播,5:活动,6:活动追踪,7:校园活力展
+  switch (moduleType) {
+    case 1:
+      Taro.navigateTo({
+        url: `/pages/detail_page/index?categoryId=${id}`,
+      });
+      break;
+    case 2:
+      Taro.navigateTo({
+        url: `/pages/theme_detail_page/index?themeId=${id}`,
+      });
+      break;
+    case 5:
+      Taro.navigateTo({
+        url: `/pages/theme_detail_page/index?themeId=${id}`,
+      });
+      break;
+    case 6:
+      Taro.showToast({
+        title: '活力校园无数据',
+        icon: 'none'
+      })
+      // Taro.navigateTo({
+      //   url: `/pages/theme_detail_page/index?themeId=${id}`,
+      // });
+      break;
+
+    default:
+      break;
+  }
+}
+
