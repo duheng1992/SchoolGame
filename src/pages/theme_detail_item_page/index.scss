@@ -1,5 +1,10 @@
 .wrap {
   padding: 40px;
+  .comment_image_list {
+    .comment_image {
+      width: 100vw;
+    }
+  }
   .list_butten_group {
     display: flex;
     justify-content: space-between;
@@ -14,6 +19,23 @@
       width: auto;
       border-radius: 50px !important;
       border: 5px solid #fc4514;
+    }
+  }
+  .theme_commit_wrap {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px;
+    .commit_wrap {
+      display: flex;
+      align-items: center;
+      .icon {
+        width: 48px;
+        height: 48px;
+      }
+      .num {
+        font-size: 24px;
+        color: #666;
+      }
     }
   }
 }

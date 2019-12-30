@@ -8,6 +8,15 @@
       display: inline;
     }
   }
+  .commit_image {
+    display: flex;
+    margin: 20px 0 40px 0;
+    .commit_img_url {
+      width: 220px;
+      height: 220px;
+      margin-right: 4px;
+    }
+  }
 
   .theme_commit_wrap {
     display: flex;

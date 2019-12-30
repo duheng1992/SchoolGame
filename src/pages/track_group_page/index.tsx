@@ -124,14 +124,13 @@ class _page extends Component {
   }
 
   goToDetailPage = detail => {
+    console.log('dratil', detail)
     const { old } = this.state
     if (old) {
-      setStore('trackOldDetail', detail)
       Taro.navigateTo({
         url: `/pages/track_old_detail_page/index?trackId=${detail.id}`,
       });
     } else {
-      setStore('trackDetail', detail)
       Taro.navigateTo({
         url: `/pages/track_detail_page/index?trackId=${detail.id}`,
       });

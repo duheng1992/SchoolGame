@@ -1,9 +1,9 @@
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Image, Button, Canvas, Text, ScrollView } from "@tarojs/components";
+import { View, Image, Button, Canvas, RichText, ScrollView } from "@tarojs/components";
 import { getTrackDetailByTrackId } from "@/api/detail";
 import { getStore } from "@/utils/utils";
-import Favorite from '@/images/tab_bar/home.png'
-import Favorited from '@/images/tab_bar/home-active.png'
+import share from '@/images/card/tab_share.png'
+import collect from '@/images/card/tab_collect.png'
 
 import "./index.scss";
 
@@ -35,7 +35,6 @@ class _page extends Component {
     state: StateType = {
         // token,
         detail_info: {},
-        discuss: [],
         trackId: null
 
     };
@@ -45,7 +44,7 @@ class _page extends Component {
         const { trackId } = this.$router.params
         const detail = getStore('trackDetail')
         this.setState({
-            traclId: Number(trackId),
+            trackId: Number(trackId),
             detail_info: detail
         })
     }
@@ -57,8 +56,11 @@ class _page extends Component {
 
     componentDidShow() {
         const { trackId } = this.state
-        getTrackDetailByTrackId({ trackId }).then(res => {
+        getTrackDetailByTrackId({ trackId }).then((res: any) => {
             console.log('tracklist', res)
+            if (res.code == 'OK') {
+                this.setState({ detail_info: res.data })
+            }
 
         })
     }
@@ -67,42 +69,64 @@ class _page extends Component {
     componentWillReact() { }
 
 
-    onTapFab = () => {
-        console.log('fab');
+    join = () => {
+        const { trackId, detail_info } = this.state
+        Taro.navigateTo({
+            url: `/pages/join_page/index?trackingId=${trackId}&title=${detail_info.title}&title_en=${detail_info.titleEn}`,
+        });
 
     }
 
     render() {
-        const { detail_info, discuss } = this.state
+        const { detail_info } = this.state
         return (
             <View className='theme-wrap'>
-                <ScrollView scrollY style={{ height: '100vh' }}>
+                <ScrollView scrollY style={{ height: 'calc(100vh - 130rpx)' }}>
                     <View className='banner_warp'>
                         <Image className='banner_image' src={detail_info.bannerImage}></Image>
-                        <View className='theme_title_warp'>
-                            <View className='theme_title'>{detail_info.title}</View>
-                            <View className='theme_joinNum'>{detail_info.joinNum}人参与·热门</View>
-                        </View>
                     </View>
                     <View className='theme_body_wrap'>
                         <View className='theme_body_title'>
                             <View>{detail_info.title}</View>
-                            <View className='favorite'>
-                                <Image className='favorite_img' src={detail_info.isFavorite ? Favorited : Favorite}></Image>
+                            <View className='title_en'>{detail_info.titleEn}</View>
+                        </View>
+                        <View className='favorite_wrap'>
+                            <View className='favorite_item border'>
+                                <View className='num'>{detail_info.viewNum}</View>
+                                <View>浏览</View>
+                            </View>
+                            <View className='favorite_item border'>
+                                <View className='num'>{detail_info.favoriteNum}</View>
+                                <View>收藏</View>
+                            </View>
+                            <View className='favorite_item'>
+                                <View className='num'>{detail_info.joinNum}</View>
+                                <View>已报名</View>
                             </View>
                         </View>
                         <View className='theme_intro_wrap'>
-                            <View className='theme_subTitle'>话题简介</View>
-                            <View className='body_info'>{detail_info.intro}</View>
+                            <View className='theme_subTitle'>时间地点</View>
+                            <View className='body_time'>{detail_info.startTime} ~ {detail_info.endTime}</View>
+                            <View className='body_address'>{detail_info.address}</View>
                         </View>
                         <View>
-                            <View className='theme_subTitle'>话题时间</View>
-                            <View className='body_info'>{detail_info.startTime}至{detail_info.endTime}</View>
+                            <View className='theme_subTitle'>活动详情</View>
+                            <RichText nodes={detail_info.content}></RichText>
                         </View>
 
                     </View>
 
-                    <View onClick={() => this.onTapFab()} className='fab_btn'>发布</View>
+                    <View className='fixButtom'>
+                        <View className='fix_btn_group'>
+                            <Image className='fix_btn_img' src={collect}></Image>
+                            <View>收藏</View>
+                        </View>
+                        <View className='fix_btn_group'>
+                            <Image className='fix_btn_img' src={share}></Image>
+                            <Button openType='share'>分享</Button>
+                        </View>
+                        <View className='fix_btn' onClick={() => { this.join() }}>立即报名</View>
+                    </View>
                 </ScrollView>
 
 

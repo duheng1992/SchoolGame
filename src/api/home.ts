@@ -55,3 +55,13 @@ export const releaseDiscussPublish = data => {
     method: 'post'
   })
 }
+
+// 报名参加活动
+
+export const joinTracking = data => {
+  return request_json({
+    url: '/api/tracking/join',
+    data,
+    method: 'post'
+  })
+}

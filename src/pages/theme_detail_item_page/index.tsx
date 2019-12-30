@@ -2,10 +2,8 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Image, ScrollView } from "@tarojs/components";
 import Avatar from '@/components/Avactar/index'
 import { getThemeDetailDiscussDetailByDiscussId } from "@/api/detail";
-import { getStore } from "@/utils/utils";
-import Favorite from '@/images/tab_bar/home.png'
-import Favorited from '@/images/tab_bar/home-active.png'
-import add from '@/images/card/add_photo.png'
+import praise from '@/images/card/card_praise.png'
+import eye from '@/images/card/card_eye.png'
 
 import "./index.scss";
 
@@ -79,13 +77,13 @@ class _page extends Component {
         return (
             <View className='wrap'>
                 <ScrollView scrollY style={{ height: '100vh' }}>
-                    <Avatar></Avatar>
+                    <Avatar subTitle={list.createTime} title={list.nickName} avatar={list.avatar} type='discuss'></Avatar>
                     <View>
                         {list.content}
                     </View>
-                    <View>
+                    <View className='comment_image_list'>
                         {
-                            list.commentImage && list.commentImage.map(item => (<Image src={item.file}></Image>))
+                            list.commentImage && list.commentImage.map(item => (<Image className='comment_image' src={item.file}></Image>))
                         }
                     </View>
                     <View>
@@ -93,6 +91,17 @@ class _page extends Component {
                             <AtButton className='list_btn save_btn'>保存图片</AtButton>
                             <AtButton className='list_btn' openType='share'>分享至微信</AtButton>
                             <AtButton className='list_btn'>复制链接</AtButton>
+                        </View>
+                        <View className='theme_commit_wrap'>
+                            <View className='commit_wrap'>
+                                <Image className='icon' src={praise}></Image>
+                                <View className='num'>{list.praiseNum}</View>
+                            </View>
+                            <View className='commit_wrap'>
+                                <Image className='icon' src={eye}></Image>
+                                <View className='num'>{list.viewNum}</View>
+                            </View>
+
                         </View>
                     </View>
 

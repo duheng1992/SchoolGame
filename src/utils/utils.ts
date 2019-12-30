@@ -152,32 +152,35 @@ export const wipeYear = (date) => {
 
 
 export const toDetailByCategory = item => {
-  const { moduleType, id } = item
+  const { moduleType, domainId } = item
   // 1:教学资源,2:热门话题,3:专家答疑,4:专家直播,5:活动,6:活动追踪,7:校园活力展
   switch (moduleType) {
     case 1:
       Taro.navigateTo({
-        url: `/pages/detail_page/index?categoryId=${id}`,
+        url: `/pages/detail_page/index?categoryId=${domainId}`,
       });
       break;
     case 2:
       Taro.navigateTo({
-        url: `/pages/theme_detail_page/index?themeId=${id}`,
+        url: `/pages/theme_detail_page/index?themeId=${domainId}`,
       });
       break;
     case 5:
       Taro.navigateTo({
-        url: `/pages/theme_detail_page/index?themeId=${id}`,
+        url: `/pages/track_detail_page/index?trackId=${domainId}`,
       });
       break;
+    case 6:
+      Taro.navigateTo({
+        url: `/pages/track_detail_page/index?trackId=${domainId}`,
+      });
+      break
+
     case 6:
       Taro.showToast({
         title: '活力校园无数据',
         icon: 'none'
       })
-      // Taro.navigateTo({
-      //   url: `/pages/theme_detail_page/index?themeId=${id}`,
-      // });
       break;
 
     default:

@@ -24,7 +24,7 @@ export const getDetailData = (data) => {
   });
 };
 
-export const getResourceData = () => {
+export const getResourceBannerData = () => {
   return ajax({
     url: `/api/resource/banner/list`,
     method: "get",

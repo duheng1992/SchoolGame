@@ -3,8 +3,9 @@ import Taro, { Component, Config, getStorage } from "@tarojs/taro";
 import { View, ScrollView, Image, Swiper, SwiperItem } from "@tarojs/components";
 import { getStore, setStore } from "@/utils/utils";
 import SearchBar from "@/components/SearchBar";
-import { getResourceData } from "@/api/detail"
+import { getResourceBannerData } from "@/api/detail"
 import "./index.scss";
+import { getBannerList } from "@/api/home";
 
 type StateType = {
   [propName: string]: any;
@@ -25,7 +26,8 @@ class _page extends Component {
   }
 
   state: StateType = {
-    list: []
+    list: [],
+    bannerList: []
   };
 
   componentWillMount() {
@@ -43,8 +45,17 @@ class _page extends Component {
   componentDidShow() {
     const list = getStore('groupList')
     console.log('list', list)
-    getResourceData().then(res => {
+    getResourceBannerData().then((res: any) => {
       console.log('getResourceData', res)
+      if (res.code == 'OK') {
+        const banner = res.data
+        banner.forEach(item => {
+          if (typeof item.bannerImage == 'string') {
+            item.bannerImage = JSON.parse(item.bannerImage)
+          }
+        })
+        this.setState({ bannerList: banner })
+      }
     })
     this.setState({
       list
@@ -59,14 +70,13 @@ class _page extends Component {
   }
 
   toDeatilByCategoryId = (detail) => {
-    setStore('teachDetail', detail)
     Taro.navigateTo({
       url: `/pages/detail_page/index?categoryId=${detail.id}`,
     });
   }
 
   render() {
-    const { list } = this.state
+    const { list, bannerList } = this.state
     return (
       <View className="group_page" id="page">
         <SearchBar onTapSearchBar={() => this.onSearchBar()}></SearchBar>
@@ -78,15 +88,11 @@ class _page extends Component {
             indicatorActiveColor='#333'
             indicatorDots
             autoplay>
-            <SwiperItem>
-              <View className='demo-text-1'>1</View>
-            </SwiperItem>
-            <SwiperItem>
-              <View className='demo-text-2'>2</View>
-            </SwiperItem>
-            <SwiperItem>
-              <View className='demo-text-3'>3</View>
-            </SwiperItem>
+            {
+              bannerList.length > 0 && bannerList.map(item => (<SwiperItem>
+                <Image className='img_item' key={item.id} style='height:334rpx;width: 100%;' src={item.bannerImage.file}></Image>
+              </SwiperItem>))
+            }
           </Swiper>
         </View>
         <View>

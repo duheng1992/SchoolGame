@@ -27,7 +27,9 @@ import { observer, inject } from "@tarojs/mobx";
 @observer
 class _page extends Component {
     static defaultProps: ComponentsProps = {
-        detail: {},
+        detail: {
+            commentImage: ''
+        },
         title: '',
         onClick: () => { }
     };
@@ -61,14 +63,25 @@ class _page extends Component {
 
     render() {
         const { detail, title, onClick } = this.props
+        const commentImage = detail.commentImage !== '' ? JSON.parse(detail.commentImage) : []
         return (
 
             <View className='discuss_wrap'>
-                <Avatar subTitle={detail.createTime} type='discuss'></Avatar>
+                <Avatar subTitle={detail.createTime} title={detail.nickName} avatar={detail.avatar} type='discuss'></Avatar>
                 <View onClick={() => onClick()}>
                     <View className='discuss_content'>
                         <View className='theme_word'>#{title}#</View>
                         {detail.content}</View>
+                    <View className='commit_image'>
+                        {
+                            commentImage.map((item, index) => {
+                                if (index < 3) {
+                                    return <Image className='commit_img_url' src={item.file} ></Image>
+                                }
+                            }
+                            )
+                        }
+                    </View>
                     <View className='theme_commit_wrap'>
                         <View className='commit_wrap'>
                             <Image className='icon' src={praise}></Image>

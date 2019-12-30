@@ -47,13 +47,11 @@ class _page extends Component {
   componentDidMount() {
     const _this = this;
     const token = getStore("userToken");
-    // if (token) {
-    //   getUserInfo().then((res) => {
-    //     _this.setState({
-    //       userInfo: { ...res.data },
-    //     });
-    //   });
-    // }
+    if (token) {
+      const userInfo = getStore('userInfo')
+      this.setState({ userInfo })
+
+    }
   }
 
   componentDidShow() {
@@ -105,15 +103,18 @@ class _page extends Component {
             avatarUrl,
             nickName
           }
+        }, () => {
+          setStore('userInfo', this.state.userInfo)
         })
-        setUserInfo({
-          avatarImage: {
-            title: nickName,
-            url: avatarUrl,
-          },
-          gender,
-          nickName,
-        });
+
+        // setUserInfo({
+        //   avatarImage: {
+        //     title: nickName,
+        //     url: avatarUrl,
+        //   },
+        //   gender,
+        //   nickName,
+        // });
         // getUserInfo().then((res: any) => {
         //   if (res.code === "OK") {
         //     const data = res.data;

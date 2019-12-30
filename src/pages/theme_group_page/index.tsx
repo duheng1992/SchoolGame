@@ -125,7 +125,6 @@ class _page extends Component {
   }
 
   goToThemeDetailPage = detail => {
-    setStore('themeDetail', detail)
     Taro.navigateTo({
       url: `/pages/theme_detail_page/index?themeId=${detail.id}`,
     });
@@ -203,7 +202,7 @@ class _page extends Component {
             </View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
-            <View>标签页二的内容</View>
+            <View>敬请期待</View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
             <View>

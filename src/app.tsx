@@ -59,6 +59,7 @@ class App extends Component {
       "pages/register/index", // 注册
       "pages/login/index", // 登录
       "pages/search_page/index", // 搜索
+      "pages/join_page/index", // 搜索
 
       "pages/theme_detail_page/index", //话题详情页
       "pages/theme_detail_item_page/index", //话题讨论详情页

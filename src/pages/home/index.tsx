@@ -171,7 +171,7 @@ class _page extends Component {
     console.log('trackDetail', trackDetail)
     setStore('trackDetail', trackDetail[0])
     Taro.navigateTo({
-      url: `/pages/track_detail_page/index?themeId=${teackId}`,
+      url: `/pages/track_detail_page/index?trackId=${teackId}`,
     });
   }
 

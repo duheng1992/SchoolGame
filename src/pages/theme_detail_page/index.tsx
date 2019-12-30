@@ -45,10 +45,8 @@ class _page extends Component {
     componentWillMount() {
         console.log(this.$router.params)
         const { themeId } = this.$router.params
-        const detail = getStore('themeDetail')
         this.setState({
             themeId: Number(themeId),
-            detail_info: detail
         })
     }
 
@@ -59,11 +57,14 @@ class _page extends Component {
 
     componentDidShow() {
         const { themeId } = this.state
-        getThemeDetailByThemeId({ themeId }).then(res => {
+        getThemeDetailByThemeId({ themeId }).then((res: any) => {
             console.log('res', res);
+            if (res.code == 'OK') {
+                this.setState({ detail_info: res.data })
+            }
 
         })
-        getThemeDetailDiscussByThemeId({ themeId }).then(res => {
+        getThemeDetailDiscussByThemeId({ themeId }).then((res: any) => {
             console.log('discuss', res)
             if (res.code == 'OK') {
                 const list = res.data.list
