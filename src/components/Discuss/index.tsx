@@ -13,7 +13,8 @@ type StateType = {
 type ComponentsProps = {
     detail: any,
     title: string,
-    onClick: Function
+    onClick: Function,
+    type: string
 };
 
 interface _page {
@@ -31,7 +32,8 @@ class _page extends Component {
             commentImage: ''
         },
         title: '',
-        onClick: () => { }
+        onClick: () => { },
+        type: 'default'
     };
 
     constructor(props) {
@@ -62,7 +64,7 @@ class _page extends Component {
 
 
     render() {
-        const { detail, title, onClick } = this.props
+        const { detail, title, onClick, type } = this.props
         const commentImage = detail.commentImage !== '' ? JSON.parse(detail.commentImage) : []
         return (
 
@@ -82,17 +84,23 @@ class _page extends Component {
                             )
                         }
                     </View>
-                    <View className='theme_commit_wrap'>
-                        <View className='commit_wrap'>
-                            <Image className='icon' src={praise}></Image>
-                            <View className='num'>{detail.praiseNum}</View>
-                        </View>
-                        <View className='commit_wrap'>
-                            <Image className='icon' src={eye}></Image>
-                            <View className='num'>{detail.viewNum}</View>
-                        </View>
+                    {
+                        type == 'default' && (
+                            <View className='theme_commit_wrap'>
+                                <View className='commit_wrap'>
+                                    <Image className='icon' src={eye}></Image>
+                                    <View className='num'>{detail.viewNum}</View>
+                                </View>
+                                <View className='commit_wrap'>
+                                    <Image className='icon' src={praise}></Image>
+                                    <View className='num'>{detail.praiseNum}</View>
+                                </View>
 
-                    </View>
+
+                            </View>
+                        )
+                    }
+
                 </View>
             </View>
 

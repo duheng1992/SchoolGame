@@ -3,7 +3,6 @@ import { ajax, request_json } from "@/utils/http";
 export const getHomeData = (data: { equipmentId }) => {
   return ajax({
     url: `/api/u/weight/record/home/${data.equipmentId}`,
-    data,
     method: "get",
   });
 };
@@ -78,7 +77,7 @@ export const getThemeDetailDiscussDetailByDiscussId = (data) => {
 }
 
 // 添加评论
-export const createResourceComment = (data) => {
+export const createResourceComment = (data?) => {
   return request_json({
     url: `/api/resource/create/comment`,
     data,
@@ -91,5 +90,47 @@ export const getTrackDetailByTrackId = (data) => {
   return ajax({
     url: `/api/tracking/info/${data.trackId}`,
     method: "get",
+  });
+}
+
+// 活动往期回顾详情
+export const getTrackingOldDetailByNewsId = (data) => {
+  return request_json({
+    url: `/api/tracking/news/info/${data.newsId}`,
+    method: "get",
+  });
+}
+
+// 活动往期回顾评论列表
+export const getTrackingOldDetailCommitByNewsId = (data) => {
+  return request_json({
+    url: `/api/tracking/news/comment/${data.newsId}`,
+    method: "get",
+  });
+}
+
+// 活动追踪收藏
+export const favoriteNew = (data) => {
+  return request_json({
+    url: `/api/tracking/favorite/${data.newsId}`,
+    data,
+    method: "post",
+  });
+}
+
+// 热门话题点赞
+export const favoriteCommit = (data) => {
+  return request_json({
+    url: `/api/theme/favorite/${data.themeId}`,
+    data,
+    method: "post",
+  });
+}
+// 热门话题点赞
+export const praiseCommit = (data) => {
+  return request_json({
+    url: `/api/tracking/praise/${data.newsId}`,
+    data,
+    method: "post",
   });
 }

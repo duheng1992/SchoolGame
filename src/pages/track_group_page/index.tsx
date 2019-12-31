@@ -33,7 +33,11 @@ class _page extends Component {
       old: 0,
       entity: {
         hotRank: 0,
-      }
+        pageIndex: 1,
+        pageSize: 5
+      },
+      loading: false,
+      endPage: false
     }
   }
 
@@ -62,24 +66,35 @@ class _page extends Component {
 
   }
 
-  getDataList = (parmas) => {
-    getTrackingList(parmas).then(res => {
+  getDataList = (parmas, list) => {
+    getTrackingList(parmas).then((res: any) => {
       console.log('list', res)
-      const list = res.data.list
-      this.setState({ list })
+      let themeList = JSON.parse(JSON.stringify(list))
+      if (res.code == 'OK') {
+        themeList = themeList.concat(res.data.list);
+        if (!res.data.hasNextPage) {
+          this.setState({ endPage: true })
+        }
+        this.setState({ loading: false, list: themeList })
+      }
     })
   }
 
-  getDataOldList = (parmas) => {
-    getTrackingOldList(parmas).then(res => {
+  getDataOldList = (parmas, list) => {
+    getTrackingOldList(parmas).then((res: any) => {
       console.log('list', res)
-      const list = res.data.list
-      list.forEach(item => {
-        console.log('lisitem', item)
-        item.bannerImage = typeof item.bannerImage === 'string' ? JSON.parse(item.bannerImage).file : ''
-      })
-      console.log('oldList', list)
-      this.setState({ list })
+      let themeList = JSON.parse(JSON.stringify(list))
+      if (res.code == 'OK') {
+        themeList = themeList.concat(res.data.list);
+        if (!res.data.hasNextPage) {
+          this.setState({ endPage: true })
+        }
+        themeList.forEach(item => {
+          console.log('lisitem', item)
+          item.bannerImage = typeof item.bannerImage === 'string' ? JSON.parse(item.bannerImage).file : ''
+        })
+        this.setState({ loading: false, list: themeList })
+      }
     })
   }
 
@@ -92,13 +107,26 @@ class _page extends Component {
   }
   handleSegmentClick(value) {
     this.setState({ old: value }, () => {
-      const { entity } = this.state
+      let data = this.state.entity
+      data.pageIndex = 1
       if (value) {
-        this.getDataOldList(entity)
+        this.getDataOldList(data, [])
       } else {
-        this.getDataList(entity)
+        this.getDataList(data, [])
       }
     })
+  }
+
+  showMore = () => {
+    const { old, list } = this.state
+    let data = this.state.entity
+    data.pageIndex = data.pageIndex + 1
+    this.setState({ loading: true })
+    if (old) {
+      this.getDataOldList(data, list)
+    } else {
+      this.getDataList(data, list)
+    }
   }
 
   handleLiveSegmentClick(value) {
@@ -108,27 +136,25 @@ class _page extends Component {
   onTapHotRank = ishot => {
     let data = this.state.entity
     data.hotRank = ishot
+    data.pageIndex = 1
     this.setState({ entity: data }, () => {
       const { entity, old } = this.state
       if (old) {
-        this.getDataOldList(entity)
+        this.getDataOldList(entity, [])
       } else {
-        this.getDataList(entity)
+        this.getDataList(entity, [])
       }
 
     })
   }
 
-  showMore = () => {
-    console.log('showMore')
-  }
 
   goToDetailPage = detail => {
     console.log('dratil', detail)
     const { old } = this.state
     if (old) {
       Taro.navigateTo({
-        url: `/pages/track_old_detail_page/index?trackId=${detail.id}`,
+        url: `/pages/track_old_detail_page/index?newsId=${detail.id}`,
       });
     } else {
       Taro.navigateTo({
@@ -141,7 +167,7 @@ class _page extends Component {
 
 
   render() {
-    const { list, showMore, entity, old } = this.state
+    const { list, showMore, entity, old, endPage, loading } = this.state
     return (
       <View className="theme_group_page">
         <View>
@@ -164,7 +190,7 @@ class _page extends Component {
           <ScrollView scrollY>
             {
               list.length > 0 && list.map(item => (
-                <View className='list_warp' onClick={() => this.goToDetailPage(item)}>
+                <View className='list_warp' key={item.id} onClick={() => this.goToDetailPage(item)}>
                   <Image className="list_img" mode="aspectFill" src={item.bannerImage}></Image>
                   <View className='list_info'>
                     <View className="list_title">{item.title}</View>
@@ -179,7 +205,14 @@ class _page extends Component {
                 </View>
               ))
             }
-            <View className='showMore' onClick={() => this.showMore()}>{showMore}</View>
+            {
+              endPage && (
+                <View className='showMore'>没有更多数据了</View>
+              )
+            }
+            {
+              !endPage && (<View className='showMore' onClick={() => this.showMore()}>{loading ? '。。加载中。。' : showMore}</View>)
+            }
           </ScrollView>
         </View>
 

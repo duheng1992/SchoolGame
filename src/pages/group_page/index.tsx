@@ -4,8 +4,10 @@ import { View, ScrollView, Image, Swiper, SwiperItem } from "@tarojs/components"
 import { getStore, setStore } from "@/utils/utils";
 import SearchBar from "@/components/SearchBar";
 import { getResourceBannerData } from "@/api/detail"
+import { getCategoryList } from '@/api/home'
 import "./index.scss";
 import { getBannerList } from "@/api/home";
+import { AtSearchBar } from "taro-ui";
 
 type StateType = {
   [propName: string]: any;
@@ -27,7 +29,13 @@ class _page extends Component {
 
   state: StateType = {
     list: [],
-    bannerList: []
+    bannerList: [],
+    form: {
+      keyword: '',
+      pageIndex: 1,
+      pageSize: 20
+    },
+
   };
 
   componentWillMount() {
@@ -43,8 +51,7 @@ class _page extends Component {
   componentDidHide() { }
 
   componentDidShow() {
-    const list = getStore('groupList')
-    console.log('list', list)
+    const { form } = this.state
     getResourceBannerData().then((res: any) => {
       console.log('getResourceData', res)
       if (res.code == 'OK') {
@@ -57,29 +64,58 @@ class _page extends Component {
         this.setState({ bannerList: banner })
       }
     })
-    this.setState({
-      list
-    })
+
+    this.getCategoryList(form, [])
 
   }
+
+  getCategoryList = (params, list) => {
+    getCategoryList(params).then((res: any) => {
+      let newList = JSON.parse(JSON.stringify(list))
+      if (res.code == 'OK') {
+        newList = newList.concat(res.data);
+        if (!res.data.hasNextPage) {
+          this.setState({ endPage: true })
+        }
+        this.setState({ loading: false, list: newList })
+      }
+    })
+  }
+
 
   componentWillReact() { }
 
-  onSearchBar = () => {
-
-  }
 
   toDeatilByCategoryId = (detail) => {
+    setStore('teachDetail', detail)
     Taro.navigateTo({
       url: `/pages/detail_page/index?categoryId=${detail.id}`,
     });
   }
 
+  onInputChange = val => {
+    let data = { ...this.state.form }
+    data.keyword = val
+    this.setState({ form: data })
+    console.log('val', val)
+  }
+
+  onActionClick = () => {
+    const { form } = this.state
+    let data = form
+    data.pageIndex = 1
+    this.getCategoryList(form, [])
+  }
+
   render() {
-    const { list, bannerList } = this.state
+    const { list, bannerList, form } = this.state
     return (
       <View className="group_page" id="page">
-        <SearchBar onTapSearchBar={() => this.onSearchBar()}></SearchBar>
+        <AtSearchBar
+          value={form.keyword}
+          onChange={(e) => this.onInputChange(e)}
+          onActionClick={() => this.onActionClick()}
+        />
         <View>
           <View>热门推荐</View>
           <Swiper

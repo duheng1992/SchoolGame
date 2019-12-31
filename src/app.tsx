@@ -65,12 +65,14 @@ class App extends Component {
       "pages/theme_detail_item_page/index", //话题讨论详情页
       "pages/release_page/index", //话题发布页
       "pages/track_detail_page/index", //活动追踪详情页
+      "pages/track_old_detail_page/index", //活动追踪往期回顾详情页
       "pages/detail_page/index", //分类详情列表页面
       "pages/detail_item_page/index", //详情页面
       "pages/group_page/index", //教学分类页面
       "pages/theme_group_page/index",//热门分类页面
       "pages/track_group_page/index",//活动追踪分类页面
       "pages/personal/about/index", //关于活力校园
+      "pages/dynamic_page/index",
 
       // "pages/detail/index", //详情页面
       "pages/cheng_set/index", // 称的设置

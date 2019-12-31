@@ -1,9 +1,10 @@
 import { ajax, request_json } from "@/utils/http";
 // import Taro from "@tarojs/taro";
 
-export const getCategoryList = () => {
+export const getCategoryList = (data) => {
   return ajax({
     url: "/api/resource/category/list",
+    data,
     method: "get",
   });
 };

@@ -151,28 +151,32 @@ export const wipeYear = (date) => {
 };
 
 
-export const toDetailByCategory = item => {
-  const { moduleType, domainId } = item
+export const toDetailByCategory = (item, type = 'banner') => {
+  const { moduleType, domainId, id } = item
   // 1:教学资源,2:热门话题,3:专家答疑,4:专家直播,5:活动,6:活动追踪,7:校园活力展
+  let itemId = domainId
+  if (type !== 'banner') {
+    itemId = id
+  }
   switch (moduleType) {
     case 1:
       Taro.navigateTo({
-        url: `/pages/detail_page/index?categoryId=${domainId}`,
+        url: `/pages/detail_page/index?categoryId=${itemId}`,
       });
       break;
     case 2:
       Taro.navigateTo({
-        url: `/pages/theme_detail_page/index?themeId=${domainId}`,
+        url: `/pages/theme_detail_page/index?themeId=${itemId}`,
       });
       break;
     case 5:
       Taro.navigateTo({
-        url: `/pages/track_detail_page/index?trackId=${domainId}`,
+        url: `/pages/track_detail_page/index?trackId=${itemId}`,
       });
       break;
     case 6:
       Taro.navigateTo({
-        url: `/pages/track_detail_page/index?trackId=${domainId}`,
+        url: `/pages/track_detail_page/index?trackId=${itemId}`,
       });
       break
 

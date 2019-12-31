@@ -34,14 +34,17 @@ class _page extends Component {
         keyword: '',
         old: 0,
         hotRank: 0,
-      }
+        pageIndex: 1,
+        pageSize: 5
+      },
+      loading: false,
+      endPage: false
     }
   }
 
   state: StateType = {
 
   };
-
   componentWillMount() {
     console.log(this.$router.params)
   }
@@ -57,42 +60,47 @@ class _page extends Component {
   componentDidShow() {
     const list = getStore('themeGroupList')
     console.log('list', list)
-    // getResourceData().then(res => {
-    //   console.log('getResourceData', res)
-    // })
-    this.setState({
-      list
-    })
+    const { entity } = this.state
+    this.getThemeList(entity, [])
 
   }
 
-  getThemeList = (parmas) => {
-    getThemeList(parmas).then(res => {
+  getThemeList = (parmas, list) => {
+    getThemeList(parmas).then((res: any) => {
       console.log('list', res)
-      const list = res.data.list
-      this.setState({ list })
+      let themeList = JSON.parse(JSON.stringify(list))
+      if (res.code == 'OK') {
+        themeList = themeList.concat(res.data.list);
+        if (!res.data.hasNextPage) {
+          this.setState({ endPage: true })
+        }
+        this.setState({ loading: false, list: themeList })
+      }
+
     })
   }
 
   componentWillReact() { }
 
   onActionSearch = () => {
-
     const { entity } = this.state
-
-    this.getThemeList(entity)
+    let data = entity
+    data.pageIndex = 1
+    this.getThemeList(data, [])
   }
   searchBarChange = val => {
     let data = this.state.entity
     data.keyword = val
+    data.pageIndex = 1
     this.setState({ entity: data })
   }
 
   onClearSearch = () => {
     let data = this.state.entity
     data.keyword = ''
-    this.setState({ entity: data }, () => {
-      this.getThemeList(data)
+    data.pageIndex = 1
+    this.setState({ entity: data, endPage: false }, () => {
+      this.getThemeList(data, [])
     })
   }
   handleClick(value) {
@@ -104,7 +112,7 @@ class _page extends Component {
     let data = this.state.entity
     data.old = value
     this.setState({ entity: data }, () => {
-      this.getThemeList(data)
+      this.getThemeList(data, [])
     })
   }
 
@@ -116,12 +124,16 @@ class _page extends Component {
     let data = this.state.entity
     data.hotRank = ishot
     this.setState({ entity: data }, () => {
-      this.getThemeList(data)
+      this.getThemeList(data, [])
     })
   }
 
   showMore = () => {
-    console.log('showMore')
+    let data = this.state.entity
+    data.pageIndex = data.pageIndex + 1
+    this.setState({ loading: true })
+    console.log('showMore', data)
+    this.getThemeList(data, this.state.list)
   }
 
   goToThemeDetailPage = detail => {
@@ -143,7 +155,7 @@ class _page extends Component {
   // }
 
   render() {
-    const { list, showMore, entity } = this.state
+    const { list, showMore, entity, loading, endPage } = this.state
     return (
       <View className="theme_group_page">
         <AtSearchBar
@@ -182,7 +194,7 @@ class _page extends Component {
               <ScrollView scrollY>
                 {
                   list.length > 0 && list.map(item => (
-                    <View className='list_warp' onClick={() => this.goToThemeDetailPage(item)}>
+                    <View className='list_warp' key={item.id} onClick={() => this.goToThemeDetailPage(item)}>
                       <Image className="list_img" mode="aspectFill" src={item.bannerImage}></Image>
                       <View className='list_info'>
                         <View className="list_title">{item.title}</View>
@@ -197,7 +209,15 @@ class _page extends Component {
                     </View>
                   ))
                 }
-                <View className='showMore' onClick={() => this.showMore()}>{showMore}</View>
+                {
+                  endPage && (
+                    <View className='showMore'>没有更多数据了</View>
+                  )
+                }
+                {
+                  !endPage && (<View className='showMore' onClick={() => this.showMore()}>{loading ? '。。加载中。。' : showMore}</View>)
+                }
+
               </ScrollView>
             </View>
           </AtTabsPane>

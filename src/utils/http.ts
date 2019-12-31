@@ -44,14 +44,29 @@ const request = ({ url, data = null, method }) => {
 };
 const request_json = ({ url, data = null, method }) => {
   const token = getStore("userToken");
-  return Taro.request({
-    url: baseUrl + url,
-    data,
-    method,
-    header: {
-      "Authorization": `Bearer ${token}`,
-    },
-  });
+  if (token) {
+    return Taro.request({
+      url: baseUrl + url,
+      data,
+      method,
+      header: {
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+  } else {
+    Taro.showToast({
+      title: '请登录',
+      icon: 'none'
+    }).then(() => {
+      setTimeout(() => {
+        Taro.switchTab({
+          url: "/pages/personal/index",
+        })
+      }, 2000)
+    })
+    return false
+  }
+
 };
 const ajax = request
 

@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Image, Button, Canvas, RichText, ScrollView } from "@tarojs/components";
-import { getTrackDetailByTrackId } from "@/api/detail";
+import { getTrackDetailByTrackId, favoriteNew } from "@/api/detail";
 import { getStore } from "@/utils/utils";
 import share from '@/images/card/tab_share.png'
 import collect from '@/images/card/tab_collect.png'
@@ -77,6 +77,19 @@ class _page extends Component {
 
     }
 
+    collect = () => {
+        const { detail_info } = this.state
+        const newsId = detail_info.id
+        favoriteNew({ newsId }).then(res => {
+            if (res.code == 'OK') {
+                Taro.showToast({
+                    title: res.message,
+                    icon: 'success'
+                })
+            }
+        })
+    }
+
     render() {
         const { detail_info } = this.state
         return (
@@ -117,7 +130,7 @@ class _page extends Component {
                     </View>
 
                     <View className='fixButtom'>
-                        <View className='fix_btn_group'>
+                        <View className='fix_btn_group' onClick={() => this.collect()}>
                             <Image className='fix_btn_img' src={collect}></Image>
                             <View>收藏</View>
                         </View>

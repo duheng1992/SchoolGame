@@ -3,7 +3,6 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import DetailCard from "./components/DetailCard/index"
 import "./index.scss";
-import { data } from "./static"
 import { getDetailData } from "@/api/detail";
 import { getStore, setStore } from "@/utils/utils";
 
@@ -26,7 +25,7 @@ class _page extends Component {
   }
 
   state: StateType = {
-    comment_list: data,
+    detail_list: [],
     categoryId: null,
     detail_info: null
   };
@@ -68,7 +67,7 @@ class _page extends Component {
   }
 
   render() {
-    const { comment_list, detail_info } = this.state
+    const { detail_list, detail_info } = this.state
     return (
       <View className="detail_page" id="page">
 
@@ -86,7 +85,7 @@ class _page extends Component {
           <View className="firstTitle">{detail_info.firstTitle}</View>
           <View className='firstTitleIntro'>{detail_info.firstTitleIntro}</View>
           <View className="detail_list">
-            {comment_list.map(item => (
+            {detail_list.map(item => (
               <View onClick={() => this.tapCard(item)}>
                 <DetailCard data={item}></DetailCard>
               </View>

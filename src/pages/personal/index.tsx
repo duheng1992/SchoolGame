@@ -151,6 +151,12 @@ class _page extends Component {
 
   }
 
+  dynamic = () => {
+    Taro.navigateTo({
+      url: "/pages/dynamic_page/index",
+    });
+  }
+
 
 
   render() {
@@ -184,7 +190,7 @@ class _page extends Component {
           </View>
           <View className="listPadding">
             <AtList hasBorder={false}>
-              <AtListItem hasBorder={false} title="我的动态" arrow='right' />
+              <AtListItem hasBorder={false} title="我的动态" onClick={() => this.dynamic()} arrow='right' />
               <AtListItem hasBorder={false} title="我的关注" arrow='right' />
               <AtListItem hasBorder={false} title="已报活动" arrow='right' />
             </AtList>

@@ -29,9 +29,12 @@ class _page extends Component {
     form: {
       keyword: '',
       pageIndex: 1,
-      pageSize: 10
+      pageSize: 5
     },
-    list: []
+    showMore: '加载更多',
+    list: [],
+    endPage: false,
+    loading: false
   };
 
   componentWillMount() {
@@ -58,26 +61,41 @@ class _page extends Component {
     console.log('val', val)
   }
   onActionClick = () => {
-    console.log('开始搜索')
     const { form } = this.state
-    getCommonSearchList(form).then((res: any) => {
-      console.log('search res', res)
+    let data = form
+    data.pageIndex = 1
+    this.getCommonSearchList(data, [])
+
+  }
+  getCommonSearchList = (params, list) => {
+    getCommonSearchList(params).then((res: any) => {
+      let newList = JSON.parse(JSON.stringify(list))
       if (res.code == 'OK') {
-        const list = res.data.list
-        this.setState({ list })
+        newList = newList.concat(res.data.list);
+        if (!res.data.hasNextPage) {
+          this.setState({ endPage: true })
+        }
+        this.setState({ loading: false, list: newList })
       }
     })
-
   }
 
   onTapItem = item => {
-    console.log('item', item);
-    toDetailByCategory(item)
+    toDetailByCategory(item, 'search')
 
   }
 
+
+  showMore = () => {
+    let data = this.state.form
+    data.pageIndex = data.pageIndex + 1
+    this.setState({ loading: true })
+    console.log('showMore', data)
+    this.getCommonSearchList(data, this.state.list)
+  }
+
   render() {
-    const { form, list } = this.state
+    const { form, list, endPage, loading, showMore } = this.state
     return (
       <View className="search_page" >
         <AtSearchBar
@@ -89,6 +107,14 @@ class _page extends Component {
           list && list.map(item => (
             <GoodItem data={item} onTapCard={() => this.onTapItem(item)}></GoodItem>
           ))
+        }
+        {
+          endPage && (
+            <View className='showMore'>没有更多数据了</View>
+          )
+        }
+        {
+          (!endPage && list.length > 0) && (<View className='showMore' onClick={() => this.showMore()}>{loading ? '。。加载中。。' : showMore}</View>)
         }
       </View>
     );

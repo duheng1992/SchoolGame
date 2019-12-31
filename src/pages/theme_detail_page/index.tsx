@@ -88,8 +88,9 @@ class _page extends Component {
     goToDetail = (item) => {
         console.log('item', item)
         const discussId = item.id
+        const { themeId } = this.state
         Taro.navigateTo({
-            url: `/pages/theme_detail_item_page/index?discussId=${discussId}`,
+            url: `/pages/theme_detail_item_page/index?discussId=${discussId}&themeId=${themeId}`,
         });
     }
 
@@ -123,14 +124,20 @@ class _page extends Component {
                         </View>
 
                     </View>
-                    <View className='discuss_wrap'>
-                        {
-                            discuss.length > 0 && discuss.map(item => (
-                                <Discuss detail={item} title={detail_info.title} onClick={() => this.goToDetail(item)}></Discuss>
-                            ))
-                        }
 
-                    </View>
+                    {
+                        discuss.length > 0 && (
+                            <View className='discuss_wrap'>
+                                {
+                                    discuss.length > 0 && discuss.map(item => (
+                                        <Discuss key={item.id} detail={item} title={detail_info.title} onClick={() => this.goToDetail(item)}></Discuss>
+                                    ))
+                                }
+
+                            </View>
+                        )
+                    }
+
                     <View onClick={() => this.onTapFab()} className='fab_btn'> <Image className='add_img' src={add} ></Image>发布</View>
                 </ScrollView>
 

@@ -6,3 +6,27 @@ export const getUserBaseInfo = () => {
     method: "get",
   });
 };
+
+export const getUserCommentList = (data) => {
+  return ajax({
+    url: `/api/u/comment/list`,
+    data,
+    method: "get",
+  });
+};
+
+export const getUserDiscussList = (data) => {
+  return ajax({
+    url: `/api/u/discuss/list`,
+    data,
+    method: "get",
+  });
+};
+
+export const getUserHistoryList = (data) => {
+  return ajax({
+    url: `/api/u/view/history/list`,
+    data,
+    method: "get",
+  });
+};

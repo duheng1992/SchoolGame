@@ -105,6 +105,42 @@ npm run build:h5
 
 - 支持编译 css 以及 scss
 
+## 异步编程
+
+Taro 支持使用 async functions 来让开发者获得不错的异步编程体验，开启 async functions 支持需要安装包 babel-plugin-transform-runtime 和 babel-runtime。
+
+```
+$ yarn add babel-plugin-transform-runtime --dev
+$ yarn add babel-runtime
+```
+
+随后修改项目 babel 配置，增加插件 babel-plugin-transform-runtime。
+
+```
+babel: {
+  sourceMap: true,
+  presets: [
+    [
+      'env',
+      {
+        modules: false
+      }
+    ]
+  ],
+  plugins: [
+    'transform-decorators-legacy',
+    'transform-class-properties',
+    'transform-object-rest-spread',
+    ['transform-runtime', {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true,
+      "moduleName": 'babel-runtime'
+    }]
+  ]
+}
+```
+
 ## 状态管理和页面通信
 
 Mobx
