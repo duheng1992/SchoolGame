@@ -30,3 +30,27 @@ export const getUserHistoryList = (data) => {
     method: "get",
   });
 };
+
+export const getUserFavoriteList = (data?) => {
+  return ajax({
+    url: `/api/u/favorite/list`,
+    data,
+    method: "get",
+  });
+};
+
+export const getUserFollowList = (data?) => {
+  return ajax({
+    url: `/api/u/follow/list`,
+    data,
+    method: "get",
+  });
+};
+
+export const getUserJoinList = (data?) => {
+  return ajax({
+    url: `/api/u/join/list`,
+    data,
+    method: "get",
+  });
+};

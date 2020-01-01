@@ -4,7 +4,7 @@ import GetUserInfo from "@/components/GetUserInfo";
 import { getUserInfo, wx_login, setUserInfo } from "@/api/login";
 import { clearUserInfo, setStore, getStore } from "@/utils/utils";
 import { getUserBaseInfo } from '@/api/personal'
-import { AtList, AtListItem, AtAvatar, AtToast } from "taro-ui";
+import { AtList, AtListItem, AtAvatar, AtToast, AtModal, AtModalHeader, AtModalContent, AtModalAction, AtButton } from "taro-ui";
 import "./index.scss";
 
 
@@ -39,7 +39,8 @@ class _page extends Component {
 
     },
     isToastOpened: false,
-    toastText: '请先登录'
+    toastText: '请先登录',
+    isFocusPublic: false
   };
 
   componentWillMount() { }
@@ -107,24 +108,6 @@ class _page extends Component {
           setStore('userInfo', this.state.userInfo)
         })
 
-        // setUserInfo({
-        //   avatarImage: {
-        //     title: nickName,
-        //     url: avatarUrl,
-        //   },
-        //   gender,
-        //   nickName,
-        // });
-        // getUserInfo().then((res: any) => {
-        //   if (res.code === "OK") {
-        //     const data = res.data;
-        //     if (data.birthday && data.gender && data.height) {
-
-        //     } else {
-
-        //     }
-        //   }
-        // });
       });
     } else {
       clearUserInfo();
@@ -132,7 +115,6 @@ class _page extends Component {
     }
   };
   Toast = () => {
-    const { isToastOpened, toastText } = this.state
     this.setState({
       isToastOpened: true,
       toastText: '功能暂未开放'
@@ -157,10 +139,22 @@ class _page extends Component {
     });
   }
 
+  focus = () => {
+    Taro.navigateTo({
+      url: "/pages/focus_page/index",
+    });
+  }
+
+  entered = () => {
+    Taro.navigateTo({
+      url: "/pages/entered_page/index",
+    });
+  }
+
 
 
   render() {
-    const { userInfo, isToastOpened, toastText } = this.state;
+    const { userInfo, isToastOpened, toastText, isFocusPublic } = this.state;
     const { avatarUrl, nickName } = userInfo
     console.log('userInfo', userInfo)
     // if (userInfo) {
@@ -191,8 +185,8 @@ class _page extends Component {
           <View className="listPadding">
             <AtList hasBorder={false}>
               <AtListItem hasBorder={false} title="我的动态" onClick={() => this.dynamic()} arrow='right' />
-              <AtListItem hasBorder={false} title="我的关注" arrow='right' />
-              <AtListItem hasBorder={false} title="已报活动" arrow='right' />
+              <AtListItem hasBorder={false} title="我的关注" onClick={() => this.focus()} arrow='right' />
+              <AtListItem hasBorder={false} title="已报活动" onClick={() => this.entered()} arrow='right' />
             </AtList>
           </View>
           <View className="listPadding">
@@ -203,13 +197,22 @@ class _page extends Component {
           </View>
           <View className="listPadding">
             <AtList hasBorder={false}>
-              <AtListItem hasBorder={false} title='关注服务号，接受活动提醒' arrow='right' />
+              <AtListItem hasBorder={false} title='关注服务号，接受活动提醒' onClick={() => this.setState({ isFocusPublic: true })} arrow='right' />
               <AtListItem hasBorder={false} onClick={() => this.goToNav('/pages/personal/about/index')} title='关于活力校园' arrow='right' />
             </AtList>
 
           </View>
           <AtToast isOpened={isToastOpened} text={toastText} duration={2000} icon="close"></AtToast>
+          <AtModal isOpened={isFocusPublic}>
+            <AtModalHeader>关注公众号，获取更多消息提醒</AtModalHeader>
+            <AtModalContent>
+              <View className='toastContent'>
+                关注<View className='fontColor'>[ 活力校园ActiveSchools ]</View>公众号，可获取更多关于活动的通知消息。点击关注按钮后回复<View className='fontColor'>[ 1 ]</View>，获取公众号二维码，长按关注
 
+              </View>
+            </AtModalContent>
+            <AtModalAction> <AtButton circle className='btn_style'>关注</AtButton></AtModalAction>
+          </AtModal>
         </ScrollView>
       </View>
 

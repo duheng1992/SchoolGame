@@ -192,3 +192,117 @@ export const toDetailByCategory = (item, type = 'banner') => {
   }
 }
 
+
+export const drawImage = async (item_info, qrcode) => {
+  // 创建canvas对象
+  let ctx = Taro.createCanvasContext('cardCanvas')
+
+  // 填充背景色
+  let grd = ctx.createLinearGradient(0, 0, 1, 600)
+  grd.addColorStop(0, '#FC4514')
+  // grd.addColorStop(0.5, '#FFF')
+  ctx.setFillStyle(grd)
+  ctx.fillRect(0, 0, 500, 600)
+
+  // 填充背景色
+  let grd_in = ctx.createLinearGradient(0, 0, 1, 600)
+  grd_in.addColorStop(0, '#fff')
+  // grd.addColorStop(0.5, '#FFF')
+  ctx.setFillStyle(grd_in)
+  ctx.fillRect(15, 80, 292, 508)
+
+  // // 绘制圆形用户头像
+  let res = await Taro.downloadFile({
+    url: item_info.bannerImage
+  })
+  console.log('res', res);
+
+
+  ctx.save()
+  ctx.beginPath()
+  ctx.drawImage(res.tempFilePath, 15, 80, 292, 180)
+  ctx.restore()
+
+  // 绘制文字
+  ctx.save()
+  ctx.setFontSize(18)
+  ctx.setFillStyle('black')
+  ctx.fillText(item_info.title, 30, 300)
+  ctx.restore()
+
+  // 绘制文字
+  ctx.save()
+  ctx.setFontSize(14)
+  ctx.setFillStyle('#999')
+  ctx.fillText(`${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`, 30, 325)
+  ctx.restore()
+
+  ctx.lineTo(30, 292)
+  ctx.moveTo(30, 345)
+  ctx.setStrokeStyle('red')
+  ctx.stroke()
+
+  // 绘制文字
+  ctx.save()
+  ctx.setFontSize(14)
+  ctx.setFillStyle('#999')
+  ctx.fillText(`${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`, 30, 325)
+  ctx.restore()
+
+  // 绘制二维码
+  // let qrcodeUrl = await Taro.downloadFile({
+  //   url: qrcode
+  // })
+  // console.log('qrcode', qrcode);
+
+
+  ctx.drawImage(qrcode, 110, 350, 108, 108)
+  // 绘制文字
+  ctx.save()
+  ctx.setFontSize(16)
+  ctx.setFillStyle('black')
+  ctx.fillText('长按小程序二维码', 100, 470)
+  ctx.restore()
+
+  // 绘制文字
+  ctx.save()
+  ctx.setFontSize(16)
+  ctx.setFillStyle('black')
+  ctx.fillText('进入查看更多信息', 100, 495)
+  ctx.restore()
+
+  // 将以上绘画操作进行渲染
+  ctx.draw()
+}
+
+export const saveCard = async () => {
+  // 将Canvas图片内容导出指定大小的图片
+  let res = await Taro.canvasToTempFilePath({
+    x: 15,
+    y: 80,
+    width: 292,
+    height: 508,
+    destWidth: 300,
+    destHeight: 516,
+    canvasId: 'cardCanvas',
+    fileType: 'png'
+  })
+  let saveRes = await Taro.saveImageToPhotosAlbum({
+    filePath: res.tempFilePath
+  })
+  if (saveRes.errMsg === 'saveImageToPhotosAlbum:ok') {
+    Taro.showModal({
+      title: '图片保存成功',
+      content: '图片成功保存到相册了，快去发朋友圈吧~',
+      showCancel: false,
+      confirmText: '确认'
+    })
+  } else {
+    Taro.showModal({
+      title: '图片保存失败',
+      content: '请重新尝试!',
+      showCancel: false,
+      confirmText: '确认'
+    })
+  }
+}

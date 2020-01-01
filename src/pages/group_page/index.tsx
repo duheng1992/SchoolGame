@@ -117,7 +117,7 @@ class _page extends Component {
           onActionClick={() => this.onActionClick()}
         />
         <View>
-          <View>热门推荐</View>
+          <View className='sub_title'>热门推荐</View>
           <Swiper
             className='test-h'
             indicatorColor='#999'

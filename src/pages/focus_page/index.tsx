@@ -2,10 +2,10 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import { AtSearchBar, AtTabs, AtTabsPane } from "taro-ui";
-import { getUserCommentList, getUserDiscussList, getUserHistoryList } from "@/api/personal";
+import { getUserFavoriteList, getUserFollowList } from "@/api/personal";
 import { toDetailByCategory } from "@/utils/utils";
 import GoodItem from "@/pages/search_page/components/card";
-import Discuss from "@/components/Discuss/index";
+import Avatar from '@/components/Avactar/index'
 import "./index.scss";
 
 type StateType = {
@@ -37,9 +37,8 @@ class _page extends Component {
     list: [],
     endPage: false,
     loading: false,
-    historyList: [],
-    commintList: [],
-    discussList: [],
+    focusList: [],
+    collectList: [],
   };
 
   componentWillMount() {
@@ -97,30 +96,20 @@ class _page extends Component {
   fetchList = (tabIndex, form) => {
     switch (tabIndex) {
       case 0:
-        getUserCommentList(form).then((res: any) => {
+        getUserFavoriteList(form).then((res: any) => {
           const list = this.setDataList(res);
           this.setState({
             loading: false,
-            commintList: list
+            focusList: list
           });
         });
         break;
       case 1:
-        getUserDiscussList(form).then((res: any) => {
+        getUserFollowList(form).then((res: any) => {
           const list = this.setDataList(res);
           this.setState({
             loading: false,
-            discussList: list
-          });
-        });
-        break;
-      case 2:
-        getUserHistoryList(form).then((res: any) => {
-          const list = this.setDataList(res);
-
-          this.setState({
-            loading: false,
-            historyList: list
+            collectList: list
           });
         });
         break;
@@ -156,34 +145,34 @@ class _page extends Component {
   goToDetail = (item, type) => {
     console.log("detailitem", item);
     console.log("type", type);
-    switch (type) {
-      case 'commit':
-        Taro.navigateTo({
-          url: `/pages/theme_detail_page/index?themeId=${item.id}`,
-        })
-        break;
-      case 'discuss':
-        Taro.navigateTo({
-          url: `/pages/theme_detail_item_page/index?discussId=${item.id}&themeId=${item.themeId}`
-        })
-        break;
-      case 'history':
-        const data = {
-          moduleType: item.type,
-          domainId: item.domainId,
-          id: item.id
-        }
-        toDetailByCategory(data)
-        break;
+    // switch (type) {
+    //   case 'commit':
+    //     Taro.navigateTo({
+    //       url: `/pages/theme_detail_page/index?themeId=${item.id}`,
+    //     })
+    //     break;
+    //   case 'discuss':
+    //     Taro.navigateTo({
+    //       url: `/pages/theme_detail_item_page/index?discussId=${item.id}&themeId=${item.themeId}`
+    //     })
+    //     break;
+    //   case 'history':
+    //     const data = {
+    //       moduleType: item.type,
+    //       domainId: item.domainId,
+    //       id: item.id
+    //     }
+    //     toDetailByCategory(data)
+    //     break;
 
-      default:
-        break;
-    }
+    //   default:
+    //     break;
+    // }
   }
 
 
   render() {
-    const { form, list, endPage, loading, showMore, tabIndex, commintList, discussList, historyList } = this.state;
+    const { form, list, endPage, loading, showMore, tabIndex, collectList, focusList } = this.state;
     return (
       <View className="dynamic_page" >
         <AtSearchBar
@@ -200,24 +189,24 @@ class _page extends Component {
         <AtTabs
           current={tabIndex}
           tabList={[
-            { title: "我的发布" },
-            { title: "我的评论" },
-            { title: "浏览历史" },
+            { title: "我的关注" },
+            { title: "我的收藏" },
           ]}
           onClick={this.handleTabClick.bind(this)}
         >
-          <AtTabsPane current={tabIndex} index={0} >
-
+          <AtTabsPane current={tabIndex} index={0}>
             {
-              commintList.length > 0 && (
+              focusList.length > 0 && (
                 <View className="discuss_wrap">
                   {
-                    commintList.length > 0 && commintList.map((item) => {
+                    focusList.length > 0 && focusList.map((item) => {
                       return (
-                        <Discuss key={item.id} detail={item} onClick={() => {
-                          return this.goToDetail(item, "commit");
+                        <View className='focus_item' key={item.id} onClick={() => {
+                          return this.goToDetail(item, "focus");
                         }}
-                        ></Discuss>
+                        >
+                          <Avatar title={item.title} subTitle='' avatar={item.avatar}></Avatar>
+                        </View>
                       );
                     })
                   }
@@ -228,32 +217,12 @@ class _page extends Component {
             }
           </AtTabsPane>
           <AtTabsPane current={tabIndex} index={1}>
-            {
-              discussList.length > 0 && (
-                <View className="discuss_wrap">
-                  {
-                    discussList.length > 0 && discussList.map((item) => {
-                      return (
-                        <Discuss key={item.id} detail={item} onClick={() => {
-                          return this.goToDetail(item, "discuss");
-                        }}
-                        ></Discuss>
-                      );
-                    })
-                  }
-
-                </View>
-              )
-
-            }
-          </AtTabsPane>
-          <AtTabsPane current={tabIndex} index={2}>
 
             {
-              historyList.length > 0 && historyList.map((item) => {
+              collectList.length > 0 && collectList.map((item) => {
                 return (
                   <GoodItem data={item} onTapCard={() => {
-                    return this.goToDetail(item, "history");
+                    return this.goToDetail(item, "collect");
                   }}
                   ></GoodItem>
                 );

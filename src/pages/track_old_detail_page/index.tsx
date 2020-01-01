@@ -7,7 +7,11 @@ import Discuss from '@/components/Discuss'
 import collect from '@/images/card/card_collect.png'
 import replay from '@/images/card/tab_replay.png'
 import praise from '@/images/card/comment_praise.png'
+import qrcode from '@/images/card/qrcode.jpeg'
+import logo from '@/images/card/logo_title.png'
+import close from '@/images/card/card_close.png'
 import { AtButton, AtInput } from "taro-ui";
+import { drawImage, saveCard } from "@/utils/utils";
 
 type StateType = {
   [propName: string]: any;
@@ -76,86 +80,10 @@ class _page extends Component {
 
   componentWillReact() { }
 
-  async drawImage() {
-    // 创建canvas对象
-    let ctx = Taro.createCanvasContext('cardCanvas')
-
-    // 填充背景色
-    let grd = ctx.createLinearGradient(0, 0, 1, 600)
-    grd.addColorStop(0, '#FC4514')
-    // grd.addColorStop(0.5, '#FFF')
-    ctx.setFillStyle(grd)
-    ctx.fillRect(0, 0, 500, 600)
-
-    // 填充背景色
-    let grd_in = ctx.createLinearGradient(0, 0, 1, 600)
-    grd_in.addColorStop(0, '#fff')
-    // grd.addColorStop(0.5, '#FFF')
-    ctx.setFillStyle(grd_in)
-    ctx.fillRect(15, 80, 292, 508)
-
-    // // 绘制圆形用户头像
-    const { item_info } = this.state
-    let res = await Taro.downloadFile({
-      url: item_info.bannerImage
-    })
-    console.log('res', res);
-
-
-    ctx.save()
-    ctx.beginPath()
-    ctx.drawImage(res.tempFilePath, 15, 80, 292, 180)
-    ctx.restore()
-
-    // 绘制文字
-    ctx.save()
-    ctx.setFontSize(18)
-    ctx.setFillStyle('black')
-    ctx.fillText(item_info.title, 30, 300)
-    ctx.restore()
-
-    // 绘制文字
-    ctx.save()
-    ctx.setFontSize(14)
-    ctx.setFillStyle('#999')
-    ctx.fillText(`${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`, 30, 325)
-    ctx.restore()
-
-    ctx.lineTo(30, 292)
-    ctx.moveTo(30, 345)
-    ctx.setStrokeStyle('#red')
-    ctx.stroke()
-
-    // 绘制文字
-    ctx.save()
-    ctx.setFontSize(18)
-    ctx.setFillStyle('black')
-    ctx.fillText('课程简介', 30, 300)
-    ctx.restore()
-
-    // 绘制文字
-    ctx.save()
-    ctx.setFontSize(14)
-    ctx.setFillStyle('#999')
-    ctx.fillText(`${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`, 30, 325)
-    ctx.restore()
-
-    // 绘制二维码
-    // let qrcode = await Taro.downloadFile({
-    //   url: qrcodeUrl
-    // })
-    // console.log('qrcode', qrcode);
-
-
-    // ctx.drawImage(qrcode.tempFilePath, 70, 360, 180, 180)
-
-    // 将以上绘画操作进行渲染
-    ctx.draw()
-  }
-
   saveImage = () => {
     this.setState({ showCanvasPage: true })
-    this.drawImage()
+    const { item_info } = this.state
+    drawImage(item_info, qrcode)
   }
 
   onInputCommit = () => {
@@ -246,10 +174,14 @@ class _page extends Component {
         {
           showCanvasPage && (
             <View className='canvas-wrap'>
+              <View className='logo_wrap'>
+                <Image className='logo_title' src={logo}></Image>
+                <Image className='logo_close' src={close} onClick={() => this.setState({ showCanvasPage: false })}></Image>
+              </View>
               <Canvas id='card-canvas'
                 style="width: 320px; height: 600px"
                 canvasId='cardCanvas'></Canvas>
-              <Button className='btn-save' onClick={() => this.saveCard()}>保存图片</Button>
+              <Button className='btn-save' onClick={() => saveCard()}>保存图片</Button>
             </View>
           )}
       </View>

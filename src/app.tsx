@@ -72,7 +72,9 @@ class App extends Component {
       "pages/theme_group_page/index",//热门分类页面
       "pages/track_group_page/index",//活动追踪分类页面
       "pages/personal/about/index", //关于活力校园
-      "pages/dynamic_page/index",
+      "pages/dynamic_page/index", //我的动态
+      "pages/focus_page/index", //我的动态
+      "pages/entered_page/index", //我的已报活动
 
       // "pages/detail/index", //详情页面
       "pages/cheng_set/index", // 称的设置
