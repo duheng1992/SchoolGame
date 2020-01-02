@@ -211,7 +211,7 @@ class _page extends Component {
 
               </View>
             </AtModalContent>
-            <AtModalAction> <AtButton circle className='btn_style'>关注</AtButton></AtModalAction>
+            <AtModalAction> <AtButton circle openType='contact' className='btn_style'>关注</AtButton></AtModalAction>
           </AtModal>
         </ScrollView>
       </View>
