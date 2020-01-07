@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, ScrollView, Image } from "@tarojs/components";
+import { View, ScrollView, Image, Input, Picker, Button } from "@tarojs/components";
 import { getUserBaseInfo } from '@/api/personal'
 import "./userinfo.scss";
 
@@ -18,6 +18,7 @@ interface _page {
 }
 
 import { observer, inject } from "@tarojs/mobx";
+import { AtButton } from "taro-ui";
 
 @inject("tabBarStore")
 @observer
@@ -29,7 +30,9 @@ class _page extends Component {
   }
 
   state: StateType = {
-    userinfo: {}
+    userinfo: {},
+    passportFlag: ['是', '否'],
+    visaFlag: ['是', '否']
   };
 
   componentWillMount() { }
@@ -53,6 +56,21 @@ class _page extends Component {
     })
   }
 
+  onFlagChange = e => {
+    console.log(e);
+
+    // this.setState({
+    //   passportFlag: this.state.passportFlag[e.detail.value]
+    // })
+  }
+  onVisaChange = e => {
+    console.log(e);
+
+    // this.setState({
+    //   visaFlag: this.state.passportFlag[e.detail.value]
+    // })
+  }
+
 
 
 
@@ -64,41 +82,73 @@ class _page extends Component {
 
         <View className='list'>
           <View className='title'>所属地区</View>
-          <View className='info'>{userinfo.schoolProvince}{userinfo.schoolCity}</View>
+          <View className='info'>
+            <Input value={userinfo.schoolProvince + userinfo.schoolCity}></Input>
+          </View>
         </View>
         <View className='list'>
           <View className='title'>联系邮箱</View>
-          <View className='info'>{userinfo.email}</View>
+          <View className='info'>
+            <Input value={userinfo.email} /></View>
         </View>
         <View className='list'>
           <View className='title'>申报人姓名</View>
-          <View className='info'>{userinfo.userName}</View>
+          <View className='info'>
+            <Input value={userinfo.userName} />
+          </View>
         </View>
         <View className='list'>
           <View className='title'>身份证号</View>
-          <View className='info'>{userinfo.identity}</View>
+          <View className='info'>
+            <Input value={userinfo.identity} />
+          </View>
         </View>
         <View className='list'>
           <View className='title'>联系电话</View>
-          <View className='info'>{userinfo.phone}</View>
+          <View className='info'>
+            <Input value={userinfo.phone} />
+          </View>
         </View>
         <View className='list'>
           <View className='title'>在校职务</View>
-          <View className='info'>{userinfo.position}</View>
+          <View className='info'>
+            <Input value={userinfo.position} />
+          </View>
         </View>
         <View className='list'>
           <View className='title'>从事体育教育年限</View>
-          <View className='info'>{userinfo.workingYears}</View>
+          <View className='info'>
+            <Input value={userinfo.workingYears} />
+          </View>
         </View>
-        <View className='list'>
-          <View className='title'>是否拥有有效护照</View>
-          <View className='info'>{userinfo.passportFlag ? '是' : '否'}</View>
-        </View>
-        <View className='list'>
-          <View className='title'>是否办理过美国签证</View>
-          <View className='info'>{userinfo.visaFlag ? '是' : '否'}</View>
+
+
+
+        <Picker mode='selector' value={userinfo.passportFlag} range={this.state.passportFlag} onChange={this.onFlagChange}>
+          <View className='list'>
+            <View className='title'>是否拥有有效护照</View>
+            <View className='info'>
+              {userinfo.passportFlag ? '是' : '否'}
+            </View>
+          </View>
+        </Picker>
+
+
+
+
+        <Picker mode='selector' value={userinfo.visaFlag} range={this.state.visaFlag} onChange={this.onVisaChange}>
+          <View className='list'>
+            <View className='title'>是否办理过美国签证</View>
+            <View className='info'>
+              {userinfo.visaFlag ? '是' : '否'}
+            </View>
+          </View>
+        </Picker>
+        <View>
+          <AtButton className='save_btn'>保存</AtButton>
         </View>
       </View>
+
 
 
 
