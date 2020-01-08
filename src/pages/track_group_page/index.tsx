@@ -69,7 +69,7 @@ class _page extends Component {
   getDataList = (parmas, list) => {
     getTrackingList(parmas).then((res: any) => {
       console.log('list', res)
-      let themeList = JSON.parse(JSON.stringify(list))
+      let themeList = list.length > 0 ? JSON.parse(JSON.stringify(list)) : []
       if (res.code == 'OK') {
         themeList = themeList.concat(res.data.list);
         if (!res.data.hasNextPage) {
@@ -83,7 +83,7 @@ class _page extends Component {
   getDataOldList = (parmas, list) => {
     getTrackingOldList(parmas).then((res: any) => {
       console.log('list', res)
-      let themeList = JSON.parse(JSON.stringify(list))
+      let themeList = list.length > 0 ? JSON.parse(JSON.stringify(list)) : []
       if (res.code == 'OK') {
         themeList = themeList.concat(res.data.list);
         if (!res.data.hasNextPage) {
@@ -196,7 +196,7 @@ class _page extends Component {
                     <View className="list_title">{item.title}</View>
                     {
                       item.startTime && (
-                        <View className="list_create_time">{item.startTime}</View>
+                        <View className="list_create_time">{item.startTime}~{item.endTime}</View>
 
                       )
                     }

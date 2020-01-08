@@ -54,3 +54,19 @@ export const getUserJoinList = (data?) => {
     method: "get",
   });
 };
+
+export const postFavorite = (data) => {
+  return request_json({
+    url: `/api/resource/favorite/${data.resourceId}`,
+    data,
+    method: 'post'
+  })
+}
+
+export const postPraise = (data) => {
+  return request_json({
+    url: `/api/resource/praise/${data.resourceId}`,
+    data,
+    method: 'post'
+  })
+}

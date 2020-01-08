@@ -3,12 +3,14 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Image, Video, RichText, Canvas, Button, Icon } from "@tarojs/components";
 import "./index.scss";
 import { getResourceInfoData, getCommentListByResourceId, createResourceComment } from "@/api/detail";
-import { getUserBaseInfo } from '@/api/personal'
+import { getUserBaseInfo, postFavorite, postPraise } from '@/api/personal'
 import PdfButten from "@/components/PdfButten/index"
 import { AtList, AtListItem, AtButton, AtModal, AtModalContent, AtInput } from "taro-ui";
 import collect from '@/images/card/card_collect.png'
+import collect_active from '@/images/card/card_collect_active.png'
 import replay from '@/images/card/tab_replay.png'
 import praise from '@/images/card/comment_praise.png'
+import praise_active from '@/images/card/comment_praise_select.png'
 import qrcode from '@/images/card/qrcode.jpeg'
 import logo from '@/images/card/logo_title.png'
 import close from '@/images/card/card_close.png'
@@ -172,6 +174,40 @@ class _page extends Component {
     })
   }
 
+  onTapPraise = () => {
+    const resourceId = this.state.item_info.id
+    postPraise({ resourceId }).then(res => {
+      console.log('res', res);
+      Taro.showToast({ title: res.message, icon: res.code === 'OK' ? 'success' : 'none' })
+      if (res.code === 'OK') {
+
+        const item = this.state.item_info
+        item.isPraise = !item.isPraise
+
+        item.praiseNum = item.isPraise ? item.praiseNum + 1 : item.praiseNum - 1
+        this.setState({
+          item_info: item
+        })
+      }
+
+    })
+  }
+  onTapFavorite = () => {
+    const resourceId = this.state.item_info.id
+    postFavorite({ resourceId }).then(res => {
+      console.log('res', res);
+      Taro.showToast({ title: res.message, icon: res.code === 'OK' ? 'success' : 'none' })
+      if (res.code === 'OK') {
+        const item = this.state.item_info
+        item.isFavorite = !item.isFavorite
+        item.favoriteNum = item.isFavorite ? item.favoriteNum + 1 : item.favoriteNum - 1
+        this.setState({
+          item_info: item
+        })
+      }
+    })
+  }
+
 
   render() {
     //coursewareType {1:pdf,2:video,3:pdf+vedio}
@@ -220,17 +256,17 @@ class _page extends Component {
           <View>
             <View>评论</View>
             <View className='commit_wrap'>
-              <View className='commit_item'>
-                <Image className='icon' src={collect}></Image>
-                <View className='num'>0</View>
+              <View className='commit_item' onClick={() => this.onTapFavorite()}>
+                <Image className='icon' src={item_info.isFavorite ? collect_active : collect}></Image>
+                <View className='num'>{item_info.favoriteNum}</View>
               </View>
               <View className='commit_item' onClick={() => this.onInputCommit()}>
                 <Image className='icon' src={replay}></Image>
-                <View className='num'>1</View>
+                <View className='num'>{item_info.commentNum}</View>
               </View>
-              <View className='commit_item' >
-                <Image className='icon' src={praise}></Image>
-                <View className='num'>2</View>
+              <View className='commit_item' onClick={() => this.onTapPraise()}>
+                <Image className='icon' src={item_info.isPraise ? praise_active : praise}></Image>
+                <View className='num'>{item_info.praiseNum}</View>
               </View>
             </View>
 

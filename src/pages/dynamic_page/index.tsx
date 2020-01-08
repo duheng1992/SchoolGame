@@ -97,20 +97,21 @@ class _page extends Component {
   fetchList = (tabIndex, form) => {
     switch (tabIndex) {
       case 0:
-        getUserCommentList(form).then((res: any) => {
-          const list = this.setDataList(res);
-          this.setState({
-            loading: false,
-            commintList: list
-          });
-        });
-        break;
-      case 1:
         getUserDiscussList(form).then((res: any) => {
           const list = this.setDataList(res);
           this.setState({
             loading: false,
             discussList: list
+          });
+        });
+
+        break;
+      case 1:
+        getUserCommentList(form).then((res: any) => {
+          const list = this.setDataList(res);
+          this.setState({
+            loading: false,
+            commintList: list
           });
         });
         break;
@@ -209,13 +210,13 @@ class _page extends Component {
           <AtTabsPane current={tabIndex} index={0} >
 
             {
-              commintList.length > 0 && (
+              discussList.length > 0 && (
                 <View className="discuss_wrap">
                   {
-                    commintList.length > 0 && commintList.map((item) => {
+                    discussList.length > 0 && discussList.map((item) => {
                       return (
                         <Discuss key={item.id} detail={item} onClick={() => {
-                          return this.goToDetail(item, "commit");
+                          return this.goToDetail(item, "discuss");
                         }}
                         ></Discuss>
                       );
@@ -229,13 +230,13 @@ class _page extends Component {
           </AtTabsPane>
           <AtTabsPane current={tabIndex} index={1}>
             {
-              discussList.length > 0 && (
+              commintList.length > 0 && (
                 <View className="discuss_wrap">
                   {
-                    discussList.length > 0 && discussList.map((item) => {
+                    commintList.length > 0 && commintList.map((item) => {
                       return (
                         <Discuss key={item.id} detail={item} onClick={() => {
-                          return this.goToDetail(item, "discuss");
+                          return this.goToDetail(item, "commit");
                         }}
                         ></Discuss>
                       );
