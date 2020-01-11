@@ -30,7 +30,7 @@ class _page extends Component {
     form: {
       keyword: "",
       pageIndex: 1,
-      pageSize: 5,
+      pageSize: 15,
     },
     tabIndex: 0,
     showMore: "加载更多",
@@ -96,7 +96,8 @@ class _page extends Component {
   fetchList = (tabIndex, form) => {
     switch (tabIndex) {
       case 0:
-        getUserFavoriteList(form).then((res: any) => {
+
+        getUserFollowList(form).then((res: any) => {
           const list = this.setDataList(res);
           this.setState({
             loading: false,
@@ -105,8 +106,11 @@ class _page extends Component {
         });
         break;
       case 1:
-        getUserFollowList(form).then((res: any) => {
-          const list = this.setDataList(res);
+        getUserFavoriteList(form).then((res: any) => {
+          const list: any = this.setDataList(res);
+          list.forEach((item: any) => {
+            item.bannerImage = item.bannerImage && typeof item.bannerImage === 'string' ? JSON.parse(item.bannerImage).file : ''
+          })
           this.setState({
             loading: false,
             collectList: list

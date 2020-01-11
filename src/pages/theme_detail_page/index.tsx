@@ -2,10 +2,10 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Image, ScrollView } from "@tarojs/components";
 import Avatar from '@/components/Avactar/index'
 import Discuss from '@/components/Discuss/index'
-import { getThemeDetailByThemeId, getThemeDetailDiscussByThemeId } from "@/api/detail";
+import { getThemeDetailByThemeId, getThemeDetailDiscussByThemeId, FavoriteTheme } from "@/api/detail";
 import { getStore } from "@/utils/utils";
-import Favorite from '@/images/tab_bar/home.png'
-import Favorited from '@/images/tab_bar/home-active.png'
+import Favorite from '@/images/card/tab_collect.png'
+import Favorited from '@/images/card/card_collect_active.png'
 import add from '@/images/card/add_photo.png'
 
 import "./index.scss";
@@ -94,6 +94,20 @@ class _page extends Component {
         });
     }
 
+    onFavorite = themeId => {
+        FavoriteTheme({ themeId }).then((res: any) => {
+            if (res.code == 'OK') {
+                const item = this.state.detail_info
+                item.isFavorite = !item.isFavorite
+                this.setState({ detail_info: item })
+                Taro.showToast({
+                    title: res.message,
+                    icon: 'success'
+                })
+            }
+        })
+    }
+
     render() {
         const { detail_info, discuss } = this.state
         return (
@@ -103,14 +117,14 @@ class _page extends Component {
                         <Image className='banner_image' src={detail_info.bannerImage}></Image>
                         <View className='theme_title_warp'>
                             <View className='theme_title'>{detail_info.title}</View>
-                            <View className='theme_joinNum'>{detail_info.joinNum}人参与·热门</View>
+                            <View className='theme_joinNum'>{detail_info.joinNum ? detail_info.joinNum : 0}人参与·热门</View>
                         </View>
                     </View>
                     <View className='theme_body_wrap'>
                         <Avatar></Avatar>
                         <View className='theme_body_title'>
                             <View>{detail_info.title}</View>
-                            <View className='favorite'>
+                            <View className='favorite' onClick={() => this.onFavorite(detail_info.id)}>
                                 <Image className='favorite_img' src={detail_info.isFavorite ? Favorited : Favorite}></Image>
                             </View>
                         </View>

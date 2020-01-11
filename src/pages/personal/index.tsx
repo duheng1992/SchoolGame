@@ -115,10 +115,11 @@ class _page extends Component {
     }
   };
   Toast = () => {
-    this.setState({
-      isToastOpened: true,
-      toastText: '功能暂未开放'
+    Taro.showToast({
+      title: '功能暂未开放',
+      icon: 'none'
     })
+
   }
 
   userInfo = () => {
@@ -202,7 +203,7 @@ class _page extends Component {
             </AtList>
 
           </View>
-          <AtToast isOpened={isToastOpened} text={toastText} duration={2000} icon="close"></AtToast>
+          {/* <AtToast isOpened={isToastOpened} text={toastText} duration={2000} icon="close"></AtToast> */}
           <AtModal isOpened={isFocusPublic}>
             <AtModalHeader>关注公众号，获取更多消息提醒</AtModalHeader>
             <AtModalContent>

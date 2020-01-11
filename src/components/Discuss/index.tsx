@@ -65,7 +65,7 @@ class _page extends Component {
 
     render() {
         const { detail, title, onClick, type } = this.props
-        const commentImage = detail.commentImage !== '' ? JSON.parse(detail.commentImage) : []
+        const commentImage = detail.commentImage && detail.commentImage !== '' ? JSON.parse(detail.commentImage) : []
         return (
 
             <View className='discuss_wrap'>

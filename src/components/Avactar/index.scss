@@ -1,15 +1,27 @@
-.theme_avatar_wrap{
+.theme_avatar_wrap {
+  display: flex;
+  flex-direction: row;
+  .theme_avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50px;
+    background-color: #999;
+    margin-right: 30px;
+  }
+  .theme_title_wrap {
     display: flex;
-    flex-direction: row;
-    .theme_avatar{
-        width:  96px;
-        height: 96px;
-        border-radius: 50px;
-        background-color: #999;
-        margin-right: 30px;
-    }
-    .theme_title_wrap{
-        display: flex;
-        flex-direction: column;
-    }
+    flex-direction: column;
+  }
+  .focus {
+    margin-left: auto;
+    align-self: center;
+    width: 140px;
+    height: 64px;
+    text-align: center;
+    line-height: 64px;
+    background-color: #fc4514;
+    border-radius: 32px;
+    color: #fff;
+    font-size: 24px;
+  }
 }

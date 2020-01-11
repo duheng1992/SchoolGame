@@ -5,6 +5,7 @@ import "./index.scss";
 import { getResourceInfoData, getCommentListByResourceId, createResourceComment } from "@/api/detail";
 import { getUserBaseInfo, postFavorite, postPraise } from '@/api/personal'
 import PdfButten from "@/components/PdfButten/index"
+import Avatar from '@/components/Avactar'
 import { AtList, AtListItem, AtButton, AtModal, AtModalContent, AtInput } from "taro-ui";
 import collect from '@/images/card/card_collect.png'
 import collect_active from '@/images/card/card_collect_active.png'
@@ -42,7 +43,8 @@ class _page extends Component {
     showPdfModel: false,
     showInputModel: false,
     content: '',
-    showCanvasPage: false
+    showCanvasPage: false,
+    discuss: []
   };
 
   componentWillMount() {
@@ -63,22 +65,29 @@ class _page extends Component {
 
   componentDidShow() {
     const { resourceId } = this.state
-    getResourceInfoData(resourceId).then(res => {
+    getResourceInfoData(resourceId).then((res: any) => {
       console.log('resourceinfo', res)
       const { code, data } = res
-      if (code == 'OK') {
+      if (code === 'OK') {
         const dataInfo = JSON.parse(JSON.stringify(data))
         dataInfo.videoFileUrl = data.coursewareType !== 1 ? JSON.parse(dataInfo.videoFileUrl) : '';
         this.setState({ item_info: dataInfo })
       }
     })
+    this.getCommentList(resourceId)
 
-    getCommentListByResourceId(resourceId).then(res => {
-      console.log('CommentList', res)
-    })
 
   }
 
+  getCommentList = (resourceId) => {
+    getCommentListByResourceId(resourceId).then((res: any) => {
+      console.log('CommentList', res)
+      const { code, data } = res
+      if (code === 'OK') {
+        this.setState({ discuss: data.list })
+      }
+    })
+  }
   componentWillReact() { }
 
   videoUrl = (videoFileUrl) => {
@@ -109,8 +118,17 @@ class _page extends Component {
       content,
       domainId: resourceId
     }
-    createResourceComment(data).then(res => {
+    createResourceComment(data).then((res: any) => {
       console.log('res', res);
+      const { resourceId } = this.state
+      if (res.code === 'OK') {
+        Taro.showToast({
+          title: '成功',
+          icon: 'success'
+        }).then(() => {
+          this.getCommentList(resourceId)
+        })
+      }
 
     })
     this.setState({ showInputModel: false })
@@ -211,7 +229,7 @@ class _page extends Component {
 
   render() {
     //coursewareType {1:pdf,2:video,3:pdf+vedio}
-    const { item_info, showPdfModel, showInputModel, content, showCanvasPage } = this.state
+    const { item_info, showPdfModel, showInputModel, content, showCanvasPage, discuss } = this.state
     console.log('item_info', item_info)
     const { coursewareType } = item_info
     return (
@@ -253,8 +271,39 @@ class _page extends Component {
               {/* <AtButton className='list_btn'>复制链接</AtButton> */}
             </View>
           </View>
+          <View className='br'></View>
           <View>
-            <View>评论</View>
+            {
+              discuss.length > 0 && (
+                <View className='discuss_wrap'>
+                  <View className='discuss_head'>评论{item_info.commentNum}</View>
+                  {
+                    discuss.length > 0 && discuss.map(item => (
+
+                      <View>
+                        <View className='discuss_item'>
+                          <View className='discuss_avatar'>
+                            <Image className='avatar' src={item.avatar}></Image>
+                          </View>
+                          <View>
+                            <View className='discuss_nickName'>{item.nickName}</View>
+                            <View className='discuss_content'>
+                              <View className='theme_word'>{item.content}</View>
+                            </View>
+                          </View>
+
+                        </View>
+                        <View className='theme_time'>{item.createTime}</View>
+                      </View>
+                    ))
+                  }
+
+                </View>
+              )
+            }
+
+          </View>
+          <View>
             <View className='commit_wrap'>
               <View className='commit_item' onClick={() => this.onTapFavorite()}>
                 <Image className='icon' src={item_info.isFavorite ? collect_active : collect}></Image>
@@ -269,7 +318,6 @@ class _page extends Component {
                 <View className='num'>{item_info.praiseNum}</View>
               </View>
             </View>
-
           </View>
         </View>
 

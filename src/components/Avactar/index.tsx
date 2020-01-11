@@ -9,10 +9,12 @@ type StateType = {
 };
 
 type ComponentsProps = {
-    title?:string;
-    subTitle?:string;
-    type?:string;
-    avatar?:string;
+    title?: string;
+    subTitle?: string;
+    type?: string;
+    avatar?: string;
+    focus?: Boolean;
+    focusClick: Function
 };
 
 interface _page {
@@ -25,11 +27,13 @@ import { observer, inject } from "@tarojs/mobx";
 @inject("tabBarStore")
 @observer
 class _page extends Component {
-    static defaultProps:ComponentsProps = {
+    static defaultProps: ComponentsProps = {
         title: 'Nike 官方',
         subTitle: '发起了话题讨论',
-        type:'default',
-        avatar:''
+        type: 'default',
+        avatar: '',
+        focus: false,
+        focusClick: () => { }
     };
 
     constructor(props) {
@@ -60,8 +64,8 @@ class _page extends Component {
 
 
     render() {
-        const { title,subTitle ,type,avatar} = this.props
-        const avatar_img:any= type==='default'?'':avatar
+        const { title, subTitle, type, avatar, focus, focusClick } = this.props
+        const avatar_img: any = type === 'default' ? '' : avatar
         return (
 
             <View className='theme_avatar_wrap'>
@@ -70,6 +74,12 @@ class _page extends Component {
                     <View className='theme_title_wrap'>{title}</View>
                     <View className='theme_start'>{subTitle}</View>
                 </View>
+                {
+                    focus && (
+                        <View className='focus' onClick={() => focusClick()}>关注</View>
+                    )
+                }
+
             </View>
 
         );

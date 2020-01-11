@@ -34,7 +34,7 @@ class _page extends Component {
       entity: {
         hotRank: 0,
         pageIndex: 1,
-        pageSize: 5
+        pageSize: 15
       },
       loading: false,
       endPage: false

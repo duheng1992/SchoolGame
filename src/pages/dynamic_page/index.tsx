@@ -30,7 +30,7 @@ class _page extends Component {
     form: {
       keyword: "",
       pageIndex: 1,
-      pageSize: 5,
+      pageSize: 15,
     },
     tabIndex: 0,
     showMore: "加载更多",
@@ -235,7 +235,7 @@ class _page extends Component {
                   {
                     commintList.length > 0 && commintList.map((item) => {
                       return (
-                        <Discuss key={item.id} detail={item} onClick={() => {
+                        <Discuss key={item.id} detail={item} type='discuss' onClick={() => {
                           return this.goToDetail(item, "commit");
                         }}
                         ></Discuss>

@@ -134,3 +134,23 @@ export const praiseCommit = (data) => {
     method: "post",
   });
 }
+
+// 关注用户
+
+export const focusUser = (data) => {
+  return request_json({
+    url: `/api/theme/discuss/follow/${data.themeId}`,
+    data,
+    method: "post",
+  });
+}
+
+// 收藏话题
+
+export const FavoriteTheme = (data) => {
+  return request_json({
+    url: `/api/theme/favorite/${data.themeId}`,
+    data,
+    method: "post",
+  });
+}

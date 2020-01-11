@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Image, ScrollView, Canvas, Button } from "@tarojs/components";
 import Avatar from '@/components/Avactar/index'
-import { getThemeDetailDiscussDetailByDiscussId, favoriteCommit, praiseCommit } from "@/api/detail";
+import { getThemeDetailDiscussDetailByDiscussId, favoriteCommit, praiseCommit, focusUser } from "@/api/detail";
 import praise from '@/images/card/comment_praise.png'
 import collect from '@/images/card/card_collect.png'
 
@@ -178,14 +178,27 @@ class _page extends Component {
         })
     }
 
+    focusClick = item => {
+        const { themeId } = item
+        focusUser({ themeId }).then((res: any) => {
+            if (res.code == 'OK') {
+                Taro.showToast({
+                    title: res.message,
+                    icon: 'success'
+                })
+            }
+        })
+    }
+
     render() {
         const { list, showCanvasPage } = this.state
         return (
             <View className='wrap'>
                 <ScrollView scrollY style={{ height: '100vh' }}>
-                    <Avatar subTitle={list.createTime} title={list.nickName} avatar={list.avatar} type='discuss'></Avatar>
-                    <View>
-                        {list.content}
+                    <Avatar subTitle={list.createTime} title={list.nickName} focus={true} focusClick={() => { this.focusClick(list) }} avatar={list.avatar} type='discuss'></Avatar>
+                    <View className='comment_content'>
+                        <View className='theme_word'>#{list.themeTitle}#</View>
+                        <View>{list.content}</View>
                     </View>
                     <View className='comment_image_list'>
                         {

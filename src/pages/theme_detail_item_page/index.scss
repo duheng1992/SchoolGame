@@ -5,6 +5,13 @@
       width: 100vw;
     }
   }
+  .comment_content {
+    display: flex;
+    padding-bottom: 40px;
+    .theme_word {
+      color: #fc4514;
+    }
+  }
   .list_butten_group {
     display: flex;
     justify-content: space-between;
