@@ -174,14 +174,13 @@ class _page extends Component {
         {
           showCanvasPage && (
             <View className='canvas-wrap'>
-              <View className='logo_wrap'>
-                <Image className='logo_title' src={logo}></Image>
-                <Image className='logo_close' src={close} onClick={() => this.setState({ showCanvasPage: false })}></Image>
-              </View>
               <Canvas id='card-canvas'
                 style="width: 320px; height: 600px"
                 canvasId='cardCanvas'></Canvas>
-              <Button className='btn-save' onClick={() => saveCard()}>保存图片</Button>
+              <View className="btn_group">
+                <Button className='btn-save' onClick={() => saveCard()}>保存图片</Button>
+                <Button className='btn-close' onClick={() => this.setState({ showCanvasPage: false })}>关 闭</Button>
+              </View>
             </View>
           )}
       </View>

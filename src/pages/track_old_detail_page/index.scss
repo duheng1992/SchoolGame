@@ -111,8 +111,21 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    .btn-save {
+    .btn_group {
+      display: flex;
       margin-top: 40rpx;
+      .btn-save {
+        background-color: #fc4514;
+        border-radius: 38px;
+        color: #fff;
+        margin-right: 40rpx;
+      }
+      .btn-close {
+        background-color: #fff;
+        color: #000;
+        border-radius: 38px;
+        width: 200px;
+      }
     }
     .logo_wrap {
       position: absolute;

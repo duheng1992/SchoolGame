@@ -1,5 +1,6 @@
 import Taro from "@tarojs/taro";
 import { baseUrl } from "../config/baseUrl";
+import logo from '@/images/card/logo_title.png'
 
 export const getUrlParam = () => {
   /**
@@ -202,14 +203,16 @@ export const drawImage = async (item_info, qrcode) => {
   grd.addColorStop(0, '#FC4514')
   // grd.addColorStop(0.5, '#FFF')
   ctx.setFillStyle(grd)
-  ctx.fillRect(0, 0, 500, 600)
+  ctx.fillRect(0, 0, 500, 580)
 
   // 填充背景色
   let grd_in = ctx.createLinearGradient(0, 0, 1, 600)
   grd_in.addColorStop(0, '#fff')
   // grd.addColorStop(0.5, '#FFF')
   ctx.setFillStyle(grd_in)
-  ctx.fillRect(15, 80, 292, 508)
+  ctx.fillRect(15, 80, 292, 488)
+
+  ctx.drawImage(logo, 85, 15, 140, 58)
 
   // // 绘制圆形用户头像
   let res = await Taro.downloadFile({
@@ -261,14 +264,14 @@ export const drawImage = async (item_info, qrcode) => {
   ctx.save()
   ctx.setFontSize(16)
   ctx.setFillStyle('black')
-  ctx.fillText('长按小程序二维码', 100, 470)
+  ctx.fillText('长按小程序二维码', 100, 480)
   ctx.restore()
 
   // 绘制文字
   ctx.save()
   ctx.setFontSize(16)
   ctx.setFillStyle('black')
-  ctx.fillText('进入查看更多信息', 100, 495)
+  ctx.fillText('进入查看更多信息', 100, 505)
   ctx.restore()
 
   // 将以上绘画操作进行渲染

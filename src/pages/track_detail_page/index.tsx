@@ -4,6 +4,8 @@ import { getTrackDetailByTrackId, favoriteNew } from "@/api/detail";
 import { getStore } from "@/utils/utils";
 import share from '@/images/card/tab_share.png'
 import collect from '@/images/card/tab_collect.png'
+import collected from '@/images/card/card_collect_active.png'
+
 
 import "./index.scss";
 
@@ -77,11 +79,14 @@ class _page extends Component {
 
     }
 
-    collect = () => {
+    doCollect = () => {
         const { detail_info } = this.state
         const newsId = detail_info.id
         favoriteNew({ newsId }).then(res => {
             if (res.code == 'OK') {
+                const data = detail_info
+                data.isFavorite = !data.isFavorite
+                this.setState({ detail_info: data })
                 Taro.showToast({
                     title: res.message,
                     icon: 'success'
@@ -130,13 +135,13 @@ class _page extends Component {
                     </View>
 
                     <View className='fixButtom'>
-                        <View className='fix_btn_group' onClick={() => this.collect()}>
-                            <Image className='fix_btn_img' src={collect}></Image>
+                        <View className='fix_btn_group' onClick={() => this.doCollect()}>
+                            <Image className='fix_btn_img' src={detail_info.isFavorite ? collected : collect}></Image>
                             <View>收藏</View>
                         </View>
                         <View className='fix_btn_group'>
                             <Image className='fix_btn_img' src={share}></Image>
-                            <Button openType='share'>分享</Button>
+                            <Button className='fix_btn_share' openType='share'>分享</Button>
                         </View>
                         <View className='fix_btn' onClick={() => { this.join() }}>立即报名</View>
                     </View>

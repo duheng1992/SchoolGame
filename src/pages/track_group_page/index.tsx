@@ -89,10 +89,10 @@ class _page extends Component {
         if (!res.data.hasNextPage) {
           this.setState({ endPage: true })
         }
-        themeList.forEach(item => {
-          console.log('lisitem', item)
-          item.bannerImage = typeof item.bannerImage === 'string' ? JSON.parse(item.bannerImage).file : ''
-        })
+        // themeList.forEach(item => {
+        //   console.log('lisitem', item)
+        //   item.bannerImage = typeof item.bannerImage === 'string' ? JSON.parse(item.bannerImage).file : ''
+        // })
         this.setState({ loading: false, list: themeList })
       }
     })

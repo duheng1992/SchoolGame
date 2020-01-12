@@ -232,7 +232,10 @@ class _page extends Component {
                             <Canvas id='card-canvas'
                                 style="width: 320px; height: 600px"
                                 canvasId='cardCanvas'></Canvas>
-                            <Button className='btn-save' onClick={() => this.saveCard()}>保存图片</Button>
+                            <View className="btn_group">
+                                <Button className='btn-save' onClick={() => saveCard()}>保存图片</Button>
+                                <Button className='btn-close' onClick={() => this.setState({ showCanvasPage: false })}>关 闭</Button>
+                            </View>
                         </View>
                     )}
 

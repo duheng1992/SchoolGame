@@ -97,10 +97,18 @@
       display: flex;
       align-items: center;
       margin-bottom: 20px;
+      margin-right: 20px;
       .fix_btn_img {
         width: 48px;
         height: 48px;
         margin-right: 10px;
+      }
+      .fix_btn_share {
+        background-color: transparent;
+        padding: 0;
+        &::after {
+          border: none;
+        }
       }
     }
     .fix_btn {
