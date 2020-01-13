@@ -155,9 +155,13 @@ class _page extends Component {
     }
 
     favoriteCommit = () => {
-        const { themeId } = this.state
+        const { themeId, list } = this.state
+        const data = list
         favoriteCommit({ themeId }).then(res => {
             if (res.code == 'OK') {
+                data.isFavorite = !data.isFavorite
+                data.isFavorite ? data.favoriteNum = data.favoriteNum + 1 : data.favoriteNum = data.favoriteNum - 1
+                this.setState({ list: data })
                 Taro.showToast({
                     title: res.message,
                     icon: 'success'
@@ -170,6 +174,14 @@ class _page extends Component {
         const { list } = this.state
         praiseCommit({ newsId: list.id }).then(res => {
             if (res.code == 'OK') {
+                const data = list
+                data.isPraise = !data.isPraise
+                if (data.isPraise) {
+                    data.praiseNum = data.praiseNum + 1
+                } else {
+                    data.praiseNum = data.praiseNum - 1
+                }
+                this.setState({ list: data })
                 Taro.showToast({
                     title: res.message,
                     icon: 'success'
@@ -182,6 +194,7 @@ class _page extends Component {
         const { themeId } = item
         focusUser({ themeId }).then((res: any) => {
             if (res.code == 'OK') {
+
                 Taro.showToast({
                     title: res.message,
                     icon: 'success'

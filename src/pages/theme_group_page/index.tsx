@@ -225,7 +225,7 @@ class _page extends Component {
             <View>敬请期待</View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
-            <View>
+            {/* <View>
               <View className='segment_bar'>
                 <AtSegmentedControl
                   onClick={this.handleLiveSegmentClick.bind(this)}
@@ -241,7 +241,7 @@ class _page extends Component {
                   <View className={entity.hotRank ? 'hot_rank_active' : ''} onClick={() => this.onTapLiveHotRank(1)}>最热</View>
                 </View>
               </View>
-            </View>
+            </View> */}
             <View>敬请期待</View>
           </AtTabsPane>
         </AtTabs>

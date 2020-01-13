@@ -147,7 +147,7 @@ class _page extends Component {
           </View>
         </Picker>
         <View>
-          <AtButton className='save_btn' onClick={() => this.saveUserInfo}>保存</AtButton>
+          <AtButton className='save_btn' onClick={() => this.saveUserInfo()}>保存</AtButton>
         </View>
       </View>
 

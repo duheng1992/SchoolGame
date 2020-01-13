@@ -129,7 +129,7 @@ export const favoriteCommit = (data) => {
 // 热门话题点赞
 export const praiseCommit = (data) => {
   return request_json({
-    url: `/api/tracking/praise/${data.newsId}`,
+    url: `/api/theme/discuss/praise/${data.newsId}`,
     data,
     method: "post",
   });
