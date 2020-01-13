@@ -112,7 +112,7 @@ export const getTrackingOldDetailCommitByNewsId = (data) => {
 // 活动追踪收藏
 export const favoriteNew = (data) => {
   return request_json({
-    url: `/api/tracking/favorite/${data.newsId}`,
+    url: `/api/tracking/favorite/tracking/${data.newsId}`,
     data,
     method: "post",
   });
