@@ -35,8 +35,9 @@
     background-color: #fff;
     margin-bottom: 20px;
     .theme_body_title {
-      margin-top: 60px;
-      margin-bottom: 120px;
+      padding-top: 60px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid #eee;
       display: flex;
       justify-content: space-between;
       font-size: 36px;
@@ -49,6 +50,7 @@
       }
     }
     .theme_intro_wrap {
+      margin-top: 58px;
       margin-bottom: 60px;
     }
     .body_info {
