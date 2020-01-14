@@ -47,6 +47,7 @@ class _page extends Component {
     discuss: []
   };
 
+
   componentWillMount() {
     console.log(this.$router.params)
     const { resourceId } = this.$router.params;
@@ -71,6 +72,7 @@ class _page extends Component {
       if (code === 'OK') {
         const dataInfo = JSON.parse(JSON.stringify(data))
         dataInfo.videoFileUrl = data.coursewareType !== 1 ? JSON.parse(dataInfo.videoFileUrl) : '';
+        dataInfo.intro = dataInfo.intro.replace('<img ', '<img style="max-width:100%;height:auto"')
         this.setState({ item_info: dataInfo })
       }
     })

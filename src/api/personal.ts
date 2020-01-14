@@ -7,6 +7,14 @@ export const getUserBaseInfo = () => {
   });
 };
 
+export const updateUserBaseInfo = (data) => {
+  return request_json({
+    url: `/api/u/update`,
+    data,
+    method: "post",
+  });
+};
+
 export const getUserCommentList = (data) => {
   return ajax({
     url: `/api/u/comment/list`,

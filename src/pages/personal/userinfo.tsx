@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Image, Input, Picker, Button } from "@tarojs/components";
-import { getUserBaseInfo } from '@/api/personal'
+import { getUserBaseInfo, updateUserBaseInfo } from '@/api/personal'
 import "./userinfo.scss";
 
 
@@ -31,8 +31,8 @@ class _page extends Component {
 
   state: StateType = {
     userinfo: {},
-    passportFlag: ['是', '否'],
-    visaFlag: ['是', '否']
+    passportFlag: ['否', '是'],
+    visaFlag: ['否', '是'],
   };
 
   componentWillMount() { }
@@ -50,6 +50,7 @@ class _page extends Component {
     getUserBaseInfo().then((res: any) => {
       console.log('user', res);
       if (res.code == 'OK') {
+
         this.setState({ userinfo: res.data })
       }
 
@@ -71,8 +72,47 @@ class _page extends Component {
     // })
   }
 
+  goBack = () => {
+    Taro.navigateBack({
+      delta: 1,
+    });
+  };
   saveUserInfo = () => {
+    const { userinfo } = this.state
+    const info = {
+      province: userinfo.schoolProvince,
+      city: userinfo.schoolCity,
+      email: userinfo.email,
+      name: userinfo.userName,
+      identity: userinfo.identity,
+      mobile: userinfo.phone,
+      position: userinfo.position,
+      workingYears: userinfo.workingYears,
+      passportFlag: userinfo.passportFlag,
+      visaFlag: userinfo.visaFlag
+    }
+    console.log('info', info);
+    updateUserBaseInfo(info).then(res => {
+      if (res.code === 'OK') {
+        Taro.showToast({
+          title: res.message,
+          icon: 'success',
+          duration: 2000
+        }).then(() => {
+          setTimeout(() => {
+            this.goBack()
+          }, 1800)
+        })
+      }
+    })
 
+  }
+  inputChange = (e, name) => {
+    console.log('e', e);
+    console.log('name', name);
+    const info = this.state.userinfo
+    info[name] = e.currentTarget.value
+    this.setState({ userinfo: info })
   }
 
 
@@ -83,50 +123,57 @@ class _page extends Component {
       <View className='wrap'>
 
         <View className='list'>
-          <View className='title'>所属地区</View>
+          <View className='title'>省份</View>
           <View className='info'>
-            <Input value={userinfo.schoolProvince + userinfo.schoolCity}></Input>
+            <Input value={userinfo.schoolProvince} onInput={e => this.inputChange(e, 'schoolProvince')}></Input>
+          </View>
+        </View>
+        <View className='list'>
+          <View className='title'>市</View>
+          <View className='info'>
+            <Input value={userinfo.schoolCity} onInput={e => this.inputChange(e, 'schoolCity')}></Input>
           </View>
         </View>
         <View className='list'>
           <View className='title'>联系邮箱</View>
           <View className='info'>
-            <Input value={userinfo.email} /></View>
+            <Input value={userinfo.email} onInput={e => this.inputChange(e, 'email')} />
+          </View>
         </View>
         <View className='list'>
           <View className='title'>申报人姓名</View>
           <View className='info'>
-            <Input value={userinfo.userName} />
+            <Input value={userinfo.userName} onInput={e => this.inputChange(e, 'userName')} />
           </View>
         </View>
         <View className='list'>
           <View className='title'>身份证号</View>
           <View className='info'>
-            <Input value={userinfo.identity} />
+            <Input value={userinfo.identity} onInput={e => this.inputChange(e, 'identity')} />
           </View>
         </View>
         <View className='list'>
           <View className='title'>联系电话</View>
           <View className='info'>
-            <Input value={userinfo.phone} />
+            <Input value={userinfo.phone} onInput={e => this.inputChange(e, 'phone')} />
           </View>
         </View>
         <View className='list'>
           <View className='title'>在校职务</View>
           <View className='info'>
-            <Input value={userinfo.position} />
+            <Input value={userinfo.position} onInput={e => this.inputChange(e, 'position')} />
           </View>
         </View>
         <View className='list'>
           <View className='title'>从事体育教育年限</View>
           <View className='info'>
-            <Input value={userinfo.workingYears} />
+            <Input value={userinfo.workingYears} onInput={e => this.inputChange(e, 'workingYears')} />
           </View>
         </View>
 
 
 
-        <Picker mode='selector' value={userinfo.passportFlag} range={this.state.passportFlag} onChange={this.onFlagChange}>
+        <Picker mode='selector' value={userinfo.passportFlag} range={this.state.passportFlag} onChange={e => this.inputChange(e, 'passportFlag')}>
           <View className='list'>
             <View className='title'>是否拥有有效护照</View>
             <View className='info'>
@@ -138,7 +185,7 @@ class _page extends Component {
 
 
 
-        <Picker mode='selector' value={userinfo.visaFlag} range={this.state.visaFlag} onChange={this.onVisaChange}>
+        <Picker mode='selector' value={userinfo.visaFlag} range={this.state.visaFlag} onChange={e => this.inputChange(e, 'visaFlag')}>
           <View className='list'>
             <View className='title'>是否办理过美国签证</View>
             <View className='info'>

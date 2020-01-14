@@ -78,7 +78,7 @@ class _page extends Component {
                         {
                             commentImage.map((item, index) => {
                                 if (index < 3) {
-                                    return <Image className='commit_img_url' src={item.file} ></Image>
+                                    return <Image className='commit_img_url' src={item.url} ></Image>
                                 }
                             }
                             )

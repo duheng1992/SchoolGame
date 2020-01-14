@@ -208,7 +208,11 @@ class _page extends Component {
             <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
               <View>
                 {
-                  banner.length > 0 && banner.map(item => (<Image className='img_item' key={item.id} style='height:488rpx' onClick={() => this.onBannerTap(item)} src={item.bannerImage.file}></Image>))
+                  banner.length > 0 && banner.map(item => (
+                    <View className='banner_group'>
+                      <Image className='img_item' key={item.id} onClick={() => this.onBannerTap(item)} src={item.bannerImage.file}></Image>
+                      <View className='banner_title'>{item.title}</View>
+                    </View>))
                 }
               </View>
             </ScrollView>

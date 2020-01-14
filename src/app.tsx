@@ -87,8 +87,13 @@ class App extends Component {
       // "pages/demo/pageDemo_js/index",
     ],
     usingComponents: {},
+
+
     requiredBackgroundModes: ["audio"],
-    window: {},
+    window: {
+      navigationBarBackgroundColor: "#ffffff",
+      navigationBarTextStyle: 'black'
+    },
     tabBar: {
       list: [
         {

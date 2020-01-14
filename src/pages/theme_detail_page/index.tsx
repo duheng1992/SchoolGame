@@ -7,6 +7,7 @@ import { getStore } from "@/utils/utils";
 import Favorite from '@/images/card/tab_collect.png'
 import Favorited from '@/images/card/card_collect_active.png'
 import add from '@/images/card/add_photo.png'
+import NavigatBar from "@/components/NavigatBar/index"
 
 import "./index.scss";
 
@@ -41,6 +42,11 @@ class _page extends Component {
         discuss: []
 
     };
+
+    config: Config = {
+        navigationStyle: 'custom'
+    }
+
 
     componentWillMount() {
         console.log(this.$router.params)
@@ -108,11 +114,17 @@ class _page extends Component {
         })
     }
 
+    navigatBack = () => {
+        Taro.navigateBack()
+    }
+
     render() {
         const { detail_info, discuss } = this.state
         return (
             <View className='theme-wrap'>
+                <NavigatBar onClick={() => { this.navigatBack() }}></NavigatBar>
                 <ScrollView scrollY style={{ height: '100vh' }}>
+
                     <View className='banner_warp'>
                         <Image className='banner_image' src={detail_info.bannerImage}></Image>
                         <View className='theme_title_warp'>

@@ -2,6 +2,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import DetailCard from "./components/DetailCard/index"
+import NavigatBar from "@/components/NavigatBar/index"
 import "./index.scss";
 import { getDetailData } from "@/api/detail";
 import { getStore, setStore } from "@/utils/utils";
@@ -30,6 +31,9 @@ class _page extends Component {
     detail_info: null
   };
 
+  config: Config = {
+    navigationStyle: 'custom'
+  }
 
   componentWillMount() {
     console.log(this.$router.params)
@@ -65,12 +69,16 @@ class _page extends Component {
       url: `/pages/detail_item_page/index?resourceId=${item.id}`,
     })
   }
+  navigatBack = () => {
+    Taro.navigateBack()
+  }
+
 
   render() {
     const { detail_list, detail_info } = this.state
     return (
       <View className="detail_page" id="page">
-
+        <NavigatBar onClick={() => { this.navigatBack() }}></NavigatBar>
         <View className="detail_head">
           <Image className="banner_image" mode="aspectFill" src={detail_info.bannerImage} />
           <View className='detail_info'>

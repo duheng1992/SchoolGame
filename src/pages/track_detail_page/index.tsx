@@ -61,7 +61,9 @@ class _page extends Component {
         getTrackDetailByTrackId({ trackId }).then((res: any) => {
             console.log('tracklist', res)
             if (res.code == 'OK') {
-                this.setState({ detail_info: res.data })
+                const data = res.data
+                data.content = data.content.replace('<img ', '<img style="max-width:100%;height:auto"')
+                this.setState({ detail_info: data })
             }
 
         })
