@@ -209,7 +209,7 @@ class _page extends Component {
                           return this.goToDetail(item, "focus");
                         }}
                         >
-                          <Avatar title={item.title} subTitle='' avatar={item.avatar}></Avatar>
+                          <Avatar title={item.nickName} subTitle='' type='focus' avatar={item.avatar}></Avatar>
                         </View>
                       );
                     })

@@ -191,10 +191,13 @@ class _page extends Component {
     }
 
     focusClick = item => {
-        const { themeId } = item
-        focusUser({ themeId }).then((res: any) => {
+        const { id } = item
+        const { list } = this.state
+        focusUser({ discussId: id }).then((res: any) => {
             if (res.code == 'OK') {
-
+                const data = list
+                data.isFollow = !data.isFollow
+                this.setState({ list: data })
                 Taro.showToast({
                     title: res.message,
                     icon: 'success'
@@ -208,7 +211,7 @@ class _page extends Component {
         return (
             <View className='wrap'>
 
-                <Avatar subTitle={list.createTime} title={list.nickName} focus={true} focusClick={() => { this.focusClick(list) }} avatar={list.avatar} type='discuss'></Avatar>
+                <Avatar subTitle={list.createTime} title={list.nickName} isfocus={list.isFollow} focus={true} focusClick={() => { this.focusClick(list) }} avatar={list.avatar} type='discuss'></Avatar>
                 <View className='comment_content'>
                     <View className='theme_word'>#{list.themeTitle}#</View>
                     <View>{list.content}</View>

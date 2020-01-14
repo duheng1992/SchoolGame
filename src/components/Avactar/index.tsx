@@ -14,6 +14,7 @@ type ComponentsProps = {
     type?: string;
     avatar?: string;
     focus?: Boolean;
+    isfocus?: Boolean
     focusClick: Function
 };
 
@@ -33,6 +34,7 @@ class _page extends Component {
         type: 'default',
         avatar: '',
         focus: false,
+        isfocus: false,
         focusClick: () => { }
     };
 
@@ -64,7 +66,7 @@ class _page extends Component {
 
 
     render() {
-        const { title, subTitle, type, avatar, focus, focusClick } = this.props
+        const { title, subTitle, type, avatar, focus, focusClick, isfocus } = this.props
         const avatar_img: any = type === 'default' ? '' : avatar
         return (
 
@@ -76,7 +78,7 @@ class _page extends Component {
                 </View>
                 {
                     focus && (
-                        <View className='focus' onClick={() => focusClick()}>关注</View>
+                        <View className='focus' onClick={() => focusClick()}> {isfocus ? '已关注' : '关注'}</View>
                     )
                 }
 

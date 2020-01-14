@@ -139,7 +139,7 @@ export const praiseCommit = (data) => {
 
 export const focusUser = (data) => {
   return request_json({
-    url: `/api/theme/discuss/follow/${data.themeId}`,
+    url: `/api/theme/discuss/follow/${data.discussId}`,
     data,
     method: "post",
   });
