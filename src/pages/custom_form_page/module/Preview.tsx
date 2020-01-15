@@ -18,6 +18,7 @@ type ComponentsProps = {
   valueData: any;
   formIndex: number;
   handleValueDataChange: Function;
+  showQuestion: Function;
 };
 
 interface Preview {
@@ -32,6 +33,7 @@ class Preview extends Component {
     valueData: {},
     formIndex: 0,
     handleValueDataChange: () => { },
+    showQuestion: () => { },
   };
 
   constructor(props) {

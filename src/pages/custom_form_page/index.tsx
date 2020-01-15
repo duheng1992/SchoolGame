@@ -22,8 +22,12 @@ function isEmpty(param) {
   }
   return false;
 }
-function isMatch(regString, value) {
-  const regexp = eval(regString); // eslint-disable-line
+function isMatch(regString: string, value: string) {
+  if (!regString || !value) {
+    return false;
+  }
+  const regStringArray = regString.split("/");
+  const regexp = new RegExp(regStringArray[1], regStringArray[2]); // eslint-disable-line
   return regexp.test(value);
 }
 
