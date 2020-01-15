@@ -92,11 +92,10 @@ class App extends Component {
     ],
     usingComponents: {},
 
-
     requiredBackgroundModes: ["audio"],
     window: {
       navigationBarBackgroundColor: "#ffffff",
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: "black",
     },
     tabBar: {
       list: [

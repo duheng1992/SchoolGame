@@ -1,6 +1,7 @@
 import Taro from "@tarojs/taro";
 import { baseUrl } from "../config/baseUrl";
-import logo from '@/images/card/logo_title.png'
+import logo from "@/images/card/logo_title.png";
+import logo_title from "@/images/card/logo_title_bg.png";
 
 export const getUrlParam = () => {
   /**
@@ -151,13 +152,12 @@ export const wipeYear = (date) => {
   return `${day_split[1]}月${day_split[2]}日 ${sec_split[0]}:${sec_split[1]}`;
 };
 
-
-export const toDetailByCategory = (item, type = 'banner') => {
-  const { moduleType, domainId, id } = item
+export const toDetailByCategory = (item, type = "banner") => {
+  const { moduleType, domainId, id } = item;
   // 1:教学资源,2:热门话题,3:专家答疑,4:专家直播,5:活动,6:活动追踪,7:校园活力展
-  let itemId = domainId
-  if (type !== 'banner') {
-    itemId = id
+  let itemId = domainId;
+  if (type !== "banner") {
+    itemId = id;
   }
   switch (moduleType) {
     case 1:
@@ -179,78 +179,84 @@ export const toDetailByCategory = (item, type = 'banner') => {
       Taro.navigateTo({
         url: `/pages/track_detail_page/index?trackId=${itemId}`,
       });
-      break
+      break;
 
     case 6:
       Taro.showToast({
-        title: '活力校园无数据',
-        icon: 'none'
-      })
+        title: "活力校园无数据",
+        icon: "none",
+      });
       break;
 
     default:
       break;
   }
-}
-
+};
 
 export const drawImage = async (item_info, qrcode) => {
   // 创建canvas对象
-  let ctx = Taro.createCanvasContext('cardCanvas')
+  const ctx = Taro.createCanvasContext("cardCanvas");
 
   // 填充背景色
-  let grd = ctx.createLinearGradient(0, 0, 1, 600)
-  grd.addColorStop(0, '#FC4514')
+  const grd = ctx.createLinearGradient(0, 0, 1, 600);
+  grd.addColorStop(0, "#FC4514");
   // grd.addColorStop(0.5, '#FFF')
-  ctx.setFillStyle(grd)
-  ctx.fillRect(0, 0, 500, 580)
+  ctx.setFillStyle(grd);
+  ctx.fillRect(0, 0, 500, 580);
 
   // 填充背景色
-  let grd_in = ctx.createLinearGradient(0, 0, 1, 600)
-  grd_in.addColorStop(0, '#fff')
+  const grd_in = ctx.createLinearGradient(0, 0, 1, 600);
+  grd_in.addColorStop(0, "#fff");
   // grd.addColorStop(0.5, '#FFF')
-  ctx.setFillStyle(grd_in)
-  ctx.fillRect(15, 80, 292, 488)
+  ctx.setFillStyle(grd_in);
+  ctx.fillRect(15, 80, 292, 488);
 
-  ctx.drawImage(logo, 85, 15, 140, 58)
+  ctx.drawImage(logo_title, 0, 0, 332, 100);
 
   // // 绘制圆形用户头像
-  let res = await Taro.downloadFile({
-    url: item_info.bannerImage
-  })
-  console.log('res', res);
+  const res = await Taro.downloadFile({
+    url: item_info.bannerImage,
+  });
+  console.log("res", res);
 
-
-  ctx.save()
-  ctx.beginPath()
-  ctx.drawImage(res.tempFilePath, 15, 80, 292, 180)
-  ctx.restore()
-
-  // 绘制文字
-  ctx.save()
-  ctx.setFontSize(18)
-  ctx.setFillStyle('black')
-  ctx.fillText(item_info.title, 30, 300)
-  ctx.restore()
+  ctx.save();
+  ctx.beginPath();
+  ctx.drawImage(res.tempFilePath, 15, 80, 292, 180);
+  ctx.restore();
 
   // 绘制文字
-  ctx.save()
-  ctx.setFontSize(14)
-  ctx.setFillStyle('#999')
-  ctx.fillText(`${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`, 30, 325)
-  ctx.restore()
-
-  ctx.lineTo(30, 292)
-  ctx.moveTo(30, 345)
-  ctx.setStrokeStyle('red')
-  ctx.stroke()
+  ctx.save();
+  ctx.setFontSize(18);
+  ctx.setFillStyle("black");
+  ctx.fillText(item_info.title, 30, 300);
+  ctx.restore();
 
   // 绘制文字
-  ctx.save()
-  ctx.setFontSize(14)
-  ctx.setFillStyle('#999')
-  ctx.fillText(`${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`, 30, 325)
-  ctx.restore()
+  ctx.save();
+  ctx.setFontSize(14);
+  ctx.setFillStyle("#999");
+  ctx.fillText(
+    `${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`,
+    30,
+    325,
+  );
+  ctx.restore();
+
+  ctx.lineTo(30, 292);
+  ctx.moveTo(30, 345);
+  ctx.setStrokeStyle("red");
+  ctx.stroke();
+
+  // 绘制文字
+  ctx.save();
+  ctx.setFontSize(14);
+  ctx.setFillStyle("#999");
+  ctx.fillText(
+    `${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`,
+    30,
+    325,
+  );
+  ctx.restore();
 
   // 绘制二维码
   // let qrcodeUrl = await Taro.downloadFile({
@@ -258,54 +264,53 @@ export const drawImage = async (item_info, qrcode) => {
   // })
   // console.log('qrcode', qrcode);
 
-
-  ctx.drawImage(qrcode, 110, 350, 108, 108)
+  ctx.drawImage(qrcode, 110, 350, 108, 108);
   // 绘制文字
-  ctx.save()
-  ctx.setFontSize(16)
-  ctx.setFillStyle('black')
-  ctx.fillText('长按小程序二维码', 100, 480)
-  ctx.restore()
+  ctx.save();
+  ctx.setFontSize(16);
+  ctx.setFillStyle("black");
+  ctx.fillText("长按小程序二维码", 100, 480);
+  ctx.restore();
 
   // 绘制文字
-  ctx.save()
-  ctx.setFontSize(16)
-  ctx.setFillStyle('black')
-  ctx.fillText('进入查看更多信息', 100, 505)
-  ctx.restore()
+  ctx.save();
+  ctx.setFontSize(16);
+  ctx.setFillStyle("black");
+  ctx.fillText("进入查看更多信息", 100, 505);
+  ctx.restore();
 
   // 将以上绘画操作进行渲染
-  ctx.draw()
-}
+  ctx.draw();
+};
 
 export const saveCard = async () => {
   // 将Canvas图片内容导出指定大小的图片
-  let res = await Taro.canvasToTempFilePath({
+  const res = await Taro.canvasToTempFilePath({
     x: 15,
     y: 80,
     width: 292,
     height: 508,
     destWidth: 300,
     destHeight: 516,
-    canvasId: 'cardCanvas',
-    fileType: 'png'
-  })
-  let saveRes = await Taro.saveImageToPhotosAlbum({
-    filePath: res.tempFilePath
-  })
-  if (saveRes.errMsg === 'saveImageToPhotosAlbum:ok') {
+    canvasId: "cardCanvas",
+    fileType: "png",
+  });
+  const saveRes = await Taro.saveImageToPhotosAlbum({
+    filePath: res.tempFilePath,
+  });
+  if (saveRes.errMsg === "saveImageToPhotosAlbum:ok") {
     Taro.showModal({
-      title: '图片保存成功',
-      content: '图片成功保存到相册了，快去发朋友圈吧~',
+      title: "图片保存成功",
+      content: "图片成功保存到相册了，快去发朋友圈吧~",
       showCancel: false,
-      confirmText: '确认'
-    })
+      confirmText: "确认",
+    });
   } else {
     Taro.showModal({
-      title: '图片保存失败',
-      content: '请重新尝试!',
+      title: "图片保存失败",
+      content: "请重新尝试!",
       showCancel: false,
-      confirmText: '确认'
-    })
+      confirmText: "确认",
+    });
   }
-}
+};

@@ -89,14 +89,14 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    left: 20px;
+    left: 0;
     display: flex;
     align-items: center;
     background-color: #fff;
     .fix_btn_group {
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
+      margin-left: 20px;
       margin-right: 20px;
       .fix_btn_img {
         width: 48px;
@@ -120,6 +120,26 @@
       line-height: 80px;
       text-align: center;
       color: #fff;
+    }
+  }
+  .fixButtomJoin {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    .fix_btn {
+      width: 318px;
+      height: 80px;
+      background-color: #fff;
+      border: 3px solid #fc4514;
+      border-radius: 40px;
+      color: #fc4514;
+      margin-left: auto;
+      &.join {
+        background-color: #fc4514;
+        border-color: fff;
+        color: #fff;
+      }
     }
   }
 }
