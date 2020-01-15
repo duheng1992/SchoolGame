@@ -16,18 +16,17 @@
     }
     .info {
       color: #666;
+      input {
+        text-align: right;
+      }
     }
   }
   .save_btn {
-    width: auto;
-    left: 140px;
-    right: 140px;
+    width: 470px;
     height: 96px;
     background-color: #fc4514;
     opacity: 0.34;
     border-radius: 50px !important;
-    position: absolute;
-    bottom: -5px;
     color: #fff;
   }
 }

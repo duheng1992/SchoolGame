@@ -1,5 +1,43 @@
 .page {
   padding: 40px;
+  .item {
+    margin-bottom: 40px;
+  }
+  .bannerImage {
+    position: relative;
+    .img {
+      width: 100%;
+      height: 334px;
+    }
+    .title {
+      position: absolute;
+      left: 40px;
+      bottom: 60px;
+      color: #fff;
+      font-size: 40px;
+    }
+  }
+  .address {
+    margin-top: 40px;
+    color: #000;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  .time {
+    color: #666;
+  }
+  .control {
+    margin-top: 20px;
+    display: flex;
+    font-size: 24px;
+    justify-content: space-between;
+    .join {
+      color: #999;
+    }
+    .handle {
+      color: #000;
+    }
+  }
   .showMore {
     width: 100%;
     text-align: center;

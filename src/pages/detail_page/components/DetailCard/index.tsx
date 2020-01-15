@@ -5,6 +5,7 @@ import { View, ScrollView, Image, Text } from "@tarojs/components";
 import eye from "@/images/card/card_eye.png"
 import comment from "@/images/card/card_comment.png"
 import praise from "@/images/card/card_praise.png"
+import isVideo from "@/images/card/video_play.png"
 
 import "./index.scss";
 
@@ -52,7 +53,15 @@ class DetailCard extends Component {
     render() {
         const { data } = this.props;
         return <View className="detail_card">
-            <Image mode="center" className="detail_img" src={data.bannerImage}></Image>
+            <View className='detail_img'>
+                <Image mode="center" className="img" src={data.bannerImage}></Image>
+                {
+                    data.videoFileUrl !== '' && (
+                        <Image className='isVideo' src={isVideo}></Image>
+                    )
+                }
+            </View>
+
             <View className='card_title'>{data.title}</View>
             <View className="card_nums">
                 <View className="card_num"><Image className='card_icon' src={eye}></Image>{data.viewNum}</View>

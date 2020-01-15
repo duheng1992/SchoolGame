@@ -38,6 +38,7 @@ class _page extends Component {
 
   };
 
+
   componentWillMount() {
     console.log(this.$router.params)
   }

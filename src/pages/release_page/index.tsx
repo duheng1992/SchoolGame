@@ -3,6 +3,7 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import { AtTextarea, AtImagePicker } from 'taro-ui'
 import { releaseDiscussPublish } from '@/api/home'
+import { uploadImage } from '@/api/searchPage'
 import "./index.scss";
 
 type StateType = {
@@ -26,7 +27,8 @@ class _page extends Component {
   state: StateType = {
     content: '',
     files: [],
-    themeId: null
+    themeId: null,
+    imgList: []
   };
 
   componentWillMount() {
@@ -55,18 +57,37 @@ class _page extends Component {
     })
   }
   onChange(files) {
+    console.log('files', files);
+    Taro.showLoading({
+      title: '图片上传中'
+    })
+    const filesList = this.state.imgList
+    Taro.uploadFile({
+      url: ' http://ip-29-nikeschoolyard-admin.coralcodes.com/api/ueditor?action=uploadimage',
+      filePath: files[0].url,
+      name: 'upfile',
+      success: (res) => {
+        console.log('res', res);
+        const data = JSON.parse(res.data)
+        const url = data.url
+        filesList.push(url)
+        this.setState({ imgList: filesList })
+      },
+      complete: () => {
+        Taro.hideLoading()
+      }
+    })
     this.setState({
       files
     })
   }
 
   publish = () => {
-    const { content, files, themeId } = this.state
+    const { content, imgList, themeId } = this.state
     let filesData: any = []
-    files.forEach(item => {
+    imgList.forEach(item => {
       const obj = {
-        file: item.file.path,
-        size: item.file.size
+        url: item
       }
       filesData.push(obj)
     })

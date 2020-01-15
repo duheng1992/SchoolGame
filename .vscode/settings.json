@@ -22,7 +22,7 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[scss]": {
-    "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "eslint.validate": [
     "javascript",

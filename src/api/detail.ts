@@ -112,7 +112,7 @@ export const getTrackingOldDetailCommitByNewsId = (data) => {
 // 活动追踪收藏
 export const favoriteNew = (data) => {
   return request_json({
-    url: `/api/tracking/favorite/${data.newsId}`,
+    url: `/api/tracking/favorite/tracking/${data.newsId}`,
     data,
     method: "post",
   });
@@ -129,7 +129,7 @@ export const favoriteCommit = (data) => {
 // 热门话题点赞
 export const praiseCommit = (data) => {
   return request_json({
-    url: `/api/tracking/praise/${data.newsId}`,
+    url: `/api/theme/discuss/praise/${data.newsId}`,
     data,
     method: "post",
   });
@@ -139,7 +139,7 @@ export const praiseCommit = (data) => {
 
 export const focusUser = (data) => {
   return request_json({
-    url: `/api/theme/discuss/follow/${data.themeId}`,
+    url: `/api/theme/discuss/follow/${data.discussId}`,
     data,
     method: "post",
   });

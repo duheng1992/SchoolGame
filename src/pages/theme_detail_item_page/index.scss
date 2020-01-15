@@ -2,19 +2,19 @@
   padding: 40px;
   .comment_image_list {
     .comment_image {
-      width: 100vw;
+      max-width: 100%;
     }
   }
   .comment_content {
     display: flex;
-    padding-bottom: 40px;
+    padding: 40px 0;
     .theme_word {
       color: #fc4514;
     }
   }
   .list_butten_group {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 60px;
     margin-bottom: 80px;
     .list_btn {

@@ -155,9 +155,13 @@ class _page extends Component {
     }
 
     favoriteCommit = () => {
-        const { themeId } = this.state
+        const { themeId, list } = this.state
+        const data = list
         favoriteCommit({ themeId }).then(res => {
             if (res.code == 'OK') {
+                data.isFavorite = !data.isFavorite
+                data.isFavorite ? data.favoriteNum = data.favoriteNum + 1 : data.favoriteNum = data.favoriteNum - 1
+                this.setState({ list: data })
                 Taro.showToast({
                     title: res.message,
                     icon: 'success'
@@ -170,6 +174,14 @@ class _page extends Component {
         const { list } = this.state
         praiseCommit({ newsId: list.id }).then(res => {
             if (res.code == 'OK') {
+                const data = list
+                data.isPraise = !data.isPraise
+                if (data.isPraise) {
+                    data.praiseNum = data.praiseNum + 1
+                } else {
+                    data.praiseNum = data.praiseNum - 1
+                }
+                this.setState({ list: data })
                 Taro.showToast({
                     title: res.message,
                     icon: 'success'
@@ -179,9 +191,13 @@ class _page extends Component {
     }
 
     focusClick = item => {
-        const { themeId } = item
-        focusUser({ themeId }).then((res: any) => {
+        const { id } = item
+        const { list } = this.state
+        focusUser({ discussId: id }).then((res: any) => {
             if (res.code == 'OK') {
+                const data = list
+                data.isFollow = !data.isFollow
+                this.setState({ list: data })
                 Taro.showToast({
                     title: res.message,
                     icon: 'success'
@@ -194,38 +210,38 @@ class _page extends Component {
         const { list, showCanvasPage } = this.state
         return (
             <View className='wrap'>
-                <ScrollView scrollY style={{ height: '100vh' }}>
-                    <Avatar subTitle={list.createTime} title={list.nickName} focus={true} focusClick={() => { this.focusClick(list) }} avatar={list.avatar} type='discuss'></Avatar>
-                    <View className='comment_content'>
-                        <View className='theme_word'>#{list.themeTitle}#</View>
-                        <View>{list.content}</View>
+
+                <Avatar subTitle={list.createTime} title={list.nickName} isfocus={list.isFollow} focus={true} focusClick={() => { this.focusClick(list) }} avatar={list.avatar} type='discuss'></Avatar>
+                <View className='comment_content'>
+                    <View className='theme_word'>#{list.themeTitle}#</View>
+                    <View>{list.content}</View>
+                </View>
+                <View className='comment_image_list'>
+                    {
+                        list.commentImage && list.commentImage.map(item => (<Image mode='aspectFit' className='comment_image' src={item.url}></Image>))
+                    }
+                </View>
+                <View>
+                    <View className='list_butten_group'>
+                        <AtButton className='list_btn save_btn' onClick={() => this.saveImage()}>保存图片</AtButton>
+                        <AtButton className='list_btn' openType='share'>分享至微信</AtButton>
+                        {/* <AtButton className='list_btn'>复制链接</AtButton> */}
                     </View>
-                    <View className='comment_image_list'>
-                        {
-                            list.commentImage && list.commentImage.map(item => (<Image className='comment_image' src={item.file}></Image>))
-                        }
-                    </View>
-                    <View>
-                        <View className='list_butten_group'>
-                            <AtButton className='list_btn save_btn' onClick={() => this.saveImage()}>保存图片</AtButton>
-                            <AtButton className='list_btn' openType='share'>分享至微信</AtButton>
-                            {/* <AtButton className='list_btn'>复制链接</AtButton> */}
+                    <View className='theme_commit_wrap'>
+                        <View className='commit_wrap' onClick={() => this.favoriteCommit()}>
+                            <Image className='icon' src={collect}></Image>
+                            <View className='num'>{list.favoriteNum}</View>
                         </View>
-                        <View className='theme_commit_wrap'>
-                            <View className='commit_wrap' onClick={() => this.favoriteCommit()}>
-                                <Image className='icon' src={collect}></Image>
-                                <View className='num'>{list.favoriteNum}</View>
-                            </View>
-                            <View className='commit_wrap' onClick={() => this.praiseCommit()}>
-                                <Image className='icon' src={praise}></Image>
-                                <View className='num'>{list.praiseNum}</View>
-                            </View>
-
-
+                        <View className='commit_wrap' onClick={() => this.praiseCommit()}>
+                            <Image className='icon' src={praise}></Image>
+                            <View className='num'>{list.praiseNum}</View>
                         </View>
-                    </View>
 
-                </ScrollView>
+
+                    </View>
+                </View>
+
+
                 {
                     showCanvasPage && (
                         <View className='canvas-wrap'>

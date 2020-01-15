@@ -61,7 +61,9 @@ class _page extends Component {
         getTrackDetailByTrackId({ trackId }).then((res: any) => {
             console.log('tracklist', res)
             if (res.code == 'OK') {
-                this.setState({ detail_info: res.data })
+                const data = res.data
+                data.content = data.content.replace('<img ', '<img style="max-width:100%;height:auto"')
+                this.setState({ detail_info: data })
             }
 
         })
@@ -143,7 +145,11 @@ class _page extends Component {
                             <Image className='fix_btn_img' src={share}></Image>
                             <Button className='fix_btn_share' openType='share'>分享</Button>
                         </View>
-                        <View className='fix_btn' onClick={() => { this.join() }}>立即报名</View>
+                        {
+                            detail_info.isJoin ? (<View className='fix_btn'>已报名</View>) : (<View className='fix_btn' onClick={() => { this.join() }}>立即报名</View>)
+                        }
+
+
                     </View>
                 </ScrollView>
 
