@@ -5,7 +5,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Input, Picker, Radio, RadioGroup, CheckboxGroup, Checkbox } from "@tarojs/components";
 import { AtImagePicker } from "taro-ui";
 import { baseUrl } from "../../../config/baseUrl";
-import "./Preview.scss";
+import "./Answer.scss";
 
 type StateType = {
   [propName: string]: any;
@@ -148,12 +148,13 @@ class Answer extends Component {
           <View className="select-dropdown-wrapper">
 
             <Picker
-              value={valueData[questionIndex]}
+              value={optionRadioArray.findIndex(o => o.text === valueData[questionIndex])}
               mode="selector"
               range={optionRadioArray.map((radioObj) => {
                 return radioObj.text;
               })}
-              onChange={(value) => {
+              onChange={(e: any) => {
+                const value = optionRadioArray[e.target.value].text;
                 handleValueDataChange(questionIndex, value);
               }}
             >

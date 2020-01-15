@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import Taro, { Component, Config } from "@tarojs/taro";
-import { getFromById } from "@/api/customForm";
+import { getFromById, saveAnswer } from "@/api/customForm";
 import Preview from "./module/Answer"; // 蓝牙未开启
 import { View } from "@tarojs/components";
 import { AtButton } from "taro-ui";
@@ -53,7 +53,7 @@ class _page extends Component {
 
   state: StateType = {
     // token,
-    id: 4,
+    id: '',
     title: "",
     subTitle: "",
     formData: [],
@@ -64,9 +64,8 @@ class _page extends Component {
   };
 
   componentWillMount() {
-    // console.log(this.$router.params)
-    // const { id } = this.$router.params; // custom form id
-    // this.setState({ id })
+    const { id } = this.$router.params; // custom form id
+    this.setState({ id })
 
   }
 
@@ -188,6 +187,8 @@ class _page extends Component {
   // 提交问卷
   handleSubmit = () => {
     const { valueData } = this.state;
+    const { id } = this.state;
+    console.log('submit', valueData); // eslint-disable-line
     if (this.hasError()) {
       Taro.showToast({
         title: "请修改标红题目后提交",
@@ -195,20 +196,37 @@ class _page extends Component {
         duration: 2000,
       });
     } else {
-      Taro.showToast({
-        title: "提交成功",
-        icon: "success",
-        duration: 2000,
-      });
-      // TODO:
-      console.log('submit', valueData); // eslint-disable-line
+      try {
+        saveAnswer({
+          formData: JSON.stringify(valueData),
+          questionnaireId: id,
+        }).then((res: any) => {
+          console.log("res", res);
+          const { code, data } = res;
+          if (code === "OK") {
+            Taro.showToast({
+              title: "提交成功",
+              icon: "success",
+              duration: 2000,
+            }).then(() => {
+              console.log('submit res', res)
+              const recordId = data;
+              setTimeout(() => {
+                this.goToRecord(recordId)
+              }, 2000)
+            });
+          }
+        });
+      } catch (e) {
+        console.error(e)
+      }
     }
   };
 
 
-  goToNext = () => {
-    Taro.navigateTo({
-      url: "/pages/xxx/xxxx",
+  goToRecord = (recordId) => {
+    Taro.redirectTo({
+      url: `/pages/custom_form_record_page/index?recordId=${recordId}`,
     });
   };
 

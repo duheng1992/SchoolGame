@@ -54,7 +54,8 @@ class App extends Component {
     pages: [
       "pages/home/index", //首页
 
-      "pages/custom_form_preview_page/index", // 自定义表单答题页
+      "pages/custom_form_record_page/index", // 自定义表单结果页
+      "pages/custom_form_answer_page/index", // 自定义表单答题页
 
       "pages/binding/index", // 绑定设备
       "pages/personal/index", //个人中心

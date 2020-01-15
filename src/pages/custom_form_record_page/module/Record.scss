@@ -29,6 +29,14 @@
       margin-bottom: 0.2rem;
     }
     .previewOption {
+      .input-text-wrapper,
+      .input-matrix-wrapper .input-matrix .matrix-input,
+      .picker-address-wrapper,
+      .select-dropdown-wrapper,
+      .picker-date-wrapper {
+        color: #999;
+      }
+
       .input-text-wrapper {
         border-bottom: 2px solid #adadad;
       }
@@ -60,6 +68,14 @@
       .picker-date-wrapper {
       }
       .upload-image-wrapper {
+        .img-wrapper {
+          image {
+            width: 8rem;
+            height: 8rem;
+            margin-right: 0.8rem;
+            margin-bottom: 0.8rem;
+          }
+        }
       }
     }
     .errorTip {
