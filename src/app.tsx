@@ -5,7 +5,7 @@ import Index from "./pages/login";
 import counterStore from "./store/counter";
 import tabBarStore from "./store/tabBarStore";
 
-import '@tarojs/async-await'
+import "@tarojs/async-await";
 
 import "@/assets/style/reset.scss";
 
@@ -53,6 +53,10 @@ class App extends Component {
   config: Config = {
     pages: [
       "pages/home/index", //首页
+
+      "pages/custom_form_record_page/index", // 自定义表单结果页
+      "pages/custom_form_answer_page/index", // 自定义表单答题页
+
       "pages/binding/index", // 绑定设备
       "pages/personal/index", //个人中心
       "pages/personal/userinfo", //信息档案
@@ -69,8 +73,8 @@ class App extends Component {
       "pages/detail_page/index", //分类详情列表页面
       "pages/detail_item_page/index", //详情页面
       "pages/group_page/index", //教学分类页面
-      "pages/theme_group_page/index",//热门分类页面
-      "pages/track_group_page/index",//活动追踪分类页面
+      "pages/theme_group_page/index", //热门分类页面
+      "pages/track_group_page/index", //活动追踪分类页面
       "pages/personal/about/index", //关于活力校园
       "pages/dynamic_page/index", //我的动态
       "pages/focus_page/index", //我的动态
