@@ -172,7 +172,6 @@ module.exports = {
     "jsx-quotes": ["error", "prefer-double"],
     "key-spacing": "error",
     "keyword-spacing": "error",
-    "linebreak-style": ["error", "unix"],
     "lines-between-class-members": ["error", "always"],
     "no-multiple-empty-lines": "error",
     "max-depth": ["error", 3],
