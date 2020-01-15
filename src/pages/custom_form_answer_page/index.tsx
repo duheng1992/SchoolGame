@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import Taro, { Component, Config } from "@tarojs/taro";
 import { getFromById } from "@/api/customForm";
-import Preview from "./module/Preview"; // 蓝牙未开启
+import Preview from "./module/Answer"; // 蓝牙未开启
 import { View } from "@tarojs/components";
 import { AtButton } from "taro-ui";
 
@@ -188,7 +188,6 @@ class _page extends Component {
   // 提交问卷
   handleSubmit = () => {
     const { valueData } = this.state;
-    console.log("submit", valueData);
     if (this.hasError()) {
       Taro.showToast({
         title: "请修改标红题目后提交",
@@ -201,6 +200,7 @@ class _page extends Component {
         icon: "success",
         duration: 2000,
       });
+      // TODO:
       console.log('submit', valueData); // eslint-disable-line
     }
   };

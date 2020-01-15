@@ -21,12 +21,12 @@ type ComponentsProps = {
   showQuestion: Function;
 };
 
-interface Preview {
+interface Answer {
   props: ComponentsProps;
   state: StateType;
 }
 
-class Preview extends Component {
+class Answer extends Component {
   static defaultProps: ComponentsProps = {
     item: {},
     errorData: {},
@@ -295,4 +295,4 @@ class Preview extends Component {
   }
 }
 
-export default Preview;
+export default Answer;
