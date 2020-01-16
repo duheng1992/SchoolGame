@@ -286,12 +286,12 @@ export const drawImage = async (item_info, qrcode) => {
 export const saveCard = async () => {
   // 将Canvas图片内容导出指定大小的图片
   const res = await Taro.canvasToTempFilePath({
-    x: 15,
-    y: 80,
-    width: 292,
-    height: 508,
-    destWidth: 300,
-    destHeight: 516,
+    x: 0,
+    y: 0,
+    width: 330,
+    height: 580,
+    destWidth: 330,
+    destHeight: 600,
     canvasId: "cardCanvas",
     fileType: "png",
   });
