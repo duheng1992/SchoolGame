@@ -4,9 +4,18 @@ import GetUserInfo from "@/components/GetUserInfo";
 import { getUserInfo, wx_login, setUserInfo } from "@/api/login";
 import { clearUserInfo, setStore, getStore } from "@/utils/utils";
 import { getUserBaseInfo } from "@/api/personal";
-import { AtList, AtListItem, AtAvatar, AtToast, AtModal, AtModalHeader, AtModalContent, AtModalAction, AtButton } from "taro-ui";
+import {
+  AtList,
+  AtListItem,
+  AtAvatar,
+  AtToast,
+  AtModal,
+  AtModalHeader,
+  AtModalContent,
+  AtModalAction,
+  AtButton,
+} from "taro-ui";
 import "./index.scss";
-
 
 type StateType = {
   [propName: string]: any;
@@ -37,14 +46,13 @@ class _page extends Component {
     userInfo: {
       nickName: null,
       avatarUrl: defaultAvatar,
-
     },
     isToastOpened: false,
     toastText: "请先登录",
     isFocusPublic: false,
   };
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const _this = this;
@@ -52,18 +60,15 @@ class _page extends Component {
     if (token) {
       const userInfo = getStore("userInfo");
       this.setState({ userInfo });
-
     }
   }
 
   componentDidShow() {
     const { tabBarStore } = this.props;
     tabBarStore.setIndex(1);
-
   }
 
-  componentWillReact() { }
-
+  componentWillReact() {}
 
   goToEdit = () => {
     const { userInfo } = this.state;
@@ -87,32 +92,35 @@ class _page extends Component {
     // } else {
     //   this.setState({ isToastOpened: true })
     // }
-
-  }
-
+  };
 
   getUserInfo = (e) => {
     //每次操作记录一次时间点
     const _this = this;
+    const token = getStore("userToken");
+    if (token) {
+      return;
+    }
     const nowTime = new Date().getTime();
     setStore("getUserInfo_time", nowTime);
     if (e.detail.userInfo) {
       wx_login(e).then(() => {
         console.log("wxuser", e.detail.userInfo);
         const { avatarUrl, gender, nickName } = e.detail.userInfo;
-        this.setState({
-          userInfo: {
-            avatarUrl,
-            nickName,
+        this.setState(
+          {
+            userInfo: {
+              avatarUrl,
+              nickName,
+            },
           },
-        }, () => {
-          setStore("userInfo", this.state.userInfo);
-        });
-
+          () => {
+            setStore("userInfo", this.state.userInfo);
+          },
+        );
       });
     } else {
       clearUserInfo();
-
     }
   };
 
@@ -121,8 +129,7 @@ class _page extends Component {
       title: "功能暂未开放",
       icon: "none",
     });
-
-  }
+  };
 
   userInfo = () => {
     const token = getStore("userToken");
@@ -136,27 +143,25 @@ class _page extends Component {
         icon: "none",
       });
     }
-
-  }
+  };
 
   dynamic = () => {
     Taro.navigateTo({
       url: "/pages/dynamic_page/index",
     });
-  }
+  };
 
   focus = () => {
     Taro.navigateTo({
       url: "/pages/focus_page/index",
     });
-  }
+  };
 
   entered = () => {
     Taro.navigateTo({
       url: "/pages/entered_page/index",
     });
-  }
-
+  };
 
   render() {
     const { userInfo, isToastOpened, toastText, isFocusPublic } = this.state;
@@ -172,77 +177,106 @@ class _page extends Component {
       <View>
         <ScrollView scrollY scrollTop={0} className="personalPage">
           <View className="userDeatil">
-
             <GetUserInfo
               getUserInfo={(e) => {
                 return this.getUserInfo(e);
               }}
               my-class="loginBtnBox"
             >
-
               <AtAvatar circle size="large" image={avatarUrl}></AtAvatar>
-              <View className="goEditData" >
+              <View className="goEditData">
                 {nickName ? `${nickName}` : "立即登录"}
               </View>
             </GetUserInfo>
-
           </View>
           <View className="listPadding">
             <AtList hasBorder={false}>
-              <AtListItem hasBorder={false} title="我的动态" onClick={() => {
-                return this.dynamic();
-              }} arrow="right"
+              <AtListItem
+                hasBorder={false}
+                title="我的动态"
+                onClick={() => {
+                  return this.dynamic();
+                }}
+                arrow="right"
               />
-              <AtListItem hasBorder={false} title="我的关注" onClick={() => {
-                return this.focus();
-              }} arrow="right"
+              <AtListItem
+                hasBorder={false}
+                title="我的关注"
+                onClick={() => {
+                  return this.focus();
+                }}
+                arrow="right"
               />
-              <AtListItem hasBorder={false} title="已报活动" onClick={() => {
-                return this.entered();
-              }} arrow="right"
+              <AtListItem
+                hasBorder={false}
+                title="已报活动"
+                onClick={() => {
+                  return this.entered();
+                }}
+                arrow="right"
               />
             </AtList>
           </View>
           <View className="listPadding">
             <AtList hasBorder={false}>
-              <AtListItem hasBorder={false} title="信息档案" onClick={() => {
-                return this.userInfo();
-              }} arrow="right"
+              <AtListItem
+                hasBorder={false}
+                title="信息档案"
+                onClick={() => {
+                  return this.userInfo();
+                }}
+                arrow="right"
               />
-              <AtListItem hasBorder={false} title="发布直播" onClick={() => {
-                return this.Toast();
-              }} arrow="right"
+              <AtListItem
+                hasBorder={false}
+                title="发布直播"
+                onClick={() => {
+                  return this.Toast();
+                }}
+                arrow="right"
               />
             </AtList>
           </View>
           <View className="listPadding">
             <AtList hasBorder={false}>
-              <AtListItem hasBorder={false} title="关注服务号，接受活动提醒" onClick={() => {
-                return this.setState({ isFocusPublic: true });
-              }} arrow="right"
+              <AtListItem
+                hasBorder={false}
+                title="关注服务号，接受活动提醒"
+                onClick={() => {
+                  return this.setState({ isFocusPublic: true });
+                }}
+                arrow="right"
               />
-              <AtListItem hasBorder={false} onClick={() => {
-                return this.goToNav("/pages/personal/about/index");
-              }} title="关于活力校园" arrow="right"
+              <AtListItem
+                hasBorder={false}
+                onClick={() => {
+                  return this.goToNav("/pages/personal/about/index");
+                }}
+                title="关于活力校园"
+                arrow="right"
               />
             </AtList>
-
           </View>
           {/* <AtToast isOpened={isToastOpened} text={toastText} duration={2000} icon="close"></AtToast> */}
           <AtModal isOpened={isFocusPublic}>
             <AtModalHeader>关注公众号，获取更多消息提醒</AtModalHeader>
             <AtModalContent>
               <View className="toastContent">
-                关注<View className="fontColor">[ 活力校园ActiveSchools ]</View>公众号，可获取更多关于活动的通知消息。点击关注按钮后回复<View className="fontColor">[ 1 ]</View>，获取公众号二维码，长按关注
-
+                关注<View className="fontColor">[ 活力校园ActiveSchools ]</View>
+                公众号，可获取更多关于活动的通知消息。点击关注按钮后回复
+                <View className="fontColor">[ 1 ]</View>
+                ，获取公众号二维码，长按关注
               </View>
             </AtModalContent>
-            <AtModalAction> <AtButton circle openType="contact" className="btn_style">关注</AtButton></AtModalAction>
+            <AtModalAction>
+              {" "}
+              <AtButton circle openType="contact" className="btn_style">
+                关注
+              </AtButton>
+            </AtModalAction>
           </AtModal>
         </ScrollView>
       </View>
-
-
     );
   }
 }

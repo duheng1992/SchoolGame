@@ -9,12 +9,11 @@ type StateType = {
 };
 
 type ComponentsProps = {
-
   onClick(id: string): void;
   list: any;
   title: string;
   note: string;
-  type: string,
+  type: string;
   onTapGrunp(): void;
 };
 
@@ -26,12 +25,12 @@ interface ItemView {
 class ItemView extends Component {
   static defaultProps: ComponentsProps = {
     list: [],
-    title: '',
-    note: '',
-    type: 'image',
+    title: "",
+    note: "",
+    type: "image",
     onTapGrunp: () => { },
-    onClick: () => { }
-  }
+    onClick: () => { },
+  };
 
   constructor(props) {
     super(props);
@@ -39,7 +38,6 @@ class ItemView extends Component {
 
   state: StateType = {
     // token,
-
   };
 
   componentWillMount() { }
@@ -53,58 +51,91 @@ class ItemView extends Component {
   componentDidShow() { }
 
   componentWillReact() { }
+
   goToDetail = (e) => {
-    const { onClick } = this.props
-    onClick(e.id)
-  }
+    const { onClick } = this.props;
+    onClick(e.id);
+  };
 
   render() {
     const { title, list, note, onTapGrunp, type } = this.props;
-    return <View className='itemView-wrapper'>
-
-      <View className='card'>
-        <View className='card-info' onClick={() => onTapGrunp()}>
-          <View className="title">{title}</View>
-          <View className="extra">查看全部</View>
+    const icon = "icon";
+    const image = "image";
+    return (
+      <View className="itemView-wrapper">
+        <View className="card">
+          <View
+            className="card-info"
+            onClick={() => {
+              return onTapGrunp();
+            }}
+          >
+            <View className="title">{title}</View>
+            <View className="extra">查看全部</View>
+          </View>
+          <View className="note">{note}</View>
         </View>
-        <View className="note">{note}</View>
-      </View>
-      <View>
-        <ScrollView scrollX className="horizontalBox" scrollLeft={0} scrollWithAnimation>
-          {
-
+        <View>
+          <ScrollView
+            scrollX
+            className="horizontalBox"
+            scrollLeft={0}
+            scrollWithAnimation
+          >
             {
-              'icon': list.length > 0 && list.map((item) => (
-                <View key={item.id} className="icon_item" onClick={() => this.goToDetail(item)}>
-                  <View className='icon_wrap'>
-                    <View>
-                      <View className='title'>{item.title}</View>
-                      <View className='note'>{item.id ? item.subhead : ''}</View>
-                    </View>
+              {
+                icon:
+                  list.length > 0 &&
+                  list.map((item) => {
+                    return (
+                      <View
+                        key={item.id}
+                        className="icon_item"
+                        onClick={() => {
+                          return this.goToDetail(item);
+                        }}
+                      >
+                        <View className="icon_wrap">
+                          <View>
+                            <View className="title">{item.title}</View>
+                            <View className="note">
+                              {item.id ? item.subhead : ""}
+                            </View>
+                          </View>
 
-                    <Image className='icon' src={item.iconImage} />
-
-                  </View>
-
-                </View>
-              )),
-              'image':
-                list.length > 0 && list.map((item) => (
-                  <View key={item.id} className="img_item" onClick={() => this.goToDetail(item)}>
-                    <View className='image_wrap'>
-                      <Image className='image' src={item.bannerImage} />
-                      <View className='title'>{item.title}</View>
-                    </View>
-
-                  </View>
-                ))
-            }[type]
-          }
-
-
-        </ScrollView>
+                          <Image className="icon" src={item.iconImage} />
+                        </View>
+                      </View>
+                    );
+                  }),
+                image:
+                  list.length > 0 &&
+                  list.map((item) => {
+                    return (
+                      <View
+                        key={item.id}
+                        className="img_item"
+                        onClick={() => {
+                          return this.goToDetail(item);
+                        }}
+                      >
+                        <View className="image_wrap">
+                          <Image
+                            className="image"
+                            mode="aspectFill"
+                            src={item.bannerImage}
+                          />
+                          <View className="title">{item.title}</View>
+                        </View>
+                      </View>
+                    );
+                  }),
+              }[type]
+            }
+          </ScrollView>
+        </View>
       </View>
-    </View>;
+    );
   }
 }
 

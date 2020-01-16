@@ -75,9 +75,9 @@ class _page extends Component {
   componentWillReact() {}
 
   join = () => {
-    const { trackId, detail_info } = this.state;
+    const { detail_info } = this.state;
     Taro.navigateTo({
-      url: `/pages/custom_form_answer_page/index?id=${trackId}&title=${detail_info.title}&title_en=${detail_info.titleEn}`,
+      url: `/pages/custom_form_answer_page/index?id=${detail_info.questionnaireId}`,
     });
   };
 
@@ -85,7 +85,7 @@ class _page extends Component {
     const { detail_info } = this.state;
     const newsId = detail_info.id;
     favoriteNew({ newsId }).then((res) => {
-      if (res.code == "OK") {
+      if (res.code === "OK") {
         const data = detail_info;
         data.isFavorite = !data.isFavorite;
         this.setState({ detail_info: data });
@@ -98,9 +98,9 @@ class _page extends Component {
   };
 
   showInfo = () => {
-    return;
+    const { detail_info } = this.state;
     Taro.navigateTo({
-      url: `/pages/custom_form_answer_page/index?id=${trackId}&title=${detail_info.title}&title_en=${detail_info.titleEn}`,
+      url: `/pages/custom_form_record_page/index?recordId=${detail_info.questionnaireId}`,
     });
   };
 

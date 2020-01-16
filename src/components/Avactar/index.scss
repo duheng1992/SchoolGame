@@ -11,6 +11,9 @@
   .theme_title_wrap {
     display: flex;
     flex-direction: column;
+    .theme_start {
+      color: #999;
+    }
   }
   .focus {
     margin-left: auto;
