@@ -5,9 +5,7 @@ import Preview from "./module/Answer"; // 蓝牙未开启
 import { View } from "@tarojs/components";
 import { AtButton } from "taro-ui";
 
-
 import "./index.scss";
-
 
 function isEmpty(param) {
   if (param === null || typeof param === "undefined") {
@@ -35,7 +33,7 @@ type StateType = {
   [propName: string]: any;
   valueData: any;
   errorData: any;
-}
+};
 
 type ComponentsProps = {
   [propName: string]: any;
@@ -53,7 +51,7 @@ class _page extends Component {
 
   state: StateType = {
     // token,
-    id: '',
+    id: "",
     title: "",
     subTitle: "",
     formData: [],
@@ -63,46 +61,46 @@ class _page extends Component {
     previewImage: "", // 预览图片地址
   };
 
-  componentWillMount() {
-    const { id } = this.$router.params; // custom form id
-    this.setState({ id })
+  componentWillMount() {}
 
-  }
+  componentDidMount() {}
 
-  componentDidMount() {
-  }
+  componentWillUnmount() {}
 
-  componentWillUnmount() { }
-
-  componentDidHide() { }
+  componentDidHide() {}
 
   componentDidShow() {
-
-    const { id } = this.state;
-    getFromById({
-      id,
-    }).then((res: any) => {
-      console.log("res", res);
-      const { code, data } = res;
-      if (code === "OK") {
-        const formData = JSON.parse(data.formData);
-        this.setState({
-          title: data.title,
-          subTitle: data.subTitle,
-          formData,
-        });
-      }
-    });
-    // const dataString = getStore("data");
-    // const dataObj = JSON.parse(dataString);
-    // this.setState({
-    //   title: dataObj.title,
-    //   subTitle: dataObj.subTitle,
-    //   formData: dataObj.formData,
-    // });
+    const { id } = this.$router.params; // custom form id
+    console.log("id", id);
+    if (id && id !== "null") {
+      this.setState({ id });
+      getFromById({
+        id,
+      }).then((res: any) => {
+        const { code, data } = res;
+        if (code === "OK") {
+          const formData = JSON.parse(data.formData);
+          this.setState({
+            title: data.title,
+            subTitle: data.subTitle,
+            formData,
+          });
+        }
+      });
+    } else {
+      Taro.showToast({
+        title: "出错了",
+        icon: "none",
+        duration: 2000,
+      }).then(() => {
+        setTimeout(() => {
+          Taro.navigateBack({ delta: 1 });
+        }, 2000);
+      });
+    }
   }
 
-  componentWillReact() { }
+  componentWillReact() {}
 
   config: Config = {
     // navigationBarBackgroundColor: "#F0E8DF",
@@ -141,9 +139,10 @@ class _page extends Component {
       isShow = func.call(logicRelationArray, (relation) => {
         if (Array.isArray(valueData[relation["questionIndex"]])) {
           // 多选 答案是数组
-          const matchOptions = valueData[relation["questionIndex"]].filter((value) => {
-            return relation.values.includes(value);
-          },
+          const matchOptions = valueData[relation["questionIndex"]].filter(
+            (value) => {
+              return relation.values.includes(value);
+            },
           );
           return Boolean(matchOptions.length);
         } else {
@@ -172,7 +171,11 @@ class _page extends Component {
           errorData[attr] = "格式错误";
           hasError = true;
         }
-        if (this.showQuestion(formData[attr]) && formData[attr].questionRequired && isEmpty(value)) {
+        if (
+          this.showQuestion(formData[attr]) &&
+          formData[attr].questionRequired &&
+          isEmpty(value)
+        ) {
           errorData[attr] = "请填写该字段";
           hasError = true;
         }
@@ -188,7 +191,7 @@ class _page extends Component {
   handleSubmit = () => {
     const { valueData } = this.state;
     const { id } = this.state;
-    console.log('submit', valueData); // eslint-disable-line
+    console.log("submit", valueData); // eslint-disable-line
     if (this.hasError()) {
       Taro.showToast({
         title: "请修改标红题目后提交",
@@ -209,20 +212,19 @@ class _page extends Component {
               icon: "success",
               duration: 2000,
             }).then(() => {
-              console.log('submit res', res)
+              console.log("submit res", res);
               const recordId = data;
               setTimeout(() => {
-                this.goToRecord(recordId)
-              }, 2000)
+                this.goToRecord(recordId);
+              }, 2000);
             });
           }
         });
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     }
   };
-
 
   goToRecord = (recordId) => {
     Taro.redirectTo({
@@ -231,13 +233,7 @@ class _page extends Component {
   };
 
   render() {
-    const {
-      title,
-      subTitle,
-      formData,
-      errorData,
-      valueData,
-    } = this.state;
+    const { title, subTitle, formData, errorData, valueData } = this.state;
     return (
       <View className="page">
         <View className="main">

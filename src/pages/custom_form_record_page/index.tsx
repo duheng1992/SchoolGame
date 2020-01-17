@@ -4,13 +4,12 @@ import { getAnswerByRecordId } from "@/api/customForm";
 import Preview from "./module/Record"; // 蓝牙未开启
 import { View } from "@tarojs/components";
 
-
 import "./index.scss";
 
 type StateType = {
   [propName: string]: any;
   valueData: any;
-}
+};
 
 type ComponentsProps = {
   [propName: string]: any;
@@ -28,7 +27,7 @@ class _page extends Component {
 
   state: StateType = {
     // token,
-    recordId: 6,
+    recordId: "",
     title: "",
     subTitle: "",
     formData: [],
@@ -37,42 +36,51 @@ class _page extends Component {
     // previewImage: "", // 预览图片地址
   };
 
-  componentWillMount() {
-    // const { recordId } = this.$router.params; // custom form id
-    // this.setState({ recordId })
-  }
+  componentWillMount() {}
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   componentDidShow() {
-
-    const { recordId } = this.state;
-    getAnswerByRecordId({
-      id: recordId,
-    }).then((res: any) => {
-      const { code, data } = res;
-      if (code === "OK") {
-        this.setState({
-          title: data.questionnaireTitle,
-          subTitle: data.questionnaireSubTitle,
-          formData: JSON.parse(data.questionnaireData),
-          valueData: JSON.parse(data.answerData),
-        });
-      }
-    });
+    const { recordId } = this.$router.params; // custom form id
+    if (recordId && recordId !== "null") {
+      this.setState({ recordId });
+      getAnswerByRecordId({
+        id: recordId,
+      }).then((res: any) => {
+        const { code, data } = res;
+        if (code === "OK") {
+          this.setState({
+            title: data.questionnaireTitle,
+            subTitle: data.questionnaireSubTitle,
+            formData: JSON.parse(data.questionnaireData),
+            valueData: JSON.parse(data.answerData),
+          });
+        }
+      });
+    } else {
+      Taro.showToast({
+        title: "出错了",
+        icon: "none",
+        duration: 2000,
+      }).then(() => {
+        setTimeout(() => {
+          Taro.redirectTo({
+            url: "/pages/home/index",
+          });
+        }, 2000);
+      });
+    }
   }
 
-  componentWillReact() { }
+  componentWillReact() {}
 
   config: Config = {
     // navigationBarBackgroundColor: "#F0E8DF",
   };
-
 
   showQuestion = (item) => {
     const { logicRelationArray, logicRelationOperator } = item;
@@ -92,9 +100,10 @@ class _page extends Component {
       isShow = func.call(logicRelationArray, (relation) => {
         if (Array.isArray(valueData[relation["questionIndex"]])) {
           // 多选 答案是数组
-          const matchOptions = valueData[relation["questionIndex"]].filter((value) => {
-            return relation.values.includes(value);
-          },
+          const matchOptions = valueData[relation["questionIndex"]].filter(
+            (value) => {
+              return relation.values.includes(value);
+            },
           );
           return Boolean(matchOptions.length);
         } else {
@@ -107,12 +116,7 @@ class _page extends Component {
   };
 
   render() {
-    const {
-      title,
-      subTitle,
-      formData,
-      valueData,
-    } = this.state;
+    const { title, subTitle, formData, valueData } = this.state;
     return (
       <View className="page">
         <View className="main">
