@@ -317,16 +317,19 @@ class _page extends Component {
             <View>
               <RichText nodes={item_info.intro}></RichText>
             </View>
-            <AtList>
-              <AtListItem
-                className="list_item"
-                title="了解更多 请查看课件"
-                arrow="right"
-                onClick={() => {
-                  return this.preViewPdf();
-                }}
-              />
-            </AtList>
+            {(coursewareType == 1 || coursewareType == 3) && (
+              <AtList>
+                <AtListItem
+                  className="list_item"
+                  title="了解更多 请查看课件"
+                  arrow="right"
+                  onClick={() => {
+                    return this.preViewPdf();
+                  }}
+                />
+              </AtList>
+            )}
+
             <View className="list_butten_group">
               <AtButton
                 className="list_btn save_btn"

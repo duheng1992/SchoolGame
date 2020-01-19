@@ -32,37 +32,36 @@ export const getThemeList = (data?) => {
   });
 };
 
-
 export const getBannerList = () => {
   return ajax({
-    url: '/api/common/banner',
-    method: 'get'
-  })
-}
+    url: "/api/common/banner",
+    method: "get",
+  });
+};
 
 //vigorous
 export const getVigorousList = () => {
   return ajax({
-    url: '/api/vigorous/list',
-    method: 'get'
-  })
-}
+    url: "/api/vigorous/list",
+    method: "get",
+  });
+};
 
 // 话题发布
-export const releaseDiscussPublish = data => {
+export const releaseDiscussPublish = (data) => {
   return request_json({
-    url: '/api/theme/discuss/publish',
+    url: "/api/theme/discuss/publish",
     data,
-    method: 'post'
-  })
-}
+    method: "post",
+  });
+};
 
 // 报名参加活动
 
-export const joinTracking = data => {
+export const joinTracking = (data) => {
   return request_json({
-    url: '/api/tracking/join',
+    url: "/api/tracking/join",
     data,
-    method: 'post'
-  })
-}
+    method: "post",
+  });
+};

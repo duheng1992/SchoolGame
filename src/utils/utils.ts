@@ -202,14 +202,14 @@ export const drawImage = async (item_info, qrcode) => {
   grd.addColorStop(0, "#FC4514");
   // grd.addColorStop(0.5, '#FFF')
   ctx.setFillStyle(grd);
-  ctx.fillRect(0, 0, 500, 580);
+  ctx.fillRect(0, 0, 500, 540);
 
   // 填充背景色
   const grd_in = ctx.createLinearGradient(0, 0, 1, 600);
   grd_in.addColorStop(0, "#fff");
   // grd.addColorStop(0.5, '#FFF')
   ctx.setFillStyle(grd_in);
-  ctx.fillRect(15, 80, 292, 488);
+  ctx.fillRect(15, 80, 292, 448);
 
   ctx.drawImage(logo_title, 0, 0, 332, 100);
 

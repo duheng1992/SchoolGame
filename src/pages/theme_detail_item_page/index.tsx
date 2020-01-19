@@ -141,67 +141,69 @@ class _page extends Component {
   render() {
     const { list, showCanvasPage } = this.state;
     return (
-      <View className="wrap">
-        <Avatar
-          subTitle={list.createTime}
-          title={list.nickName}
-          isfocus={list.isFollow}
-          focus
-          focusClick={() => {
-            this.focusClick(list);
-          }}
-          avatar={list.avatar}
-          type="discuss"
-        ></Avatar>
-        <View className="comment_content">
-          <View className="theme_word">#{list.themeTitle}#</View>
-          <View>{list.content}</View>
-        </View>
-        <View className="comment_image_list">
-          {list.commentImage &&
-            list.commentImage.map((item) => {
-              return (
-                <Image
-                  mode="aspectFit"
-                  className="comment_image"
-                  src={item.url}
-                ></Image>
-              );
-            })}
-        </View>
-        <View>
-          <View className="list_butten_group">
-            <AtButton
-              className="list_btn save_btn"
-              onClick={() => {
-                return this.saveImage();
-              }}
-            >
-              保存图片
-            </AtButton>
-            <AtButton className="list_btn" openType="share">
-              分享至微信
-            </AtButton>
-            {/* <AtButton className='list_btn'>复制链接</AtButton> */}
+      <View>
+        <View className="wrap">
+          <Avatar
+            subTitle={list.createTime}
+            title={list.nickName}
+            isfocus={list.isFollow}
+            focus
+            focusClick={() => {
+              this.focusClick(list);
+            }}
+            avatar={list.avatar}
+            type="discuss"
+          ></Avatar>
+          <View className="comment_content">
+            <View className="theme_word">#{list.themeTitle}#</View>
+            <View>{list.content}</View>
           </View>
-          <View className="theme_commit_wrap">
-            <View
-              className="commit_wrap"
-              onClick={() => {
-                return this.favoriteCommit();
-              }}
-            >
-              <Image className="icon" src={collect}></Image>
-              <View className="num">{list.favoriteNum}</View>
+          <View className="comment_image_list">
+            {list.commentImage &&
+              list.commentImage.map((item) => {
+                return (
+                  <Image
+                    mode="aspectFit"
+                    className="comment_image"
+                    src={item.url}
+                  ></Image>
+                );
+              })}
+          </View>
+          <View>
+            <View className="list_butten_group">
+              <AtButton
+                className="list_btn save_btn"
+                onClick={() => {
+                  return this.saveImage();
+                }}
+              >
+                保存图片
+              </AtButton>
+              <AtButton className="list_btn" openType="share">
+                分享至微信
+              </AtButton>
+              {/* <AtButton className='list_btn'>复制链接</AtButton> */}
             </View>
-            <View
-              className="commit_wrap"
-              onClick={() => {
-                return this.praiseCommit();
-              }}
-            >
-              <Image className="icon" src={praise}></Image>
-              <View className="num">{list.praiseNum}</View>
+            <View className="theme_commit_wrap">
+              <View
+                className="commit_wrap"
+                onClick={() => {
+                  return this.favoriteCommit();
+                }}
+              >
+                <Image className="icon" src={collect}></Image>
+                <View className="num">{list.favoriteNum}</View>
+              </View>
+              <View
+                className="commit_wrap"
+                onClick={() => {
+                  return this.praiseCommit();
+                }}
+              >
+                <Image className="icon" src={praise}></Image>
+                <View className="num">{list.praiseNum}</View>
+              </View>
             </View>
           </View>
         </View>

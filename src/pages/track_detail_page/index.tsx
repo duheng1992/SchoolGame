@@ -146,53 +146,52 @@ class _page extends Component {
               <RichText nodes={detail_info.content}></RichText>
             </View>
           </View>
-
-          {detail_info.isJoin ? (
-            <View className="fixButtom">
-              <View className="fixButtomJoin">
-                <View
-                  className="fix_btn"
-                  onClick={() => {
-                    return this.showInfo();
-                  }}
-                >
-                  查看信息
-                </View>
-                <View className="fix_btn join">报名成功</View>
-              </View>
-            </View>
-          ) : (
-            <View className="fixButtom">
-              <View
-                className="fix_btn_group"
-                onClick={() => {
-                  return this.doCollect();
-                }}
-              >
-                <Image
-                  className="fix_btn_img"
-                  src={detail_info.isFavorite ? collected : collect}
-                ></Image>
-                <View>收藏</View>
-              </View>
-              <View className="fix_btn_group">
-                <Image className="fix_btn_img" src={share}></Image>
-                <Button className="fix_btn_share" openType="share">
-                  分享
-                </Button>
-              </View>
-
+        </ScrollView>
+        {detail_info.isJoin ? (
+          <View className="fixButtom">
+            <View className="fixButtomJoin">
               <View
                 className="fix_btn"
                 onClick={() => {
-                  this.join();
+                  return this.showInfo();
                 }}
               >
-                立即报名
+                查看信息
               </View>
+              <View className="fix_btn join">报名成功</View>
             </View>
-          )}
-        </ScrollView>
+          </View>
+        ) : (
+          <View className="fixButtom">
+            <View
+              className="fix_btn_group"
+              onClick={() => {
+                return this.doCollect();
+              }}
+            >
+              <Image
+                className="fix_btn_img"
+                src={detail_info.isFavorite ? collected : collect}
+              ></Image>
+              <View>收藏</View>
+            </View>
+            <View className="fix_btn_group">
+              <Image className="fix_btn_img" src={share}></Image>
+              <Button className="fix_btn_share" openType="share">
+                分享
+              </Button>
+            </View>
+
+            <View
+              className="fix_btn"
+              onClick={() => {
+                this.join();
+              }}
+            >
+              立即报名
+            </View>
+          </View>
+        )}
       </View>
     );
   }
