@@ -230,32 +230,14 @@ export const drawImage = async (item_info, qrcode) => {
   ctx.setFillStyle("black");
   ctx.fillText(item_info.title, 30, 300);
   ctx.restore();
-
+  const pdfInfo = item_info.pdfPageNum
+    ? ` · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`
+    : "";
   // 绘制文字
   ctx.save();
   ctx.setFontSize(14);
   ctx.setFillStyle("#999");
-  ctx.fillText(
-    `${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`,
-    30,
-    325,
-  );
-  ctx.restore();
-
-  ctx.lineTo(30, 292);
-  ctx.moveTo(30, 345);
-  ctx.setStrokeStyle("red");
-  ctx.stroke();
-
-  // 绘制文字
-  ctx.save();
-  ctx.setFontSize(14);
-  ctx.setFillStyle("#999");
-  ctx.fillText(
-    `${item_info.title} · ${item_info.pdfPageNum}页 · 已有${item_info.viewNum}人查看`,
-    30,
-    325,
-  );
+  ctx.fillText(`${item_info.title}${pdfInfo}`, 30, 325);
   ctx.restore();
 
   // 绘制二维码

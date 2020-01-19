@@ -28,6 +28,7 @@ interface _page {
 import { observer, inject } from "@tarojs/mobx";
 import { AtButton } from "taro-ui";
 import { drawImage, saveCard } from "@/utils/utils";
+import qrcode from "@/images/card/qrcode.jpeg";
 
 @inject("tabBarStore")
 @observer
@@ -48,10 +49,12 @@ class _page extends Component {
 
   componentWillMount() {
     console.log(this.$router.params);
-    const { discussId, themeId } = this.$router.params;
+    const { discussId, themeId, bannerImage, title } = this.$router.params;
     this.setState({
       discussId: Number(discussId),
       themeId: Number(themeId),
+      bannerImage,
+      title,
     });
   }
 
@@ -71,10 +74,16 @@ class _page extends Component {
 
   componentWillReact() {}
 
-
   saveImage = () => {
     this.setState({ showCanvasPage: true });
-    // drawImage();
+    const { pdfPageNum, viewNum, bannerImage, title, list } = this.state;
+    const item_info = {
+      pdfPageNum,
+      viewNum,
+      bannerImage,
+      title: list.content,
+    };
+    drawImage(item_info, qrcode);
   };
 
   favoriteCommit = () => {
@@ -83,9 +92,7 @@ class _page extends Component {
     favoriteCommit({ themeId }).then((res) => {
       if (res.code == "OK") {
         data.isFavorite = !data.isFavorite;
-        data.isFavorite
-          ? (data.favoriteNum = data.favoriteNum + 1)
-          : (data.favoriteNum = data.favoriteNum - 1);
+        data.isFavorite ? (data.favoriteNum += 1) : (data.favoriteNum -= 1);
         this.setState({ list: data });
         Taro.showToast({
           title: res.message,
@@ -102,9 +109,9 @@ class _page extends Component {
         const data = list;
         data.isPraise = !data.isPraise;
         if (data.isPraise) {
-          data.praiseNum = data.praiseNum + 1;
+          data.praiseNum += 1;
         } else {
-          data.praiseNum = data.praiseNum - 1;
+          data.praiseNum -= 1;
         }
         this.setState({ list: data });
         Taro.showToast({
@@ -139,7 +146,7 @@ class _page extends Component {
           subTitle={list.createTime}
           title={list.nickName}
           isfocus={list.isFollow}
-          focus={true}
+          focus
           focusClick={() => {
             this.focusClick(list);
           }}
@@ -152,19 +159,23 @@ class _page extends Component {
         </View>
         <View className="comment_image_list">
           {list.commentImage &&
-            list.commentImage.map((item) => (
-              <Image
-                mode="aspectFit"
-                className="comment_image"
-                src={item.url}
-              ></Image>
-            ))}
+            list.commentImage.map((item) => {
+              return (
+                <Image
+                  mode="aspectFit"
+                  className="comment_image"
+                  src={item.url}
+                ></Image>
+              );
+            })}
         </View>
         <View>
           <View className="list_butten_group">
             <AtButton
               className="list_btn save_btn"
-              onClick={() => this.saveImage()}
+              onClick={() => {
+                return this.saveImage();
+              }}
             >
               保存图片
             </AtButton>
@@ -174,11 +185,21 @@ class _page extends Component {
             {/* <AtButton className='list_btn'>复制链接</AtButton> */}
           </View>
           <View className="theme_commit_wrap">
-            <View className="commit_wrap" onClick={() => this.favoriteCommit()}>
+            <View
+              className="commit_wrap"
+              onClick={() => {
+                return this.favoriteCommit();
+              }}
+            >
               <Image className="icon" src={collect}></Image>
               <View className="num">{list.favoriteNum}</View>
             </View>
-            <View className="commit_wrap" onClick={() => this.praiseCommit()}>
+            <View
+              className="commit_wrap"
+              onClick={() => {
+                return this.praiseCommit();
+              }}
+            >
               <Image className="icon" src={praise}></Image>
               <View className="num">{list.praiseNum}</View>
             </View>
@@ -193,12 +214,19 @@ class _page extends Component {
               canvasId="cardCanvas"
             ></Canvas>
             <View className="btn_group">
-              <Button className="btn-save" onClick={() => saveCard()}>
+              <Button
+                className="btn-save"
+                onClick={() => {
+                  return saveCard();
+                }}
+              >
                 保存图片
               </Button>
               <Button
                 className="btn-close"
-                onClick={() => this.setState({ showCanvasPage: false })}
+                onClick={() => {
+                  return this.setState({ showCanvasPage: false });
+                }}
               >
                 关 闭
               </Button>
