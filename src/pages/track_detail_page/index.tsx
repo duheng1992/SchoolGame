@@ -55,6 +55,11 @@ class _page extends Component {
     });
   }
 
+
+  config: Config = {
+    navigationBarTitleText: "活动追踪",
+  };
+
   componentDidMount() {}
 
   componentDidShow() {

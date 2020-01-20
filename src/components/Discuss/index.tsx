@@ -13,6 +13,7 @@ type ComponentsProps = {
   detail: any;
   title: string;
   onClick: Function;
+  onTapPraise: Function;
   type: string;
 };
 
@@ -56,7 +57,7 @@ class _page extends Component {
   };
 
   render() {
-    const { detail, title, onClick, type } = this.props;
+    const { detail, title, onClick, type, onTapPraise } = this.props;
     const commentImage =
       detail.commentImage && detail.commentImage !== ""
         ? JSON.parse(detail.commentImage)
@@ -69,24 +70,26 @@ class _page extends Component {
           avatar={detail.avatar}
           type="discuss"
         ></Avatar>
-        <View
-          onClick={() => {
-            return onClick();
-          }}
-        >
-          <View className="discuss_content">
-            {title !== "" && <View className="theme_word">#{title}#</View>}
+        <View>
+          <View
+            onClick={() => {
+              return onClick();
+            }}
+          >
+            <View className="discuss_content">
+              {title !== "" && <View className="theme_word">#{title}#</View>}
 
-            {detail.content}
-          </View>
-          <View className="commit_image">
-            {commentImage.map((item, index) => {
-              if (index < 3) {
-                return (
-                  <Image className="commit_img_url" src={item.url}></Image>
-                );
-              }
-            })}
+              {detail.content}
+            </View>
+            <View className="commit_image">
+              {commentImage.map((item, index) => {
+                if (index < 3) {
+                  return (
+                    <Image className="commit_img_url" src={item.url}></Image>
+                  );
+                }
+              })}
+            </View>
           </View>
           {type == "default" && (
             <View className="theme_commit_wrap">
@@ -94,7 +97,12 @@ class _page extends Component {
                 <Image className="icon" src={eye}></Image>
                 <View className="num">{detail.viewNum}</View>
               </View>
-              <View className="commit_wrap">
+              <View
+                className="commit_wrap"
+                onClick={() => {
+                  return onTapPraise();
+                }}
+              >
                 <Image className="icon" src={praise}></Image>
                 <View className="num">{detail.praiseNum}</View>
               </View>

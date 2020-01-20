@@ -52,6 +52,10 @@ class _page extends Component {
   componentDidMount() {
 
   }
+  config: Config = {
+    navigationBarTitleText: "活动追踪",
+  };
+
 
   componentWillUnmount() { }
 

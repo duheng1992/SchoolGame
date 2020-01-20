@@ -2,7 +2,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import { getStore, setStore } from "@/utils/utils";
-import { getThemeList } from "@/api/home"
+import { getThemeList } from "@/api/home";
 import "./index.scss";
 import { AtTabs, AtTabsPane, AtSegmentedControl, AtSearchBar } from "taro-ui";
 
@@ -19,133 +19,131 @@ interface _page {
   state: StateType;
 }
 
-
-
-
 class _page extends Component {
   constructor(props) {
     super(props);
     this.state = {
       current: 0,
       currentSegment: 0,
-      showMore: '加载更多',
+      showMore: "加载更多",
       list: [],
       entity: {
-        keyword: '',
+        keyword: "",
         old: 0,
         hotRank: 0,
         pageIndex: 1,
-        pageSize: 15
+        pageSize: 15,
       },
       loading: false,
-      endPage: false
-    }
+      endPage: false,
+    };
   }
 
-  state: StateType = {
+  state: StateType = {};
 
+  config: Config = {
+    navigationBarTitleText: "热门话题",
   };
+
   componentWillMount() {
-    console.log(this.$router.params)
+    console.log(this.$router.params);
   }
 
-  componentDidMount() {
+  componentDidMount() {}
 
-  }
+  componentWillUnmount() {}
 
-  componentWillUnmount() { }
-
-  componentDidHide() { }
+  componentDidHide() {}
 
   componentDidShow() {
-    const list = getStore('themeGroupList')
-    console.log('list', list)
-    const { entity } = this.state
-    this.getThemeList(entity, [])
-
+    const list = getStore("themeGroupList");
+    console.log("list", list);
+    const { entity } = this.state;
+    this.getThemeList(entity, []);
   }
 
   getThemeList = (parmas, list) => {
     getThemeList(parmas).then((res: any) => {
-      console.log('list', res)
-      let themeList = JSON.parse(JSON.stringify(list))
-      if (res.code == 'OK') {
+      console.log("list", res);
+      let themeList = JSON.parse(JSON.stringify(list));
+      if (res.code == "OK") {
         themeList = themeList.concat(res.data.list);
         if (!res.data.hasNextPage) {
-          this.setState({ endPage: true })
+          this.setState({ endPage: true });
         }
-        this.setState({ loading: false, list: themeList })
+        this.setState({ loading: false, list: themeList });
       }
+    });
+  };
 
-    })
-  }
-
-  componentWillReact() { }
+  componentWillReact() {}
 
   onActionSearch = () => {
-    const { entity } = this.state
-    let data = entity
-    data.pageIndex = 1
-    this.getThemeList(data, [])
-  }
-  searchBarChange = val => {
-    let data = this.state.entity
-    data.keyword = val
-    data.pageIndex = 1
-    this.setState({ entity: data })
-  }
+    const { entity } = this.state;
+    const data = entity;
+    data.pageIndex = 1;
+    this.getThemeList(data, []);
+  };
+
+  searchBarChange = (val) => {
+    const data = this.state.entity;
+    data.keyword = val;
+    data.pageIndex = 1;
+    this.setState({ entity: data });
+  };
 
   onClearSearch = () => {
-    let data = this.state.entity
-    data.keyword = ''
-    data.pageIndex = 1
+    const data = this.state.entity;
+    data.keyword = "";
+    data.pageIndex = 1;
     this.setState({ entity: data, endPage: false }, () => {
-      this.getThemeList(data, [])
-    })
-  }
+      this.getThemeList(data, []);
+    });
+  };
+
   handleClick(value) {
     this.setState({
-      current: value
-    })
-  }
-  handleSegmentClick(value) {
-    let data = this.state.entity
-    data.old = value
-    this.setState({ entity: data }, () => {
-      this.getThemeList(data, [])
-    })
-  }
-
-  handleLiveSegmentClick(value) {
-    this.setState({ currentSegment: value })
-  }
-
-  onTapHotRank = ishot => {
-    let data = this.state.entity
-    data.hotRank = ishot
-    this.setState({ entity: data }, () => {
-      this.getThemeList(data, [])
-    })
-  }
-
-  showMore = () => {
-    let data = this.state.entity
-    data.pageIndex = data.pageIndex + 1
-    this.setState({ loading: true })
-    console.log('showMore', data)
-    this.getThemeList(data, this.state.list)
-  }
-
-  goToThemeDetailPage = detail => {
-    Taro.navigateTo({
-      url: `/pages/theme_detail_page/index?themeId=${detail.id}`,
+      current: value,
     });
   }
 
-  onTapLiveHotRank = num => {
-    console.log(num)
+  handleSegmentClick(value) {
+    const data = this.state.entity;
+    data.old = value;
+    this.setState({ entity: data }, () => {
+      this.getThemeList(data, []);
+    });
   }
 
+  handleLiveSegmentClick(value) {
+    this.setState({ currentSegment: value });
+  }
+
+  onTapHotRank = (ishot) => {
+    const data = this.state.entity;
+    data.hotRank = ishot;
+    this.setState({ entity: data }, () => {
+      this.getThemeList(data, []);
+    });
+  };
+
+  showMore = () => {
+    const data = this.state.entity;
+    data.pageIndex += 1;
+    this.setState({ loading: true });
+    console.log("showMore", data);
+    this.getThemeList(data, this.state.list);
+  };
+
+  goToThemeDetailPage = (detail) => {
+    Taro.navigateTo({
+      url: `/pages/theme_detail_page/index?themeId=${detail.id}`,
+    });
+  };
+
+  onTapLiveHotRank = (num) => {
+    console.log(num);
+  };
 
   // toDeatilByCategoryId = (detail) => {
   //   setStore('teachDetail', detail)
@@ -155,7 +153,7 @@ class _page extends Component {
   // }
 
   render() {
-    const { list, showMore, entity, loading, endPage } = this.state
+    const { list, showMore, entity, loading, endPage } = this.state;
     return (
       <View className="theme_group_page">
         <AtSearchBar
@@ -168,56 +166,82 @@ class _page extends Component {
           animated={false}
           current={this.state.current}
           tabList={[
-            { title: '话题讨论' },
-            { title: '专家答疑' },
-            { title: '专家直播' }
+            { title: "话题讨论" },
+            { title: "专家答疑" },
+            { title: "专家直播" },
           ]}
-          onClick={this.handleClick.bind(this)}>
-          <AtTabsPane current={this.state.current} index={0} >
+          onClick={this.handleClick.bind(this)}
+        >
+          <AtTabsPane current={this.state.current} index={0}>
             <View>
-              <View className='segment_bar'>
+              <View className="segment_bar">
                 <AtSegmentedControl
                   onClick={this.handleSegmentClick.bind(this)}
-                  selectedColor='#fff'
-                  color='#f5f5f5'
+                  selectedColor="#fff"
+                  color="#f5f5f5"
                   fontSize={30}
                   current={entity.old}
-                  values={['正在进行', '往期回顾']}
+                  values={["正在进行", "往期回顾"]}
                 />
-                <View className='hot_rank'>
-                  <View className={!entity.hotRank ? 'hot_rank_active' : ''} onClick={() => this.onTapHotRank(0)}>最新</View>
+                <View className="hot_rank">
+                  <View
+                    className={!entity.hotRank ? "hot_rank_active" : ""}
+                    onClick={() => {
+                      return this.onTapHotRank(0);
+                    }}
+                  >
+                    最新
+                  </View>
                   <View>·</View>
-                  <View className={entity.hotRank ? 'hot_rank_active' : ''} onClick={() => this.onTapHotRank(1)}>最热</View>
+                  <View
+                    className={entity.hotRank ? "hot_rank_active" : ""}
+                    onClick={() => {
+                      return this.onTapHotRank(1);
+                    }}
+                  >
+                    最热
+                  </View>
                 </View>
               </View>
 
               <ScrollView scrollY>
-                {
-                  list.length > 0 && list.map(item => (
-                    <View className='list_warp' key={item.id} onClick={() => this.goToThemeDetailPage(item)}>
-                      <Image className="list_img" mode="aspectFill" src={item.bannerImage}></Image>
-                      <View className='list_info'>
-                        <View className="list_title">{item.title}</View>
-                        {
-                          item.startTime && (
-                            <View className="list_create_time">{item.startTime}</View>
-
-                          )
-                        }
+                {list.length > 0 &&
+                  list.map((item) => {
+                    return (
+                      <View
+                        className="list_warp"
+                        key={item.id}
+                        onClick={() => {
+                          return this.goToThemeDetailPage(item);
+                        }}
+                      >
+                        <Image
+                          className="list_img"
+                          mode="aspectFill"
+                          src={item.bannerImage}
+                        ></Image>
+                        <View className="list_info">
+                          <View className="list_title">{item.title}</View>
+                          {item.startTime && (
+                            <View className="list_create_time">
+                              {item.startTime}
+                            </View>
+                          )}
+                        </View>
                       </View>
-
-                    </View>
-                  ))
-                }
-                {
-                  endPage && (
-                    <View className='showMore'>没有更多数据了</View>
-                  )
-                }
-                {
-                  !endPage && (<View className='showMore' onClick={() => this.showMore()}>{loading ? '。。加载中。。' : showMore}</View>)
-                }
-
+                    );
+                  })}
+                {endPage && <View className="showMore">没有更多数据了</View>}
+                {!endPage && (
+                  <View
+                    className="showMore"
+                    onClick={() => {
+                      return this.showMore();
+                    }}
+                  >
+                    {loading ? "。。加载中。。" : showMore}
+                  </View>
+                )}
               </ScrollView>
             </View>
           </AtTabsPane>

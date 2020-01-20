@@ -6,6 +6,7 @@ import {
   getThemeDetailByThemeId,
   getThemeDetailDiscussByThemeId,
   FavoriteTheme,
+  praiseCommit,
 } from "@/api/detail";
 import { getStore } from "@/utils/utils";
 import Favorite from "@/images/card/tab_collect.png";
@@ -113,6 +114,30 @@ class _page extends Component {
     Taro.navigateBack();
   };
 
+  praiseCommit = (id, index) => {
+    const { discuss } = this.state;
+    praiseCommit({ newsId: id }).then((res) => {
+      if (res.code == "OK") {
+        const data = discuss;
+        console.log("data", data);
+        const listItem = data[index];
+        console.log("listItem", listItem);
+        listItem.isPraise = !listItem.isPraise;
+        if (listItem.isPraise) {
+          listItem.praiseNum += 1;
+        } else {
+          listItem.praiseNum -= 1;
+        }
+        data[index] = listItem;
+        this.setState({ discuss: data });
+        Taro.showToast({
+          title: res.message,
+          icon: "success",
+        });
+      }
+    });
+  };
+
   render() {
     const { detail_info, discuss } = this.state;
     return (
@@ -166,7 +191,7 @@ class _page extends Component {
           {discuss.length > 0 && (
             <View className="discuss_wrap">
               {discuss.length > 0 &&
-                discuss.map((item) => {
+                discuss.map((item, index) => {
                   return (
                     <Discuss
                       key={item.id}
@@ -174,6 +199,9 @@ class _page extends Component {
                       title={detail_info.title}
                       onClick={() => {
                         return this.goToDetail(item);
+                      }}
+                      onTapPraise={() => {
+                        return this.praiseCommit(item.id, index);
                       }}
                     ></Discuss>
                   );

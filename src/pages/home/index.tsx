@@ -56,6 +56,10 @@ class _page extends Component {
     vigorous: [],
   };
 
+  config: Config = {
+    navigationBarTitleText: "Nike活力校园",
+  };
+
   componentWillMount() {}
 
   componentDidMount() {}
@@ -72,6 +76,7 @@ class _page extends Component {
         teach: res.data,
       });
     });
+
     // 活动追踪列表
     getTrackingList().then((res) => {
       console.log("res", res);

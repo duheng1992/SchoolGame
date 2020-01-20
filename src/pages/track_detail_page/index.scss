@@ -98,6 +98,7 @@
       align-items: center;
       margin-left: 20px;
       margin-right: 20px;
+      font-size: 24px;
       .fix_btn_img {
         width: 48px;
         height: 48px;
@@ -106,6 +107,7 @@
       .fix_btn_share {
         background-color: transparent;
         padding: 0;
+        font-size: 24px;
         &::after {
           border: none;
         }

@@ -42,6 +42,10 @@ class _page extends Component {
     content: ''
   };
 
+  config: Config = {
+    navigationBarTitleText: "活动追踪",
+  };
+
   componentWillMount() {
     console.log(this.$router.params)
     const { newsId } = this.$router.params;
