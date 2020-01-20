@@ -84,6 +84,31 @@ class _page extends Component {
 
   saveUserInfo = () => {
     const { userinfo } = this.state;
+    const reg = /(^\d{8}(0\d|10|11|12)([0-2]\d|30|31)\d{3}$)|(^\d{6}(18|19|20)\d{2}(0\d|10|11|12)([0-2]\d|30|31)\d{3}(\d|X|x)$)/;
+    const phoneReg = /^(?:(?:\+|00)86)?1[3-9]\d{9}$/;
+    const emailReg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if (!reg.test(userinfo.identity) && userinfo.identity !== "") {
+      Taro.showToast({
+        title: "身份证格式错误",
+        icon: "none",
+      });
+      return;
+    }
+    // if (!phoneReg.test(userinfo.phone) && userinfo.phone !== "") {
+    //   Taro.showToast({
+    //     title: "手机格式错误",
+    //     icon: "none",
+    //   });
+    //   return;
+    // }
+    if (!emailReg.test(userinfo.email) && userinfo.email !== "") {
+      Taro.showToast({
+        title: "邮箱格式错误",
+        icon: "none",
+      });
+      return;
+    }
+
     const info = {
       province: userinfo.schoolProvince,
       city: userinfo.schoolCity,
@@ -113,12 +138,8 @@ class _page extends Component {
   };
 
   inputChange = (e, name) => {
-    console.log("e", e);
-    console.log("name", name);
     const info = this.state.userinfo;
     info[name] = e.currentTarget.value;
-    console.log(" info[name]", info[name]);
-    console.log(" info", info);
     this.setState({ userinfo: info });
   };
 
