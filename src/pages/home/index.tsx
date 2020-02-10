@@ -57,12 +57,12 @@ class _page extends Component {
   };
 
   config: Config = {
-    navigationBarTitleText: "Nike活力校园",
+    navigationBarTitleText: "活力校园",
   };
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   componentDidShow() {
     const { tabBarStore } = this.props;
@@ -109,14 +109,19 @@ class _page extends Component {
     });
     // 活力校园
     getVigorousList().then((res) => {
-      console.log("vigorous", res.data);
+      let list = res.data.list;
+      list.forEach(item => {
+        if (item.bannerImage && typeof item.bannerImage == 'string') {
+          item.bannerImage = JSON.parse(item.bannerImage).file
+        }
+      })
       this.setState({
-        vigorous: res.data,
+        vigorous: list,
       });
     });
   }
 
-  componentWillReact() {}
+  componentWillReact() { }
 
   unfold = () => {
     const { isShow } = this.state;
@@ -285,7 +290,7 @@ class _page extends Component {
                 return this.goToDetailByTrackId(e);
               }}
             />
-            {/* <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={vigorous} /> */}
+            <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={vigorous} />
           </View>
         </ScrollView>
       </View>
