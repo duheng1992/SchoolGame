@@ -75,6 +75,7 @@ class App extends Component {
       "pages/group_page/index", //教学分类页面
       "pages/theme_group_page/index", //热门分类页面
       "pages/track_group_page/index", //活动追踪分类页面
+      "pages/vigorous_group_page/index", //活力校园项目展示分类页面
       "pages/personal/about/index", //关于活力校园
       "pages/dynamic_page/index", //我的动态
       "pages/focus_page/index", //我的动态

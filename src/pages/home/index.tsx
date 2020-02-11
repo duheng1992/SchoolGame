@@ -109,12 +109,12 @@ class _page extends Component {
     });
     // 活力校园
     getVigorousList().then((res) => {
-      let list = res.data.list;
-      list.forEach(item => {
-        if (item.bannerImage && typeof item.bannerImage == 'string') {
-          item.bannerImage = JSON.parse(item.bannerImage).file
+      const list = res.data.list;
+      list.forEach((item) => {
+        if (item.bannerImage && typeof item.bannerImage === "string") {
+          item.bannerImage = JSON.parse(item.bannerImage).file;
         }
-      })
+      });
       this.setState({
         vigorous: list,
       });
@@ -290,7 +290,17 @@ class _page extends Component {
                 return this.goToDetailByTrackId(e);
               }}
             />
-            <ItemView title="活力校园项目展示" note='活力校园相关资讯' list={vigorous} />
+            <ItemView
+              title="活力校园项目展示"
+              note="活力校园相关资讯"
+              list={vigorous}
+              onTapGrunp={() => {
+                return this.goToCategoryGroup(vigorous, "vigorous");
+              }}
+              onClick={(e) => {
+                return this.goToDetailByTrackId(e);
+              }}
+            />
           </View>
         </ScrollView>
       </View>
