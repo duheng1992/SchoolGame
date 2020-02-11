@@ -81,8 +81,8 @@ class App extends Component {
       "pages/entered_page/index", //我的已报活动
 
       // "pages/detail/index", //详情页面
-      "pages/cheng_set/index", // 称的设置
-      "pages/manage/index", // 管理称
+      // "pages/cheng_set/index", // 称的设置
+      // "pages/manage/index", // 管理称
 
       //demo
       // "pages/demo/mobxDemo/index",
