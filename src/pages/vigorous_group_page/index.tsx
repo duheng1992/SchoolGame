@@ -3,6 +3,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import { getStore, setStore } from "@/utils/utils";
 import { getTrackingList, getTrackingOldList } from "@/api/home"
+import { getVigorousList } from "@/api/home"
 import "./index.scss";
 import { AtSegmentedControl } from "taro-ui";
 
