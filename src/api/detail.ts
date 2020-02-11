@@ -118,6 +118,14 @@ export const favoriteNew = (data) => {
   });
 }
 
+// 校园活力详情
+export const getVigorousDetailByVigorousId = (data) => {
+  return ajax({
+    url: `/api/vigorous/info/${data.vigorousId}`,
+    method: "get",
+  });
+}
+
 // 热门话题点赞
 export const favoriteCommit = (data) => {
   return request_json({

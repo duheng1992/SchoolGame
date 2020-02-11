@@ -39,7 +39,8 @@ export const getBannerList = () => {
   });
 };
 
-//vigorous
+//校园活力展列表 
+//data ?
 export const getVigorousList = () => {
   return ajax({
     url: "/api/vigorous/list",
@@ -57,7 +58,6 @@ export const releaseDiscussPublish = (data) => {
 };
 
 // 报名参加活动
-
 export const joinTracking = (data) => {
   return request_json({
     url: "/api/tracking/join",

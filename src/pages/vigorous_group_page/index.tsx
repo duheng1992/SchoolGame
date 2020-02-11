@@ -53,7 +53,7 @@ class _page extends Component {
 
   }
   config: Config = {
-    navigationBarTitleText: "活动追踪",
+    navigationBarTitleText: "校园活力项目展示",
   };
 
 

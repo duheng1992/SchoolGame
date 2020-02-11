@@ -297,9 +297,9 @@ class _page extends Component {
               onTapGrunp={() => {
                 return this.goToCategoryGroup(vigorous, "vigorous");
               }}
-            // onClick={(e) => {
-            //   return this.goToDetailByTrackId(e);
-            // }}
+              onClick={(e) => {
+                return this.goToDetailByTrackId(e);
+              }}
             />
           </View>
         </ScrollView>
