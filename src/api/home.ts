@@ -40,8 +40,7 @@ export const getBannerList = () => {
 };
 
 //校园活力展列表 
-//data ?
-export const getVigorousList = () => {
+export const getVigorousList = (data) => {
   return ajax({
     url: "/api/vigorous/list",
     method: "get",

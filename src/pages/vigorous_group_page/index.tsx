@@ -2,10 +2,8 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import { getStore, setStore } from "@/utils/utils";
-import { getTrackingList, getTrackingOldList } from "@/api/home"
 import { getVigorousList } from "@/api/home"
 import "./index.scss";
-import { AtSegmentedControl } from "taro-ui";
 
 type StateType = {
   [propName: string]: any;
@@ -21,8 +19,6 @@ interface _page {
 }
 
 
-
-
 class _page extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +27,6 @@ class _page extends Component {
       currentSegment: 0,
       showMore: '加载更多',
       list: [],
-      old: 0,
       entity: {
         hotRank: 0,
         pageIndex: 1,
@@ -63,7 +58,7 @@ class _page extends Component {
   componentDidHide() { }
 
   componentDidShow() {
-    const list = getStore('trackGroupList')
+    const list = getStore('vigorousGroupList')
     console.log('list', list)
     this.setState({
       list
@@ -72,7 +67,7 @@ class _page extends Component {
   }
 
   getDataList = (parmas, list) => {
-    getTrackingList(parmas).then((res: any) => {
+    getVigorousList(parmas).then((res: any) => {
       console.log('list', res)
       let themeList = list.length > 0 ? JSON.parse(JSON.stringify(list)) : []
       if (res.code == 'OK') {
@@ -80,24 +75,6 @@ class _page extends Component {
         if (!res.data.hasNextPage) {
           this.setState({ endPage: true })
         }
-        this.setState({ loading: false, list: themeList })
-      }
-    })
-  }
-
-  getDataOldList = (parmas, list) => {
-    getTrackingOldList(parmas).then((res: any) => {
-      console.log('list', res)
-      let themeList = list.length > 0 ? JSON.parse(JSON.stringify(list)) : []
-      if (res.code == 'OK') {
-        themeList = themeList.concat(res.data.list);
-        if (!res.data.hasNextPage) {
-          this.setState({ endPage: true })
-        }
-        // themeList.forEach(item => {
-        //   console.log('lisitem', item)
-        //   item.bannerImage = typeof item.bannerImage === 'string' ? JSON.parse(item.bannerImage).file : ''
-        // })
         this.setState({ loading: false, list: themeList })
       }
     })
@@ -110,32 +87,14 @@ class _page extends Component {
       current: value
     })
   }
-  handleSegmentClick(value) {
-    this.setState({ old: value }, () => {
-      let data = this.state.entity
-      data.pageIndex = 1
-      if (value) {
-        this.getDataOldList(data, [])
-      } else {
-        this.getDataList(data, [])
-      }
-    })
-  }
 
   showMore = () => {
-    const { old, list } = this.state
+    const { list } = this.state
     let data = this.state.entity
     data.pageIndex = data.pageIndex + 1
     this.setState({ loading: true })
-    if (old) {
-      this.getDataOldList(data, list)
-    } else {
-      this.getDataList(data, list)
-    }
-  }
+    this.getDataList(data, list)
 
-  handleLiveSegmentClick(value) {
-    this.setState({ currentSegment: value })
   }
 
   onTapHotRank = ishot => {
@@ -143,54 +102,28 @@ class _page extends Component {
     data.hotRank = ishot
     data.pageIndex = 1
     this.setState({ entity: data }, () => {
-      const { entity, old } = this.state
-      if (old) {
-        this.getDataOldList(entity, [])
-      } else {
-        this.getDataList(entity, [])
-      }
-
+      const { entity } = this.state
+      this.getDataList(entity, [])
     })
   }
 
 
   goToDetailPage = detail => {
-    console.log('dratil', detail)
-    const { old } = this.state
-    if (old) {
-      Taro.navigateTo({
-        url: `/pages/track_old_detail_page/index?newsId=${detail.id}`,
-      });
-    } else {
-      Taro.navigateTo({
-        url: `/pages/track_detail_page/index?trackId=${detail.id}`,
-      });
-    }
+    console.log('deatil', detail)
+    Taro.navigateTo({
+      url: `/pages/vigorous_detail_page/index?vigorousId=${detail.id}`,
+    });
+
 
   }
 
 
 
   render() {
-    const { list, showMore, entity, old, endPage, loading } = this.state
+    const { list, showMore, entity, endPage, loading } = this.state
     return (
       <View className="theme_group_page">
         <View>
-          <View className='segment_bar'>
-            <AtSegmentedControl
-              onClick={this.handleSegmentClick.bind(this)}
-              selectedColor='#fff'
-              color='#f5f5f5'
-              fontSize={30}
-              current={old}
-              values={['正在进行测试', '往期回顾']}
-            />
-            <View className='hot_rank'>
-              <View className={!entity.hotRank ? 'hot_rank_active' : ''} onClick={() => this.onTapHotRank(0)}>最新</View>
-              <View>·</View>
-              <View className={entity.hotRank ? 'hot_rank_active' : ''} onClick={() => this.onTapHotRank(1)}>最热</View>
-            </View>
-          </View>
 
           <ScrollView scrollY>
             {

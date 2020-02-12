@@ -118,7 +118,7 @@ export const favoriteNew = (data) => {
   });
 }
 
-// 校园活力详情
+// 活力校园详情
 export const getVigorousDetailByVigorousId = (data) => {
   return ajax({
     url: `/api/vigorous/info/${data.vigorousId}`,
