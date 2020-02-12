@@ -97,16 +97,6 @@ class _page extends Component {
 
   }
 
-  onTapHotRank = ishot => {
-    let data = this.state.entity
-    data.hotRank = ishot
-    data.pageIndex = 1
-    this.setState({ entity: data }, () => {
-      const { entity } = this.state
-      this.getDataList(entity, [])
-    })
-  }
-
 
   goToDetailPage = detail => {
     console.log('deatil', detail)
@@ -120,7 +110,7 @@ class _page extends Component {
 
 
   render() {
-    const { list, showMore, entity, endPage, loading } = this.state
+    const { list, showMore, endPage, loading } = this.state
     return (
       <View className="theme_group_page">
         <View>
@@ -148,7 +138,7 @@ class _page extends Component {
               )
             }
             {
-              !endPage && (<View className='showMore' onClick={() => this.showMore()}>{loading ? '。。加载中。。' : showMore}</View>)
+              !endPage && (<View className='showMore' onClick={() => this.showMore()}>{loading ? '..加载中..' : showMore}</View>)
             }
           </ScrollView>
         </View>

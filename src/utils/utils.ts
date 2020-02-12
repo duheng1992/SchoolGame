@@ -177,15 +177,15 @@ export const toDetailByCategory = (item, type = "banner") => {
       break;
     case 6:
       Taro.navigateTo({
-        url: `/pages/track_detail_page/index?trackId=${itemId}`,
+        url: `/pages/vigorous_detail_page/index?vigorousId=${itemId}`,
       });
       break;
 
-    case 6:
-      Taro.showToast({
-        title: "活力校园无数据",
-        icon: "none",
-      });
+      // case 6:
+      //   Taro.showToast({
+      //     title: "活力校园无数据",
+      //     icon: "none",
+      //   });
       break;
 
     default:

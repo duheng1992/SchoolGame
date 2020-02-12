@@ -194,6 +194,18 @@ class _page extends Component {
     });
   };
 
+  goToDetailByVigorousId = (vigorousId) => {
+    const { vigorous } = this.state;
+    const vigorousDetail = vigorous.filter((item) => {
+      return item.id === vigorousId;
+    });
+    console.log("vigorousDetail", vigorousDetail);
+    setStore("vigorousDetail", vigorousDetail[0]);
+    Taro.navigateTo({
+      url: `/pages/vigorous_detail_page/index?vigorousId=${vigorousId}`,
+    });
+  };
+
   goToCategoryGroup = (item, name) => {
     setStore(`${name}GroupList`, item);
     Taro.navigateTo({
@@ -298,7 +310,7 @@ class _page extends Component {
                 return this.goToCategoryGroup(vigorous, "vigorous");
               }}
               onClick={(e) => {
-                return this.goToDetailByTrackId(e);
+                return this.goToDetailByVigorousId(e);
               }}
             />
           </View>
